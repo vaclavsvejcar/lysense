@@ -12,7 +12,9 @@ public class GreetingCommand implements Runnable {
 
     @Override
     public void run() {
-        System.out.printf("Hello %s, go go commando!\n", name);
+
+        System.out.println(STR. "Hello \{ name }" );
+
     }
 
 }
