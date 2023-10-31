@@ -1,0 +1,4 @@
+"%test":
+  quarkus:
+    jacoco:
+      title: lysense test coverage report
