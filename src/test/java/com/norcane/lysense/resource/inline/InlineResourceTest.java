@@ -1,5 +1,7 @@
 package com.norcane.lysense.resource.inline;
 
+import com.norcane.lysense.resource.LineSeparator;
+
 import org.junit.jupiter.api.Test;
 
 import java.net.URI;
@@ -7,6 +9,7 @@ import java.net.URI;
 import io.quarkus.test.junit.QuarkusTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @QuarkusTest
 class InlineResourceTest {
@@ -19,6 +22,12 @@ class InlineResourceTest {
         assertEquals("java", resource.extension());
         assertEquals("hello world", resource.name());
         assertEquals("The Cake is a Lie!", resource.readAsString());
+        assertEquals(LineSeparator.platform(), resource.lineSeparator());
+    }
+
+    @Test
+    void of_uri_invalidScheme() {
+        assertThrows(IllegalArgumentException.class, () -> InlineResource.of(URI.create("file:///foo/bar.txt")));
     }
 
     @Test

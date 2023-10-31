@@ -83,7 +83,7 @@ public final class Memoized<T> implements Stateful {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
-            .add("value", notNullOrDefault(value, "{absent}"))
+            .add("value", notNullOrDefault(value, "<absent>"))
             .toString();
     }
 }

@@ -12,9 +12,6 @@ import java.util.Base64;
 
 public class InlineResource extends AbstractResource {
 
-    // Encoded URI: inline:java;name=hello%20world;base42,QmFzZTQyIGVuY29kaW5nIGNvbnRlbnQ=
-
-
     static final String DEFAULT_NAME = "inline-content";
     static final String DEFAULT_EXTENSION = "txt";
     static final String URI_SCHEME = "inline";
