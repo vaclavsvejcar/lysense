@@ -19,4 +19,16 @@ public final class Prelude {
     public static <T> T nonNull(T object) {
         return Objects.requireNonNull(object);
     }
+
+    /**
+     * Returns back the given object if not {@code null}, otherwise returns the provided default object.
+     *
+     * @param object     object to return if not {@code null}
+     * @param defaultObj default object
+     * @param <T>        type of the object
+     * @return provided <i>non-null</i> object or <i>default</i>
+     */
+    public static <T> T notNullOrDefault(T object, T defaultObj) {
+        return Objects.requireNonNullElse(object, defaultObj);
+    }
 }
