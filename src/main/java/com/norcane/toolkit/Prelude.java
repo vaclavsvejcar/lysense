@@ -28,7 +28,7 @@ public final class Prelude {
      * @param <T>        type of the object
      * @return provided <i>non-null</i> object or <i>default</i>
      */
-    public static <T> T notNullOrDefault(T object, T defaultObj) {
+    public static <T> T nonNullOrDefault(T object, T defaultObj) {
         return Objects.requireNonNullElse(object, defaultObj);
     }
 }

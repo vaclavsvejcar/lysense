@@ -5,7 +5,7 @@ import com.google.common.base.MoreObjects;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-import static com.norcane.toolkit.Prelude.notNullOrDefault;
+import static com.norcane.toolkit.Prelude.nonNullOrDefault;
 
 /**
  * Represents variable which value is computed only once using given supplier and then memoized.
@@ -83,7 +83,7 @@ public final class Memoized<T> implements Stateful {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
-            .add("value", notNullOrDefault(value, "<absent>"))
+            .add("value", nonNullOrDefault(value, "<absent>"))
             .toString();
     }
 }

@@ -24,7 +24,7 @@ public class InlineResource extends AbstractResource {
         this.content = content;
     }
 
-    public static InlineResource of(URI uri) throws IllegalArgumentException {
+    public static InlineResource of(URI uri) {
         if (!uri.getScheme().equals(URI_SCHEME)) {
             throw new IllegalArgumentException(STR. "Illegal inline resource URI '\{ uri }', expected scheme '\{ URI_SCHEME }'" );
         }
@@ -42,9 +42,9 @@ public class InlineResource extends AbstractResource {
     }
 
     public static InlineResource of(String name, String extension, String content) {
-        final String contentBase64 = Base64.getEncoder().encodeToString(content.getBytes());
-        final String nameEncoded = UrlEscapers.urlFragmentEscaper().escape(name);
-        final URI uri = URI.create(STR. "\{ URI_SCHEME }:\{ extension };name=\{ nameEncoded };base64,\{ contentBase64 }" );
+        final String encodedContent = Base64.getEncoder().encodeToString(content.getBytes());
+        final String encodedName = UrlEscapers.urlFragmentEscaper().escape(name);
+        final URI uri = URI.create(STR. "\{ URI_SCHEME }:\{ extension };name=\{ encodedName };base64,\{ encodedContent }" );
         return new InlineResource(name, extension, content, uri);
     }
 
