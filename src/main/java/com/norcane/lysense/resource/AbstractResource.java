@@ -22,6 +22,14 @@ public abstract class AbstractResource implements Resource {
         this.location = location;
     }
 
+
+    protected static void enforceSchemeIfPresent(URI uri, Resource.Scheme scheme) {
+        final String uriScheme = uri.getScheme();
+        if (uriScheme != null && !uriScheme.equals(scheme.value())) {
+            throw new IllegalArgumentException(STR. "Illegal resource URI scheme, got '\{ uriScheme }', expected '\{ scheme.value() }'" );
+        }
+    }
+
     @Override
     public String name() {
         return name;

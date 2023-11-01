@@ -13,7 +13,7 @@ public class InlineResourceFactory implements ResourceFactory {
 
     @Override
     public Resource.Scheme scheme() {
-        return new Resource.Scheme(InlineResource.URI_SCHEME);
+        return InlineResource.SCHEME;
     }
 
     @Override
