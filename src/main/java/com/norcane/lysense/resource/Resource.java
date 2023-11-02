@@ -11,7 +11,7 @@ public interface Resource {
 
     String extension();
 
-    URI location();
+    URI uri();
 
     LineSeparator lineSeparator();
 

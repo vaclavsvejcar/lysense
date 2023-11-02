@@ -1,10 +1,9 @@
 package com.norcane.lysense.resource.inline;
 
 
-import com.google.common.net.UrlEscapers;
-
 import com.norcane.lysense.resource.AbstractResource;
 import com.norcane.lysense.resource.Resource;
+import com.norcane.toolkit.net.URIs;
 
 import java.io.Reader;
 import java.io.StringReader;
@@ -29,7 +28,7 @@ public class InlineResource extends AbstractResource {
 
     public static InlineResource of(URI uri) {
         nonNull(uri);
-        enforceSchemeIfPresent(uri, SCHEME);
+        enforceScheme(uri, SCHEME);
 
         final String[] chunks = uri.getSchemeSpecificPart().split(";");
         final String type = chunks[0];
@@ -49,8 +48,8 @@ public class InlineResource extends AbstractResource {
         nonNull(content);
 
         final String encodedContent = Base64.getEncoder().encodeToString(content.getBytes());
-        final String encodedName = UrlEscapers.urlFragmentEscaper().escape(name);
-        final URI uri = URI.create(STR. "\{ SCHEME.value() }:\{ extension };name=\{ encodedName };base64,\{ encodedContent }" );
+        final String encodedName = URIs.escape(name);
+        final URI uri = URIs.create(STR. "\{ SCHEME.value() }:\{ extension };name=\{ encodedName };base64,\{ encodedContent }" );
         return new InlineResource(name, extension, content, uri);
     }
 

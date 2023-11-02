@@ -1,9 +1,11 @@
 package com.norcane.lysense.resource.classpath;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.io.Files;
 
 import com.norcane.lysense.resource.AbstractResource;
 import com.norcane.lysense.resource.Resource;
+import com.norcane.toolkit.net.URIs;
 
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -21,13 +23,24 @@ public class ClassPathResource extends AbstractResource {
 
     public static ClassPathResource of(URI uri) {
         nonNull(uri);
-        enforceSchemeIfPresent(uri, SCHEME);
+        enforceScheme(uri, SCHEME);
 
         return new ClassPathResource(uri);
+    }
+
+    public static ClassPathResource of(String classPath) {
+        return of(URIs.create(STR. "\{ SCHEME.value() }:\{ classPath }" ));
     }
 
     @Override
     public Reader reader() {
         return new InputStreamReader(nonNull(getClass().getResourceAsStream(location.getSchemeSpecificPart())));
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+            .add("location", location)
+            .toString();
     }
 }

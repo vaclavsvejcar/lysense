@@ -1,10 +1,10 @@
 package com.norcane.lysense.resource.inline;
 
 import com.norcane.lysense.resource.Resource;
+import com.norcane.toolkit.net.URIs;
 
 import org.junit.jupiter.api.Test;
 
-import java.net.URI;
 import java.util.Optional;
 
 import io.quarkus.test.junit.QuarkusTest;
@@ -26,7 +26,7 @@ class InlineResourceFactoryTest {
 
     @Test
     void resource() {
-        final Optional<Resource> resource = inlineResourceFactory.resource(URI.create("inline:java;name=hello%20world;base64,VGhlIENha2UgaXMgYSBMaWUh"));
+        final Optional<Resource> resource = inlineResourceFactory.resource(URIs.create("inline:java;name=hello%20world;base64,VGhlIENha2UgaXMgYSBMaWUh"));
 
         assertTrue(resource.isPresent());
     }

@@ -5,6 +5,7 @@ import com.google.common.io.CharStreams;
 import com.norcane.lysense.resource.LineSeparator;
 import com.norcane.lysense.resource.Resource;
 import com.norcane.lysense.resource.exception.CannotReadResourceException;
+import com.norcane.toolkit.net.URIs;
 
 import org.junit.jupiter.api.Test;
 
@@ -20,8 +21,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class ClassPathResourceTest {
 
     static final String content = "Hello\nthere!";
-    static final URI uri = URI.create("classpath:/classpath-resource.txt");
-    static final Resource resource = ClassPathResource.of(uri);
+    static final URI uri = URIs.create("classpath:/classpath-resource.txt");
+    static final Resource resource = ClassPathResource.of("/classpath-resource.txt");
+
+    @Test
+    void of() {
+        final ClassPathResource classPathResource1 = ClassPathResource.of(URI.create("classpath:/foo/bar"));
+        final ClassPathResource classPathResource2 = ClassPathResource.of("/foo/bar");
+        assertEquals(classPathResource1, classPathResource2);
+    }
 
     @Test
     void name() {
@@ -34,8 +42,8 @@ class ClassPathResourceTest {
     }
 
     @Test
-    void location() {
-        assertEquals(uri, resource.location());
+    void uri() {
+        assertEquals(uri, resource.uri());
     }
 
     @Test
@@ -48,7 +56,7 @@ class ClassPathResourceTest {
     @Test
     void readAsString() {
         assertEquals(content, resource.readAsString());
-        assertThrows(CannotReadResourceException.class, () -> ClassPathResource.of(URI.create("classpath:/not/existing")).readAsString());
+        assertThrows(CannotReadResourceException.class, () -> ClassPathResource.of(URIs.create("classpath:/not/existing")).readAsString());
     }
 
     @Test

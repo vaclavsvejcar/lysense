@@ -12,7 +12,7 @@ public class CannotReadResourceException extends ApplicationException {
     private final Resource resource;
 
     public CannotReadResourceException(Resource resource, Throwable cause) {
-        super(ErrorCode.CANNOT_READ_RESOURCE, STR. "Cannot read resource \{ resource.location() }" , cause);
+        super(ErrorCode.CANNOT_READ_RESOURCE, STR. "Cannot read resource \{ resource.uri() }" , cause);
 
         this.resource = nonNull(resource);
     }
@@ -20,7 +20,7 @@ public class CannotReadResourceException extends ApplicationException {
     @Override
     public ErrorDetail errorDetail() {
         return ErrorDetail.builder()
-            .problem(STR. "Cannot read resource \{ resource.location() }" )
+            .problem(STR. "Cannot read resource \{ resource.uri() }" )
             .solution(
                 """
                     Very likely the given resource exists, but either might be a directory instead of a file,\
