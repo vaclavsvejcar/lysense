@@ -5,6 +5,7 @@ import com.google.common.io.Files;
 
 import com.norcane.lysense.resource.AbstractResource;
 import com.norcane.lysense.resource.Resource;
+import com.norcane.lysense.resource.exception.ResourceNotFoundException;
 import com.norcane.toolkit.net.URIs;
 
 import java.io.InputStreamReader;
@@ -24,6 +25,10 @@ public class ClassPathResource extends AbstractResource {
     public static ClassPathResource of(URI uri) {
         nonNull(uri);
         enforceScheme(uri, SCHEME);
+
+        if (ClassPathResource.class.getResource(uri.getSchemeSpecificPart()) == null) {
+            throw new ResourceNotFoundException(uri);
+        }
 
         return new ClassPathResource(uri);
     }
