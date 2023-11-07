@@ -38,6 +38,14 @@ public record SemVer(int major, int minor, int patch, String suffix) implements 
         return new SemVer(major, minor, patch, suffix);
     }
 
+    public boolean isLowerThan(SemVer other) {
+        return this.compareTo(other) < 0;
+    }
+
+    public boolean isGreaterThan(SemVer other) {
+        return this.compareTo(other) > 0;
+    }
+
     @Override
     public int compareTo(SemVer that) {
         // compare major versions

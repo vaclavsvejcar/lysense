@@ -32,6 +32,32 @@ class SemVerTest {
     @CsvSource(
         delimiter = '|',
         value = {
+            "true |0.1.0|0.1.1",
+            "false|0.1.1|0.1.0",
+            "false|0.1.1|0.1.1"
+        }
+    )
+    void isLowerThan(boolean result, String left, String right) {
+        assertEquals(result, SemVer.from(left).isLowerThan(SemVer.from(right)));
+    }
+
+    @ParameterizedTest
+    @CsvSource(
+        delimiter = '|',
+        value = {
+            "false|0.1.0|0.1.1",
+            "true |0.1.1|0.1.0",
+            "false|0.1.1|0.1.1"
+        }
+    )
+    void isGreaterThan(boolean result, String left, String right) {
+        assertEquals(result, SemVer.from(left).isGreaterThan(SemVer.from(right)));
+    }
+
+    @ParameterizedTest
+    @CsvSource(
+        delimiter = '|',
+        value = {
             " 0|0.1.0    |0.1.0",
             " 1|0.1.0    |0.1.0-RC3",
             "-1|0.1.0-RC2|0.1.0-RC3",
@@ -43,7 +69,6 @@ class SemVerTest {
         })
     void compareTo(int result, String left, String right) {
         assertEquals(result, SemVer.from(left).compareTo(SemVer.from(right)));
-
     }
 
     @ParameterizedTest
