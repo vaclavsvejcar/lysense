@@ -2,3 +2,11 @@
   quarkus:
     jacoco:
       title: lysense test coverage report
+
+  lysense:
+    configuration:
+      default: classpath:/configuration/test-default-configuration.yaml
+
+lysense:
+  configuration:
+    default: classpath:/assets/default-configuration.yaml

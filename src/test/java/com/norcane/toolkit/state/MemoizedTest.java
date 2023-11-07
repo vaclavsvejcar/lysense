@@ -19,8 +19,8 @@ class MemoizedTest implements Stateful {
 
     @Test
     void testResetState() {
-        final Memoized<String> memoized1 = Memoized.empty(this);
-        final Memoized<String> memoized2 = Memoized.empty(this);
+        final Memoized<String> memoized1 = Memoized.bindTo(this);
+        final Memoized<String> memoized2 = Memoized.bindTo(this);
 
         memoized1.computeIfAbsent(() -> "value1");
         memoized2.computeIfAbsent(() -> "value2");

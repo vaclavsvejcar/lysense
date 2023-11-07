@@ -9,6 +9,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Instance;
 import jakarta.inject.Inject;
 
+import static com.norcane.toolkit.Prelude.nonNull;
 import static com.norcane.toolkit.Prelude.toMap;
 
 @ApplicationScoped
@@ -26,6 +27,8 @@ public class ResourceLoader {
     }
 
     public Resource resource(String path) {
+        nonNull(path);
+
         final Optional<Resource.Scheme> maybeScheme = Resource.Scheme.parse(path);
         final ResourceFactory factory = maybeScheme
             .flatMap(scheme -> Optional.ofNullable(factories.get(scheme)))

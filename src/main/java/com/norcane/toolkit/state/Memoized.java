@@ -38,7 +38,7 @@ public final class Memoized<T> implements Stateful {
      * @param <T> type of the memoized value
      * @return new instance
      */
-    public static <T> Memoized<T> empty(Stateful parent) {
+    public static <T> Memoized<T> bindTo(Stateful parent) {
         final Memoized<T> memoized = new Memoized<>(null);
 
         parent.stateContext().register(memoized);

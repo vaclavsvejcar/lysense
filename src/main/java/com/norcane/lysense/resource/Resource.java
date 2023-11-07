@@ -6,6 +6,8 @@ import java.io.Reader;
 import java.net.URI;
 import java.util.Optional;
 
+import static com.norcane.toolkit.Prelude.nonNull;
+
 public interface Resource {
 
     String name();
@@ -28,6 +30,8 @@ public interface Resource {
     record Scheme(String value) implements ValueClass<String> {
 
         public static Optional<Scheme> parse(String path) {
+            nonNull(path);
+
             final int index = path.indexOf(':');
             return (index != -1) ? Optional.of(new Scheme(path.substring(0, index))) : Optional.empty();
 

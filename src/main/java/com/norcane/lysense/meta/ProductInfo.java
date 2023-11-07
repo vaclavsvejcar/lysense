@@ -8,4 +8,5 @@ public final class ProductInfo {
     }
 
     public static final String ERROR_CODE_PREFIX = "LSN";
+    public static final String USER_CONFIGURATION_FILE = ".lysense.yaml";
 }
