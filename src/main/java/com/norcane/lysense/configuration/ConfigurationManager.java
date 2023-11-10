@@ -18,11 +18,11 @@ import com.norcane.lysense.resource.loader.ResourceLoader;
 import com.norcane.toolkit.state.Memoized;
 import com.norcane.toolkit.state.Stateful;
 
-import org.eclipse.microprofile.config.inject.ConfigProperty;
-
 import java.io.Reader;
 import java.util.Set;
 
+import io.smallrye.config.ConfigMapping;
+import io.smallrye.config.WithName;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.validation.ConstraintViolation;
@@ -31,7 +31,7 @@ import jakarta.validation.Validator;
 @ApplicationScoped
 public class ConfigurationManager implements Stateful {
 
-    private final String defaultConfigurationPath;
+    private final Properties properties;
     private final ResourceLoader resourceLoader;
     private final RuntimeInfo runtimeInfo;
     private final Validator validator;
@@ -39,12 +39,12 @@ public class ConfigurationManager implements Stateful {
     private final Memoized<Configuration> configuration = Memoized.bindTo(this);
 
     @Inject
-    public ConfigurationManager(@ConfigProperty(name = "lysense.configuration.default") String defaultConfigurationPath,
+    public ConfigurationManager(Properties properties,
                                 ResourceLoader resourceLoader,
                                 RuntimeInfo runtimeInfo,
                                 Validator validator) {
 
-        this.defaultConfigurationPath = defaultConfigurationPath;
+        this.properties = properties;
         this.resourceLoader = resourceLoader;
         this.runtimeInfo = runtimeInfo;
         this.validator = validator;
@@ -54,7 +54,7 @@ public class ConfigurationManager implements Stateful {
 
     public Configuration configuration() {
         return configuration.computeIfAbsent(() -> {
-            final Resource defaultConfigurationResource = resourceLoader.resource(defaultConfigurationPath);
+            final Resource defaultConfigurationResource = resourceLoader.resource(properties.defaultConfiguration());
             final Resource userConfigurationResource = resourceLoader.resource(runtimeInfo.userConfigurationPath());
 
             // TODO verify base version
@@ -105,5 +105,12 @@ public class ConfigurationManager implements Stateful {
         return new ObjectMapper(new YAMLFactory())
             .registerModule(module)
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    }
+
+    @ConfigMapping(prefix = "lysense.configuration")
+    public interface Properties {
+
+        @WithName("default")
+        String defaultConfiguration();
     }
 }
