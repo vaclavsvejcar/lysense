@@ -6,6 +6,7 @@
   lysense:
     configuration:
       default: classpath:/configuration/test-default-configuration.yaml
+      min-base-version: 0.0.0
 
 lysense:
   configuration:

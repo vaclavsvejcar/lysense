@@ -112,5 +112,7 @@ public class ConfigurationManager implements Stateful {
 
         @WithName("default")
         String defaultConfiguration();
+
+        SemVer minBaseVersion();
     }
 }
