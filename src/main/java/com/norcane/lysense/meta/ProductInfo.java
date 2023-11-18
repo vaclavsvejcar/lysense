@@ -19,6 +19,6 @@ public final class ProductInfo {
     public static final String USER_CONFIGURATION_FILE = ".lysense.yaml";
 
     public static String productHeader() {
-        return String.format("Welcome to @|bold,magenta %s %s|@ :: @|underline %s|@", NAME, VERSION, URL_HOMEPAGE);
+        return STR. "Welcome to @|bold,magenta \{ NAME } \{ VERSION }|@ :: @|underline \{ URL_HOMEPAGE }|@" ;
     }
 }

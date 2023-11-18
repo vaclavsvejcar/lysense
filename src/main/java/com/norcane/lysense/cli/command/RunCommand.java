@@ -24,7 +24,6 @@ public class RunCommand extends AbstractCommand{
 
     @Override
     protected ReturnCode execute() {
-        if (true) throw new IllegalStateException("fokume");
         return ReturnCode.SUCCESS;
     }
 }
