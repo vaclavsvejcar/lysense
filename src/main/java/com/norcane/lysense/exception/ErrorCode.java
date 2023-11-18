@@ -2,12 +2,13 @@ package com.norcane.lysense.exception;
 
 public enum ErrorCode {
 
-    RESOURCE_NOT_FOUND(45, "Resource not found"),
-    INCOMPATIBLE_CONFIGURATION(173, "Incompatible configuration"),
+    CANNOT_READ_RESOURCE(623, "Cannot read resource"),
     ERROR_PARSING_CONFIGURATION(207, "Error parsing configuration"),
-    MISSING_BASE_VERSION(222, "Missing base version"),
+    INCOMPATIBLE_CONFIGURATION(173, "Incompatible configuration"),
     INVALID_CONFIGURATION(571, "Invalid configuration"),
-    CANNOT_READ_RESOURCE(623, "Cannot read resource");
+    MISSING_BASE_VERSION(222, "Missing base version"),
+    RESOURCE_NOT_FOUND(45, "Resource not found"),
+    UNEXPECTED_BEHAVIOR(339, "Unexpected behavior");
 
     private final int code;
     private final String title;

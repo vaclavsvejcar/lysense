@@ -1,3 +1,25 @@
+quarkus:
+  banner:
+    enabled: false
+  log:
+    category:
+      "io.quarkus":
+        level: warn
+      "com.norcane.lysense":
+        level: ${LYSENSE_LOG_LEVEL:off}
+  native:
+    resources:
+      includes:
+        - config/**
+    additional-build-args:
+      - --initialize-at-run-time=org.jline.nativ.JLineLibrary
+      - -J--enable-preview
+
+lysense:
+  configuration:
+    default: classpath:/assets/default-configuration.yaml
+
+## TEST CONFIGURATION
 "%test":
   quarkus:
     jacoco:
@@ -7,7 +29,3 @@
     configuration:
       default: classpath:/configuration/test-default-configuration.yaml
       min-base-version: 0.0.0
-
-lysense:
-  configuration:
-    default: classpath:/assets/default-configuration.yaml

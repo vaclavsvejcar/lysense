@@ -11,7 +11,14 @@ public final class ProductInfo {
     public static final String DESCRIPTION = BuildInfo.DESCRIPTION;
     public static final String VERSION_STRING = BuildInfo.VERSION;
     public static final SemVer VERSION = SemVer.from(VERSION_STRING);
+    public static final String URL_HOMEPAGE = "https://github.com/vaclavsvejcar/lysense";
+    public static final String URL_REPORT_BUG = "https://github.com/vaclavsvejcar/lysense/issues/new";
+
 
     public static final String ERROR_CODE_PREFIX = "LSN";
     public static final String USER_CONFIGURATION_FILE = ".lysense.yaml";
+
+    public static String productHeader() {
+        return String.format("Welcome to @|bold,magenta %s %s|@ :: @|underline %s|@", NAME, VERSION, URL_HOMEPAGE);
+    }
 }
