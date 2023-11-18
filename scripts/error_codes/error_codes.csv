@@ -1,5 +1,6 @@
 045,Resource not found
 149,Cannot read resource
+173,Incompatible configuration
 207,Error parsing configuration
 222,Missing base version
 571,Invalid configuration

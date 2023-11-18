@@ -3,6 +3,7 @@ package com.norcane.lysense.exception;
 public enum ErrorCode {
 
     RESOURCE_NOT_FOUND(45, "Resource not found"),
+    INCOMPATIBLE_CONFIGURATION(173, "Incompatible configuration"),
     ERROR_PARSING_CONFIGURATION(207, "Error parsing configuration"),
     MISSING_BASE_VERSION(222, "Missing base version"),
     INVALID_CONFIGURATION(571, "Invalid configuration"),

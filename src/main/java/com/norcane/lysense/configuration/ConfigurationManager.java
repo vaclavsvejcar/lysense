@@ -8,9 +8,11 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.norcane.lysense.configuration.domain.BaseVersionWrapper;
 import com.norcane.lysense.configuration.domain.Configuration;
 import com.norcane.lysense.configuration.exception.ConfigurationParseException;
+import com.norcane.lysense.configuration.exception.IncompatibleConfigurationException;
 import com.norcane.lysense.configuration.exception.InvalidConfigurationException;
 import com.norcane.lysense.configuration.exception.MissingBaseVersionException;
 import com.norcane.lysense.configuration.serialization.SemVerDeserializer;
+import com.norcane.lysense.exception.ApplicationException;
 import com.norcane.lysense.meta.RuntimeInfo;
 import com.norcane.lysense.meta.SemVer;
 import com.norcane.lysense.resource.Resource;
@@ -57,13 +59,12 @@ public class ConfigurationManager implements Stateful {
             final Resource defaultConfigurationResource = resourceLoader.resource(properties.defaultConfiguration());
             final Resource userConfigurationResource = resourceLoader.resource(runtimeInfo.userConfigurationPath());
 
-            // TODO verify base version
-
+            verifyCompatibleBaseVersion(userConfigurationResource);
             return loadUserConfiguration(defaultConfigurationResource, userConfigurationResource);
         });
     }
 
-    private SemVer parseBaseVersion(Resource resource) {
+    private void verifyCompatibleBaseVersion(Resource resource) {
         try (final Reader reader = resource.reader()) {
             final BaseVersionWrapper wrapper = objectMapper.readValue(reader, BaseVersionWrapper.class);
 
@@ -71,7 +72,12 @@ public class ConfigurationManager implements Stateful {
                 throw new MissingBaseVersionException(resource);
             }
 
-            return wrapper.baseVersion();
+            final SemVer minBaseVersion = properties.minBaseVersion();
+            if (wrapper.baseVersion().isLowerThan(minBaseVersion)) {
+                throw new IncompatibleConfigurationException(minBaseVersion, wrapper.baseVersion());
+            }
+        } catch (ApplicationException e) {
+            throw e;
         } catch (Throwable t) {
             throw new ConfigurationParseException(resource, t);
         }
@@ -93,6 +99,8 @@ public class ConfigurationManager implements Stateful {
             }
 
             return mergedConfiguration;
+        } catch (ApplicationException e) {
+            throw e;
         } catch (Exception e) {
             throw new ConfigurationParseException(userConfigurationResource, e);
         }

@@ -4,6 +4,11 @@ import com.norcane.lysense.meta.SemVer;
 
 import org.eclipse.microprofile.config.spi.Converter;
 
+/**
+ * <i>Eclipse MicroProfile</i> configuration converter for {@link SemVer} type.
+ *
+ * @see SemVer
+ */
 public class SemVerConverter implements Converter<SemVer> {
 
     @Override
