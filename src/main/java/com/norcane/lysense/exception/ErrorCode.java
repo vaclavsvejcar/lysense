@@ -7,6 +7,7 @@ public enum ErrorCode {
     INCOMPATIBLE_CONFIGURATION(173, "Incompatible configuration"),
     INVALID_CONFIGURATION(571, "Invalid configuration"),
     MISSING_BASE_VERSION(222, "Missing base version"),
+    MISSING_TEMPLATE_VARIABLE(374, "Missing template variable"),
     RESOURCE_NOT_FOUND(45, "Resource not found"),
     UNEXPECTED_BEHAVIOR(339, "Unexpected behavior");
 

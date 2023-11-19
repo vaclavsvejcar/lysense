@@ -22,6 +22,7 @@
 
         <jansi.version>2.4.0</jansi.version>
         <jline.version>3.23.0</jline.version>
+        <mustache.java.version>0.9.11</mustache.java.version>
     </properties>
 
     <dependencyManagement>
@@ -69,6 +70,13 @@
             <groupId>org.fusesource.jansi</groupId>
             <artifactId>jansi</artifactId>
             <version>${jansi.version}</version>
+        </dependency>
+
+        <!-- Templating -->
+        <dependency>
+            <groupId>com.github.spullara.mustache.java</groupId>
+            <artifactId>compiler</artifactId>
+            <version>${mustache.java.version}</version>
         </dependency>
 
         <!-- Other tools -->
