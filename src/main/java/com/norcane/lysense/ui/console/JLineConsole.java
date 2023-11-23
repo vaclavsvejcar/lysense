@@ -22,7 +22,7 @@ import picocli.CommandLine;
 @Unremovable
 public class JLineConsole implements Console {
 
-    private final Memoized<Boolean> interactive = Memoized.empty();
+    private final Memoized<Boolean> interactive = Memoized.detached();
     private Terminal terminal;
 
     @PostConstruct

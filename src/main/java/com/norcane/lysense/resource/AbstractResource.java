@@ -16,7 +16,7 @@ public abstract class AbstractResource implements Resource {
     protected final String extension;
     protected final URI location;
 
-    private final Memoized<LineSeparator> lineSeparator = Memoized.empty();
+    private final Memoized<LineSeparator> lineSeparator = Memoized.detached();
 
     protected AbstractResource(String name, String extension, URI location) {
         this.name = name;

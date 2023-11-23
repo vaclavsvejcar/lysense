@@ -39,7 +39,7 @@ class MemoizedTest implements Stateful {
         @SuppressWarnings("unchecked") final Supplier<String> supplier = mock(Supplier.class);
 
         final String value = "Hello there!";
-        final Memoized<String> memoized = Memoized.empty();
+        final Memoized<String> memoized = Memoized.detached();
 
         // -- mocks
         when(supplier.get()).thenReturn(value);
@@ -61,7 +61,7 @@ class MemoizedTest implements Stateful {
 
     @Test
     void testToString() {
-        final Memoized<String> memoized = Memoized.empty();
+        final Memoized<String> memoized = Memoized.detached();
         assertEquals("Memoized{value=<absent>}", memoized.toString());
 
         memoized.computeIfAbsent(() -> "foo");
@@ -70,6 +70,6 @@ class MemoizedTest implements Stateful {
 
     @Test
     void testGet() {
-        assertFalse(Memoized.empty().get().isPresent());
+        assertFalse(Memoized.detached().get().isPresent());
     }
 }

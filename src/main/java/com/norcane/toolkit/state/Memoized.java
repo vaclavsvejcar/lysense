@@ -21,12 +21,12 @@ public final class Memoized<T> implements Stateful {
     }
 
     /**
-     * Constructs new instance with no memoized value.
+     * Constructs new instance with no memoized value that is not registered to any <i>stateful</i> parent.
      *
      * @param <T> type of the memoized value
      * @return new instance
      */
-    public static <T> Memoized<T> empty() {
+    public static <T> Memoized<T> detached() {
         return new Memoized<>(null);
     }
 
