@@ -13,6 +13,9 @@ quarkus:
         - config/**
     additional-build-args:
       - --initialize-at-run-time=org.jline.nativ.JLineLibrary
+      - --initialize-at-run-time=org.jline.nativ.CLibrary
+      - --initialize-at-run-time=org.jline.nativ.CLibrary$WinSize
+      - --initialize-at-run-time=org.jline.nativ.CLibrary$Termios
       - -J--enable-preview
 
 lysense:
