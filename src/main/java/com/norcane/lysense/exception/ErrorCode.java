@@ -3,6 +3,7 @@ package com.norcane.lysense.exception;
 public enum ErrorCode {
 
     CANNOT_READ_RESOURCE(623, "Cannot read resource"),
+    DUPLICATE_TEMPLATES_FOUND(347, "Duplicate templates found"),
     ERROR_PARSING_CONFIGURATION(207, "Error parsing configuration"),
     INCOMPATIBLE_CONFIGURATION(173, "Incompatible configuration"),
     INVALID_CONFIGURATION(571, "Invalid configuration"),
