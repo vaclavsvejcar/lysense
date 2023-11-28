@@ -8,6 +8,8 @@ import com.norcane.lysense.meta.SemVer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.Mock;
 import io.quarkus.test.junit.QuarkusTest;
@@ -60,6 +62,7 @@ class ConfigurationManagerTest {
 
         // -- assertions
         assertEquals(SemVer.from("1.2.3"), configuration.baseVersion());
+        assertEquals(List.of("path/to/templates"), configuration.templates());
     }
 
     @Test
