@@ -3,7 +3,9 @@
 173,Incompatible configuration
 207,Error parsing configuration
 222,Missing base version
+242,Resource not writable
 339,Unexpected behavior
 347,Duplicate templates found
 374,Missing template variable
 571,Invalid configuration
+793,Cannot write resource

@@ -4,12 +4,18 @@ import com.google.common.base.MoreObjects;
 import com.google.common.io.CharStreams;
 
 import com.norcane.lysense.resource.exception.CannotReadResourceException;
+import com.norcane.lysense.resource.exception.ResourceNotWritableException;
 import com.norcane.toolkit.state.Memoized;
 
 import java.io.Reader;
 import java.net.URI;
+import java.util.List;
 import java.util.Objects;
 
+/**
+ * Abstract implementation of {@link Resource} interface that implements common functionality such as <i>line separator</i> detection, <i>equals</i> and
+ * <i>hashCode</i>, etc.
+ */
 public abstract class AbstractResource implements Resource {
 
     protected final String name;
@@ -57,6 +63,20 @@ public abstract class AbstractResource implements Resource {
             return CharStreams.toString(stream);
         } catch (Exception e) {
             throw new CannotReadResourceException(this, e);
+        }
+    }
+
+    @Override
+    public List<String> readLines() {
+        return readAsString().lines().toList();
+    }
+
+    @Override
+    public WritableResource asWritableOrFail() {
+        if (this instanceof WritableResource writable) {
+            return writable;
+        } else {
+            throw new ResourceNotWritableException(this);
         }
     }
 
