@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -36,5 +37,12 @@ class PreludeTest {
     @Test
     void toMap() {
         assertEquals(Map.of("1", 1, "2", 2), Prelude.toMap(String::valueOf, List.of(1, 2)));
+    }
+
+    @Test
+    void streamOf() {
+        final List<String> list = List.of("one", "two");
+
+        assertEquals(list, Prelude.streamOf(Collections.enumeration(list)).toList());
     }
 }

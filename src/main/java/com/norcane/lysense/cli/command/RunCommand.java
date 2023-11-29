@@ -15,7 +15,7 @@ import picocli.CommandLine;
     parameterListHeading = "%n@|bold,underline Parameters|@:%n",
     optionListHeading = "%n@|bold,underline Options|@:%n"
 )
-public class RunCommand extends AbstractCommand{
+public class RunCommand extends AbstractCommand {
 
     @Inject
     public RunCommand(Console console) {
