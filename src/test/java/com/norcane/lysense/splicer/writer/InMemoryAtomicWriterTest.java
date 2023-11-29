@@ -1,6 +1,6 @@
 package com.norcane.lysense.splicer.writer;
 
-import com.norcane.lysense.resource.LineSeparator;
+import com.norcane.lysense.resource.util.LineSeparator;
 
 import org.junit.jupiter.api.Test;
 

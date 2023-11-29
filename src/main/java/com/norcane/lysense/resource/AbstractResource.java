@@ -5,6 +5,7 @@ import com.google.common.io.CharStreams;
 
 import com.norcane.lysense.resource.exception.CannotReadResourceException;
 import com.norcane.lysense.resource.exception.ResourceNotWritableException;
+import com.norcane.lysense.resource.util.LineSeparator;
 import com.norcane.toolkit.state.Memoized;
 
 import java.io.Reader;

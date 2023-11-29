@@ -1,6 +1,6 @@
 package com.norcane.lysense.resource.inline;
 
-import com.norcane.lysense.resource.LineSeparator;
+import com.norcane.lysense.resource.util.LineSeparator;
 import com.norcane.toolkit.net.URIs;
 
 import org.junit.jupiter.api.Test;

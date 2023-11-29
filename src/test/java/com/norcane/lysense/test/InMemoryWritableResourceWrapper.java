@@ -1,8 +1,8 @@
 package com.norcane.lysense.test;
 
-import com.norcane.lysense.resource.LineSeparator;
 import com.norcane.lysense.resource.Resource;
 import com.norcane.lysense.resource.WritableResource;
+import com.norcane.lysense.resource.util.LineSeparator;
 
 import java.io.Reader;
 import java.io.StringWriter;

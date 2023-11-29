@@ -1,5 +1,6 @@
-package com.norcane.lysense.resource;
+package com.norcane.lysense.resource.util;
 
+import com.norcane.lysense.resource.Resource;
 import com.norcane.lysense.resource.exception.CannotReadResourceException;
 
 import java.io.BufferedReader;

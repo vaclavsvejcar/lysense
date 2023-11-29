@@ -2,9 +2,9 @@ package com.norcane.lysense.resource.filesystem;
 
 import com.google.common.io.CharStreams;
 
-import com.norcane.lysense.resource.LineSeparator;
 import com.norcane.lysense.resource.Resource;
 import com.norcane.lysense.resource.exception.ResourceNotFoundException;
+import com.norcane.lysense.resource.util.LineSeparator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

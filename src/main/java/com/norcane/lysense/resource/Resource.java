@@ -1,5 +1,6 @@
 package com.norcane.lysense.resource;
 
+import com.norcane.lysense.resource.util.LineSeparator;
 import com.norcane.toolkit.ValueClass;
 
 import java.io.Reader;
