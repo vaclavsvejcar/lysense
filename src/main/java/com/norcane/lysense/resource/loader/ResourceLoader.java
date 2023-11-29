@@ -29,16 +29,20 @@ public class ResourceLoader {
     public Resource resource(String path) {
         nonNull(path);
 
-        final Optional<Resource.Scheme> maybeScheme = Resource.Scheme.parse(path);
-        final ResourceFactory factory = maybeScheme
-            .flatMap(scheme -> Optional.ofNullable(factories.get(scheme)))
-            .orElse(defaultFactory);
-
-        return factory.resource(maybeScheme.map(scheme -> dropScheme(scheme, path)).orElse(path));
+        return findFactory(path).resource(dropScheme(path));
     }
 
-    private String dropScheme(Resource.Scheme scheme, String string) {
-        final String prefix = scheme.value() + ":";
-        return string.startsWith(prefix) ? string.substring(prefix.length()) : string;
+    private ResourceFactory findFactory(String path) {
+        final Optional<Resource.Scheme> maybeScheme = Resource.Scheme.parse(path);
+        return maybeScheme
+            .flatMap(scheme -> Optional.ofNullable(factories.get(scheme)))
+            .orElse(defaultFactory);
+    }
+
+    private String dropScheme(String path) {
+        return Resource.Scheme.parse(path)
+            .filter(scheme -> path.startsWith(scheme.value() + ":"))
+            .map(scheme -> path.substring(scheme.value().length() + 1))
+            .orElse(path);
     }
 }
