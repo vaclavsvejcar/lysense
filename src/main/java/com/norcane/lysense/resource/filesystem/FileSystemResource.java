@@ -39,6 +39,10 @@ public class FileSystemResource extends AbstractResource {
         return of(Path.of(path).toUri());
     }
 
+    public static FileSystemResource of(Path path) {
+        return of(path.toUri());
+    }
+
     @Override
     public Reader reader() {
         try {
