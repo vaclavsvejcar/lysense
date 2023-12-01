@@ -54,6 +54,28 @@ public final class Prelude {
     }
 
     /**
+     * Returns back the given object if not {@code null}, otherwise throws {@link IllegalArgumentException} with the provided message.
+     *
+     * <br><br><strong>Example of use</strong>
+     * {@snippet lang = "java":
+     *      final User user = nonNullOrThrow(findUser(username), "no user found for username");
+     *}
+     *
+     * @param object           object to check for nullity and return if not {@code null}
+     * @param exceptionMessage message to use in the exception if object is {@code null}
+     * @param <R>              type of the object
+     * @return checked object
+     * @throws IllegalArgumentException when object is {@code null}
+     */
+    public static <R> R nonNullOrThrow(R object, String exceptionMessage) {
+        if (object == null) {
+            throw new IllegalArgumentException(exceptionMessage);
+        }
+
+        return object;
+    }
+
+    /**
      * Returns a sequential {@link Stream} for the provided enumeration as its source.
      *
      * @param enumeration enumeration to stream

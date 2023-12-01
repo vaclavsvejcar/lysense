@@ -35,6 +35,12 @@ class PreludeTest {
     }
 
     @Test
+    void notNullOrThrow() {
+        assertEquals(42, Prelude.nonNullOrThrow(42, "foo"));
+        assertThrows(IllegalArgumentException.class, () -> Prelude.nonNullOrThrow(null, "foo"));
+    }
+
+    @Test
     void toMap() {
         assertEquals(Map.of("1", 1, "2", 2), Prelude.toMap(String::valueOf, List.of(1, 2)));
     }
