@@ -5,13 +5,14 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.norcane.lysense.configuration.domain.BaseVersionWrapper;
-import com.norcane.lysense.configuration.domain.Configuration;
+import com.norcane.lysense.configuration.api.Configuration;
 import com.norcane.lysense.configuration.exception.ConfigurationParseException;
 import com.norcane.lysense.configuration.exception.IncompatibleConfigurationException;
 import com.norcane.lysense.configuration.exception.InvalidConfigurationException;
 import com.norcane.lysense.configuration.exception.MissingBaseVersionException;
 import com.norcane.lysense.configuration.serialization.SemVerDeserializer;
+import com.norcane.lysense.configuration.yaml.BaseVersionWrapper;
+import com.norcane.lysense.configuration.yaml.YamlConfiguration;
 import com.norcane.lysense.exception.ApplicationException;
 import com.norcane.lysense.meta.RuntimeInfo;
 import com.norcane.lysense.meta.SemVer;
@@ -26,6 +27,7 @@ import java.util.Set;
 import io.smallrye.config.ConfigMapping;
 import io.smallrye.config.WithName;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Inject;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
@@ -54,6 +56,8 @@ public class ConfigurationManager implements Stateful {
         this.objectMapper = yamlObjectMapper();
     }
 
+    @Produces
+    @ApplicationScoped
     public Configuration configuration() {
         return configuration.computeIfAbsent(() -> {
             final Resource defaultConfigurationResource = resourceLoader.resource(properties.defaultConfiguration());
@@ -90,7 +94,7 @@ public class ConfigurationManager implements Stateful {
             // merge default and user configuration
             final JsonNode defaultConfiguration = objectMapper.readValue(defaultConfigReader, JsonNode.class);
             final JsonNode userConfiguration = objectMapper.readerForUpdating(defaultConfiguration).readValue(userConfigReader, JsonNode.class);
-            final Configuration mergedConfiguration = objectMapper.treeToValue(userConfiguration, Configuration.class);
+            final Configuration mergedConfiguration = objectMapper.treeToValue(userConfiguration, YamlConfiguration.class);
 
             // validate final configuration
             final Set<ConstraintViolation<Configuration>> violations = validator.validate(mergedConfiguration);

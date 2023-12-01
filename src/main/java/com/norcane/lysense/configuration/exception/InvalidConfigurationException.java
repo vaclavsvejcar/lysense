@@ -1,6 +1,6 @@
 package com.norcane.lysense.configuration.exception;
 
-import com.norcane.lysense.configuration.domain.Configuration;
+import com.norcane.lysense.configuration.api.Configuration;
 import com.norcane.lysense.exception.ApplicationException;
 import com.norcane.lysense.exception.ErrorCode;
 import com.norcane.lysense.exception.ErrorDetail;
@@ -11,13 +11,14 @@ import java.util.stream.Collectors;
 import jakarta.validation.ConstraintViolation;
 
 import static com.norcane.toolkit.Prelude.nonNull;
+import static java.util.FormatProcessor.FMT;
 
 public class InvalidConfigurationException extends ApplicationException {
 
     private final Set<ConstraintViolation<Configuration>> violations;
 
     public InvalidConfigurationException(Set<ConstraintViolation<Configuration>> violations) {
-        super(ErrorCode.INVALID_CONFIGURATION, "Invalid configuration, found %d problems".formatted(violations.size()));
+        super(ErrorCode.INVALID_CONFIGURATION, FMT. "Invalid configuration, found %d\{ violations.size() } problems" );
 
         this.violations = nonNull(violations);
     }

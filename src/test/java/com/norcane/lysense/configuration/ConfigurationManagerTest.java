@@ -1,6 +1,6 @@
 package com.norcane.lysense.configuration;
 
-import com.norcane.lysense.configuration.domain.Configuration;
+import com.norcane.lysense.configuration.api.Configuration;
 import com.norcane.lysense.configuration.exception.IncompatibleConfigurationException;
 import com.norcane.lysense.meta.RuntimeInfo;
 import com.norcane.lysense.meta.SemVer;

@@ -1,4 +1,4 @@
-package com.norcane.lysense.configuration.domain;
+package com.norcane.lysense.configuration.yaml;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.norcane.lysense.meta.SemVer;
