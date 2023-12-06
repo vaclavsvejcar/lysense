@@ -3,6 +3,7 @@ package com.norcane.lysense.configuration.api;
 import com.norcane.lysense.meta.SemVer;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Configuration of the application.
@@ -22,4 +23,6 @@ public interface Configuration {
      * @return list of template paths
      */
     List<String> templates();
+
+    Map<String, ? extends HeaderConfig> headerConfigs();
 }

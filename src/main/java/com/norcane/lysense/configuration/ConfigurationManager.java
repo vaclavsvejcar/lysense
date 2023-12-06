@@ -1,15 +1,16 @@
 package com.norcane.lysense.configuration;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.norcane.lysense.configuration.api.Configuration;
+import com.norcane.lysense.configuration.api.HeaderStyle;
 import com.norcane.lysense.configuration.exception.ConfigurationParseException;
 import com.norcane.lysense.configuration.exception.IncompatibleConfigurationException;
 import com.norcane.lysense.configuration.exception.InvalidConfigurationException;
 import com.norcane.lysense.configuration.exception.MissingBaseVersionException;
+import com.norcane.lysense.configuration.serialization.LowerCaseDashSeparatedEnumDeserializer;
 import com.norcane.lysense.configuration.serialization.SemVerDeserializer;
 import com.norcane.lysense.configuration.yaml.BaseVersionWrapper;
 import com.norcane.lysense.configuration.yaml.YamlConfiguration;
@@ -92,9 +93,8 @@ public class ConfigurationManager implements Stateful {
              final Reader userConfigReader = userConfigurationResource.reader()) {
 
             // merge default and user configuration
-            final JsonNode defaultConfiguration = objectMapper.readValue(defaultConfigReader, JsonNode.class);
-            final JsonNode userConfiguration = objectMapper.readerForUpdating(defaultConfiguration).readValue(userConfigReader, JsonNode.class);
-            final Configuration mergedConfiguration = objectMapper.treeToValue(userConfiguration, YamlConfiguration.class);
+            final YamlConfiguration defaultConfiguration = objectMapper.readValue(defaultConfigReader, YamlConfiguration.class);
+            final YamlConfiguration mergedConfiguration = objectMapper.readerForUpdating(defaultConfiguration).readValue(userConfigReader, YamlConfiguration.class);
 
             // validate final configuration
             final Set<ConstraintViolation<Configuration>> violations = validator.validate(mergedConfiguration);
@@ -112,7 +112,8 @@ public class ConfigurationManager implements Stateful {
 
     private ObjectMapper yamlObjectMapper() {
         final SimpleModule module = new SimpleModule()
-            .addDeserializer(SemVer.class, new SemVerDeserializer());
+            .addDeserializer(SemVer.class, new SemVerDeserializer())
+            .addDeserializer(HeaderStyle.class, LowerCaseDashSeparatedEnumDeserializer.forEnum(HeaderStyle.class));
 
         return new ObjectMapper(new YAMLFactory())
             .registerModule(module)

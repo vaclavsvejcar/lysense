@@ -63,6 +63,8 @@ class ConfigurationManagerTest {
         // -- assertions
         assertEquals(SemVer.from("1.2.3"), configuration.baseVersion());
         assertEquals(List.of("path/to/templates"), configuration.templates());
+        assertEquals(0, configuration.headerConfigs().get("java").headerSpacing().blankLinesAfter());
+        assertEquals(2, configuration.headerConfigs().get("java").headerSpacing().blankLinesBefore());
     }
 
     @Test

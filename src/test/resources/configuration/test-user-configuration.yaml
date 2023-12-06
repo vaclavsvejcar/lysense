@@ -2,3 +2,9 @@ base-version: 1.2.3
 
 templates:
   - path/to/templates
+
+license-headers:
+  java:
+    header-style: block-comment
+    header-spacing:
+      blank-lines-before: 2

@@ -1,1 +1,17 @@
 base-version: 0.1.0
+
+run-mode: update
+templates: [ ]
+sources: [ ]
+
+license-headers:
+  java:
+    header-style: block-comment
+    header-spacing:
+      blank-lines-before: 0
+      blank-lines-after: 0
+  unix-shell:
+    header-style: line-comment
+    header-spacing:
+      blank-lines-before: 1
+      blank-lines-after: 1
