@@ -42,30 +42,30 @@ public class ApplicationExceptionPrinter implements UIComponent {
         final ErrorDetail errorDetails = exception.errorDetail();
         final List<String> providedLinks = errorDetails.seeAlsoLinks();
         final List<String> linksToDisplay = providedLinks.isEmpty() ? List.of(ProductInfo.URL_HOMEPAGE) : providedLinks;
-        final String listOfLinks = linksToDisplay.stream().map(link -> STR. "  - @|underline \{ link }|@" ).collect(Collectors.joining("\n"));
+        final String listOfLinks = linksToDisplay.stream().map(link -> STR."  - @|underline \{link}|@").collect(Collectors.joining("\n"));
 
         final String baseMessage =
-            STR. """
+            STR."""
 
                 @|bold,underline Problem:|@
-                \{ errorDetails.problem() }
+                \{errorDetails.problem()}
 
                 @|bold,underline Possible Solution:|@
-                \{ errorDetails.solution() }
+                \{errorDetails.solution()}
 
                 @|bold,underline See Also:|@
-                \{ listOfLinks }
-                """ ;
+                \{listOfLinks}
+                """;
 
         console.printLn(printStackTrace ? baseMessage + stackTrace() : baseMessage);
 
     }
 
     private String stackTrace() {
-        return STR. """
+        return STR."""
 
             @|bold,underline Stack Trace:|@
-            \{ Throwables.getStackTraceAsString(exception) }
-            """ ;
+            \{Throwables.getStackTraceAsString(exception)}
+            """;
     }
 }

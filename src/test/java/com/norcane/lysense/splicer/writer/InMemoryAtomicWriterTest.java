@@ -17,14 +17,14 @@ class InMemoryAtomicWriterTest {
 
     @Test
     void tempWriter() throws IOException {
-        try(InMemoryAtomicWriter writer = new InMemoryAtomicWriter(StringWriter::new, LineSeparator.LF)) {
+        try (InMemoryAtomicWriter writer = new InMemoryAtomicWriter(StringWriter::new, LineSeparator.LF)) {
             assertNotNull(writer.tempWriter());
         }
     }
 
     @Test
     void tempReader() throws IOException {
-        try(InMemoryAtomicWriter writer = new InMemoryAtomicWriter(StringWriter::new, LineSeparator.LF)) {
+        try (InMemoryAtomicWriter writer = new InMemoryAtomicWriter(StringWriter::new, LineSeparator.LF)) {
             assertNotNull(writer.tempReader());
         }
     }

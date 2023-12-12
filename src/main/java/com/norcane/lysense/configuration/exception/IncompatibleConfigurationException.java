@@ -12,7 +12,7 @@ public class IncompatibleConfigurationException extends ApplicationException {
 
     public IncompatibleConfigurationException(SemVer minBaseVersion, SemVer currentBaseVersion) {
         super(ErrorCode.INCOMPATIBLE_CONFIGURATION,
-              STR. "Incompatible configuration found, minimum base version is \{ minBaseVersion }, current base version is \{ currentBaseVersion }" );
+              STR."Incompatible configuration found, minimum base version is \{minBaseVersion}, current base version is \{currentBaseVersion}");
 
         this.minBaseVersion = minBaseVersion;
         this.currentBaseVersion = currentBaseVersion;
@@ -21,9 +21,9 @@ public class IncompatibleConfigurationException extends ApplicationException {
     @Override
     public ErrorDetail errorDetail() {
         return ErrorDetail.builder()
-            .problem(STR. """
-                         Incompatible configuration file has been found. Your configuration file has base version \{ currentBaseVersion }, but the minimum \
-                         supported base version is \{ minBaseVersion }.""" )
+            .problem(STR."""
+                         Incompatible configuration file has been found. Your configuration file has base version \{currentBaseVersion}, but the minimum \
+                         supported base version is \{minBaseVersion}.""")
             .solution(
                 """
                     Please check that some of the following isn't wrong:

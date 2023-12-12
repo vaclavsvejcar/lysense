@@ -72,7 +72,7 @@ public enum LineSeparator {
     public static LineSeparator platform() {
         final String sep = System.lineSeparator();
         return LineSeparator.from(sep)
-            .orElseThrow(() -> new IllegalStateException(STR. "unknown line separator: \{ sep }" ));
+            .orElseThrow(() -> new IllegalStateException(STR."unknown line separator: \{sep}"));
     }
 
     /**

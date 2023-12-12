@@ -94,7 +94,8 @@ public class ConfigurationManager implements Stateful {
 
             // merge default and user configuration
             final YamlConfiguration defaultConfiguration = objectMapper.readValue(defaultConfigReader, YamlConfiguration.class);
-            final YamlConfiguration mergedConfiguration = objectMapper.readerForUpdating(defaultConfiguration).readValue(userConfigReader, YamlConfiguration.class);
+            final YamlConfiguration mergedConfiguration =
+                objectMapper.readerForUpdating(defaultConfiguration).readValue(userConfigReader, YamlConfiguration.class);
 
             // validate final configuration
             final Set<ConstraintViolation<Configuration>> violations = validator.validate(mergedConfiguration);

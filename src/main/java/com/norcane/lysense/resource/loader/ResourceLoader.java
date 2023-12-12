@@ -85,7 +85,7 @@ public class ResourceLoader {
 
         // fail fast if the factory doesn't support iterating resources
         if (!(factory instanceof IterableResourceFactory iterableFactory)) {
-            throw new UnsupportedOperationException(STR. "Iterating over resources with scheme '\{ factory.scheme() }' is not supported" );
+            throw new UnsupportedOperationException(STR."Iterating over resources with scheme '\{factory.scheme()}' is not supported");
         }
 
         // strip the scheme from the pattern (e.g. 'classpath:' or 'file:')

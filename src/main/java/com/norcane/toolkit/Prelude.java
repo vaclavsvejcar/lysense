@@ -61,9 +61,9 @@ public final class Prelude {
      *      final User user = nonNullOrThrow(findUser(username), "no user found for username");
      *}
      *
-     * @param object           object to check for nullity and return if not {@code null}
+     * @param object object to check for nullity and return if not {@code null}
      * @param exceptionMessage message to use in the exception if object is {@code null}
-     * @param <R>              type of the object
+     * @param <R> type of the object
      * @return checked object
      * @throws IllegalArgumentException when object is {@code null}
      */

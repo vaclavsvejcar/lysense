@@ -15,7 +15,7 @@ public class ResourceNotWritableException extends ApplicationException {
     private final Resource resource;
 
     public ResourceNotWritableException(Resource resource) {
-        super(ErrorCode.RESOURCE_NOT_WRITABLE, STR. "Resource \{ resource } is not writable" );
+        super(ErrorCode.RESOURCE_NOT_WRITABLE, STR."Resource \{resource} is not writable");
 
         this.resource = nonNull(resource);
     }
@@ -23,7 +23,7 @@ public class ResourceNotWritableException extends ApplicationException {
     @Override
     public ErrorDetail errorDetail() {
         return ErrorDetail.builder()
-            .problem(STR. "Resource \{ resource } is not writable" )
+            .problem(STR."Resource \{resource} is not writable")
             .solution(
                 """
                     It's likely you used non-writable kind of resource (classpath, HTTP(S)) in place where writable resource

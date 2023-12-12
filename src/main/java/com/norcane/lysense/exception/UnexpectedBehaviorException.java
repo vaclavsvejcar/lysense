@@ -8,11 +8,11 @@ import com.norcane.lysense.meta.ProductInfo;
 public class UnexpectedBehaviorException extends ApplicationException {
 
     private UnexpectedBehaviorException(final String message) {
-        super(ErrorCode.UNEXPECTED_BEHAVIOR, STR. "Unexpected error occurred during application execution: \{ message }" );
+        super(ErrorCode.UNEXPECTED_BEHAVIOR, STR."Unexpected error occurred during application execution: \{message}");
     }
 
     private UnexpectedBehaviorException(final String message, final Throwable cause) {
-        super(ErrorCode.UNEXPECTED_BEHAVIOR, STR. "Unexpected error occurred during application execution: \{ message }" , cause);
+        super(ErrorCode.UNEXPECTED_BEHAVIOR, STR."Unexpected error occurred during application execution: \{message}", cause);
     }
 
     /**
@@ -28,10 +28,10 @@ public class UnexpectedBehaviorException extends ApplicationException {
     public ErrorDetail errorDetail() {
         return ErrorDetail.builder()
             .problem(
-                STR. """
+                STR."""
                     Unexpected error occurred during application execution:
 
-                    \{ getCause() }"""
+                    \{getCause()}"""
             )
             .solution("This might be application bug. Please if possible, report it using the link below.")
             .seeAlsoLink(ProductInfo.URL_REPORT_BUG)

@@ -93,7 +93,7 @@ public record SemVer(int major, int minor, int patch, String suffix) implements 
     @Override
     public String toString() {
         return suffix != null
-               ? STR. "\{ major }.\{ minor }.\{ patch }-\{ suffix }"
-               : STR. "\{ major }.\{ minor }.\{ patch }" ;
+               ? STR."\{major}.\{minor}.\{patch}-\{suffix}"
+               : STR."\{major}.\{minor}.\{patch}";
     }
 }

@@ -18,7 +18,7 @@ public class DuplicateTemplatesFoundException extends ApplicationException {
     private final List<URI> uris;
 
     public DuplicateTemplatesFoundException(String type, List<URI> uris) {
-        super(ErrorCode.DUPLICATE_TEMPLATES_FOUND, STR. "Multiple templates found for source file type '\{ type }'" );
+        super(ErrorCode.DUPLICATE_TEMPLATES_FOUND, STR."Multiple templates found for source file type '\{type}'");
 
         this.type = nonNull(type);
         this.uris = nonNull(uris);
@@ -28,9 +28,9 @@ public class DuplicateTemplatesFoundException extends ApplicationException {
     public ErrorDetail errorDetail() {
         return ErrorDetail.builder()
             .problem(
-                STR. """
-                    Template paths contain multiple templates for same source file type @|bold \{ type }|@:
-                    \{ listOfUris() }
+                STR."""
+                    Template paths contain multiple templates for same source file type @|bold \{type}|@:
+                    \{listOfUris()}
                     """
             )
             .solution("Make sure that only one template is present for selected file type")
@@ -39,7 +39,7 @@ public class DuplicateTemplatesFoundException extends ApplicationException {
 
     private String listOfUris() {
         return uris.stream()
-            .map(uri -> STR. "  - @|bold \{ uri }|@" )
+            .map(uri -> STR."  - @|bold \{uri}|@")
             .collect(Collectors.joining("\n"));
     }
 }

@@ -13,19 +13,19 @@ public class ResourceNotFoundException extends ApplicationException {
     private final String location;
 
     public ResourceNotFoundException(String location) {
-        super(ErrorCode.RESOURCE_NOT_FOUND, STR. "Resource not found: \{ location }" );
+        super(ErrorCode.RESOURCE_NOT_FOUND, STR."Resource not found: \{location}");
 
         this.location = location;
     }
 
     public ResourceNotFoundException(URI uri) {
-        super(ErrorCode.RESOURCE_NOT_FOUND, STR. "Resource not found: \{ uri }" );
+        super(ErrorCode.RESOURCE_NOT_FOUND, STR."Resource not found: \{uri}");
 
         this.location = uri.toString();
     }
 
     public ResourceNotFoundException(String location, Throwable cause) {
-        super(ErrorCode.RESOURCE_NOT_FOUND, STR. "Resource not found: \{ location }" , cause);
+        super(ErrorCode.RESOURCE_NOT_FOUND, STR."Resource not found: \{location}", cause);
 
         this.location = nonNull(location);
     }
@@ -33,7 +33,7 @@ public class ResourceNotFoundException extends ApplicationException {
     @Override
     public ErrorDetail errorDetail() {
         return ErrorDetail.builder()
-            .problem(STR. "Resource not found: \{ location }" )
+            .problem(STR."Resource not found: \{location}")
             .solution("Please check if given resource exists.")
             .build();
     }

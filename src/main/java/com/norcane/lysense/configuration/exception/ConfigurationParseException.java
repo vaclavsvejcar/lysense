@@ -13,7 +13,7 @@ public class ConfigurationParseException extends ApplicationException {
     private final Throwable cause;
 
     public ConfigurationParseException(Resource resource, Throwable cause) {
-        super(ErrorCode.ERROR_PARSING_CONFIGURATION, STR. "Error loading configuration from '\{ resource }': \{ cause.getMessage() }" , cause);
+        super(ErrorCode.ERROR_PARSING_CONFIGURATION, STR."Error loading configuration from '\{resource}': \{cause.getMessage()}", cause);
 
         this.resource = nonNull(resource);
         this.cause = nonNull(cause);
@@ -22,7 +22,7 @@ public class ConfigurationParseException extends ApplicationException {
     @Override
     public ErrorDetail errorDetail() {
         return ErrorDetail.builder()
-            .problem(STR. "Error loading configuration from '\{ resource }': \{ cause.getMessage() }" )
+            .problem(STR."Error loading configuration from '\{resource}': \{cause.getMessage()}")
             .solution(
                 """
                     Please check that some of the following isn't wrong:

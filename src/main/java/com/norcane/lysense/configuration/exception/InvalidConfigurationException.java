@@ -18,7 +18,7 @@ public class InvalidConfigurationException extends ApplicationException {
     private final Set<ConstraintViolation<Configuration>> violations;
 
     public InvalidConfigurationException(Set<ConstraintViolation<Configuration>> violations) {
-        super(ErrorCode.INVALID_CONFIGURATION, FMT. "Invalid configuration, found %d\{ violations.size() } problems" );
+        super(ErrorCode.INVALID_CONFIGURATION, FMT."Invalid configuration, found %d\{violations.size()} problems");
 
         this.violations = nonNull(violations);
     }
@@ -27,11 +27,11 @@ public class InvalidConfigurationException extends ApplicationException {
     public ErrorDetail errorDetail() {
         return ErrorDetail.builder()
             .problem(
-                STR. """
+                STR."""
                        Provided application config source is invalid and has following issues:
 
-                       \{ listOfViolations() }
-                       """ .strip()
+                       \{listOfViolations()}
+                       """.strip()
             )
             .solution("Please check the error messages above and correct the configuration appropriately.")
             .build();
@@ -40,7 +40,7 @@ public class InvalidConfigurationException extends ApplicationException {
     private String listOfViolations() {
         return violations
             .stream()
-            .map(violation -> STR. "  - @|bold,underline \{ violation.getPropertyPath() }|@ @|bold \{ violation.getMessage() }|@" )
+            .map(violation -> STR."  - @|bold,underline \{violation.getPropertyPath()}|@ @|bold \{violation.getMessage()}|@")
             .collect(Collectors.joining("\n"));
     }
 }

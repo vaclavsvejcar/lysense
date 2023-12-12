@@ -49,7 +49,7 @@ public class InlineResource extends AbstractResource {
 
         final String encodedContent = Base64.getEncoder().encodeToString(content.getBytes());
         final String encodedName = URIs.escape(name);
-        final URI uri = URIs.create(STR. "\{ SCHEME.value() }:\{ extension };name=\{ encodedName };base64,\{ encodedContent }" );
+        final URI uri = URIs.create(STR."\{SCHEME.value()}:\{extension};name=\{encodedName};base64,\{encodedContent}");
         return new InlineResource(name, extension, content, uri);
     }
 
