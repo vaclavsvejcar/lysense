@@ -53,7 +53,7 @@ public class SourceCodeProcessor implements Stateful {
      * @return set of source code language IDs
      * @see SourceCodeSupport#languageId()
      */
-    public Set<String> supportedLanguageIds() {
+    public Set<LanguageId> supportedLanguageIds() {
         return sourceCodeSupports.stream()
             .map(SourceCodeSupport::languageId)
             .collect(Collectors.toSet());
@@ -149,7 +149,7 @@ public class SourceCodeProcessor implements Stateful {
     }
 
     private String renderTemplate(SourceCode sourceCode) {
-        final String templateName = sourceCode.languageId();
+        final String templateName = sourceCode.languageId().value();
         final Variables variables = configuration.templateVariables().mergeWith(sourceCode.variables());
         final HeaderConfig headerConfig = configuration.headerConfigOrFail(sourceCode.languageId());
         final int blankLinesBefore = headerConfig.headerSpacing().blankLinesBefore();
@@ -181,7 +181,7 @@ public class SourceCodeProcessor implements Stateful {
                 .collect(Collectors.toSet());
 
             return sourceCodeSupports.stream()
-                .filter(support -> templateNames.contains(support.languageId()))  // filter only source codes for which template exists
+                .filter(support -> templateNames.contains(support.languageId().value()))  // filter only source codes for which template exists
                 .flatMap(support -> support.resourceTypes().stream().map(ext -> Map.entry(ext, support)))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         });

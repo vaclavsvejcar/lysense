@@ -21,6 +21,7 @@ import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 
+import static com.norcane.lysense.source.LanguageId.languageId;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.times;
@@ -78,7 +79,7 @@ class SourceCodeProcessorTest {
                 """;
 
         // -- mocks
-        when(configuration.headerConfigOrFail("java")).thenReturn(new TestHeaderConfig(HeaderStyle.BLOCK_COMMENT));
+        when(configuration.headerConfigOrFail(languageId("java"))).thenReturn(new TestHeaderConfig(HeaderStyle.BLOCK_COMMENT));
         when(configuration.templateVariables()).thenReturn(variables);
         when(templateManager.templates(UserLicenseTemplateSource.TemplateKey.class)).thenReturn(Map.of(
             templateKey, TEST_TEMPLATE
@@ -91,7 +92,7 @@ class SourceCodeProcessorTest {
         assertEquals(expected, resource.writtenString());
 
         // -- verify
-        verify(configuration, times(2)).headerConfigOrFail("java");
+        verify(configuration, times(2)).headerConfigOrFail(languageId("java"));
         verify(configuration).templateVariables();
         verify(templateManager).templates(UserLicenseTemplateSource.TemplateKey.class);
         verify(templateManager).template(templateKey);
@@ -110,7 +111,7 @@ class SourceCodeProcessorTest {
         ));
 
         // -- mocks
-        when(configuration.headerConfigOrFail("java")).thenReturn(new TestHeaderConfig(HeaderStyle.BLOCK_COMMENT));
+        when(configuration.headerConfigOrFail(languageId("java"))).thenReturn(new TestHeaderConfig(HeaderStyle.BLOCK_COMMENT));
         when(templateManager.templates(UserLicenseTemplateSource.TemplateKey.class)).thenReturn(Map.of(
             new UserLicenseTemplateSource.TemplateKey("java"), TEST_TEMPLATE
         ));
@@ -119,7 +120,7 @@ class SourceCodeProcessorTest {
         assertEquals(SourceModificationResult.NOT_MODIFIED, result);
 
         // -- verify
-        verify(configuration).headerConfigOrFail("java");
+        verify(configuration).headerConfigOrFail(languageId("java"));
         verify(templateManager).templates(UserLicenseTemplateSource.TemplateKey.class);
     }
 
@@ -146,7 +147,7 @@ class SourceCodeProcessorTest {
                 """;
 
         // -- mocks
-        when(configuration.headerConfigOrFail("java")).thenReturn(new TestHeaderConfig(HeaderStyle.BLOCK_COMMENT));
+        when(configuration.headerConfigOrFail(languageId("java"))).thenReturn(new TestHeaderConfig(HeaderStyle.BLOCK_COMMENT));
         when(templateManager.templates(UserLicenseTemplateSource.TemplateKey.class)).thenReturn(Map.of(
             new UserLicenseTemplateSource.TemplateKey("java"), TEST_TEMPLATE
         ));
@@ -156,7 +157,7 @@ class SourceCodeProcessorTest {
         assertEquals(expected, resource.writtenString());
 
         // -- verify
-        verify(configuration).headerConfigOrFail("java");
+        verify(configuration).headerConfigOrFail(languageId("java"));
         verify(templateManager).templates(UserLicenseTemplateSource.TemplateKey.class);
     }
 
@@ -172,7 +173,7 @@ class SourceCodeProcessorTest {
         ));
 
         // -- mocks
-        when(configuration.headerConfigOrFail("java")).thenReturn(new TestHeaderConfig(HeaderStyle.BLOCK_COMMENT));
+        when(configuration.headerConfigOrFail(languageId("java"))).thenReturn(new TestHeaderConfig(HeaderStyle.BLOCK_COMMENT));
         when(templateManager.templates(UserLicenseTemplateSource.TemplateKey.class)).thenReturn(Map.of(
             new UserLicenseTemplateSource.TemplateKey("java"), TEST_TEMPLATE
         ));
@@ -181,7 +182,7 @@ class SourceCodeProcessorTest {
         assertEquals(SourceModificationResult.NOT_MODIFIED, result);
 
         // -- verify
-        verify(configuration).headerConfigOrFail("java");
+        verify(configuration).headerConfigOrFail(languageId("java"));
         verify(templateManager).templates(UserLicenseTemplateSource.TemplateKey.class);
     }
 
@@ -221,7 +222,7 @@ class SourceCodeProcessorTest {
                 """;
 
         // -- mocks
-        when(configuration.headerConfigOrFail("java")).thenReturn(new TestHeaderConfig(HeaderStyle.BLOCK_COMMENT));
+        when(configuration.headerConfigOrFail(languageId("java"))).thenReturn(new TestHeaderConfig(HeaderStyle.BLOCK_COMMENT));
         when(configuration.templateVariables()).thenReturn(variables);
         when(templateManager.templates(UserLicenseTemplateSource.TemplateKey.class)).thenReturn(Map.of(
             templateKey, TEST_TEMPLATE
@@ -234,7 +235,7 @@ class SourceCodeProcessorTest {
         assertEquals(expected, resource.writtenString());
 
         // -- verify
-        verify(configuration, times(2)).headerConfigOrFail("java");
+        verify(configuration, times(2)).headerConfigOrFail(languageId("java"));
         verify(configuration).templateVariables();
         verify(templateManager).templates(UserLicenseTemplateSource.TemplateKey.class);
         verify(templateManager).template(templateKey);
@@ -263,7 +264,7 @@ class SourceCodeProcessorTest {
                  """;
 
         // -- mocks
-        when(configuration.headerConfigOrFail("java")).thenReturn(new TestHeaderConfig(HeaderStyle.BLOCK_COMMENT));
+        when(configuration.headerConfigOrFail(languageId("java"))).thenReturn(new TestHeaderConfig(HeaderStyle.BLOCK_COMMENT));
         when(configuration.templateVariables()).thenReturn(variables);
         when(templateManager.templates(UserLicenseTemplateSource.TemplateKey.class)).thenReturn(Map.of(
             templateKey, TEST_TEMPLATE
@@ -275,7 +276,7 @@ class SourceCodeProcessorTest {
         assertEquals(SourceModificationResult.NOT_MODIFIED, result);
 
         // -- verify
-        verify(configuration, times(2)).headerConfigOrFail("java");
+        verify(configuration, times(2)).headerConfigOrFail(languageId("java"));
         verify(configuration).templateVariables();
         verify(templateManager).templates(UserLicenseTemplateSource.TemplateKey.class);
         verify(templateManager).template(templateKey);

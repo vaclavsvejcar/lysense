@@ -11,6 +11,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Inject;
 
+import static com.norcane.lysense.source.LanguageId.languageId;
+
 
 /**
  * Implementation of {@link SourceCodeSupport} to support managing license headers in <i>UNIX Shell</i> scripts.
@@ -32,7 +34,7 @@ public class UnixShellSupportFactory implements InstanceFactory<SourceCodeSuppor
         return SourceCodeSupport
 
             // languageId is 'unix-shell', file extensions are 'sh'
-            .builder(configuration, "unix-shell", Set.of("sh"))
+            .builder(configuration, languageId("unix-shell"), Set.of("sh"))
 
             // use line comment syntax for license headers
             .lineHeaderSyntax(Pattern.compile("^#(?!!)"))

@@ -24,7 +24,7 @@ import static com.norcane.lysense.test.Assertions.assertIsPresent;
 import static com.norcane.lysense.test.Assertions.assertNotPresent;
 import static org.apache.commons.lang3.Validate.notNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 public abstract class SourceCodeSupportTestKit {
@@ -52,7 +52,7 @@ public abstract class SourceCodeSupportTestKit {
 
         return DynamicTest.dynamicTest(sample.resource(), () -> {
             // -- mocks
-            when(configuration.headerConfigOrFail(anyString())).thenReturn(new TestHeaderConfig(sample.headerStyle));
+            when(configuration.headerConfigOrFail(any())).thenReturn(new TestHeaderConfig(sample.headerStyle));
 
             final Metadata metadata = factory.instance().load(resource).metadata();
             if (sample.header() != null) {

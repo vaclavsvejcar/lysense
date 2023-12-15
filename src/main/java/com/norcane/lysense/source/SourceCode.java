@@ -15,5 +15,5 @@ import com.norcane.lysense.template.Variables;
  * @param metadata   analyzed <i>metadata</i>
  * @see SourceCodeSupport#languageId()
  */
-public record SourceCode(String languageId, Resource resource, Variables variables, Metadata metadata) {
+public record SourceCode(LanguageId languageId, Resource resource, Variables variables, Metadata metadata) {
 }

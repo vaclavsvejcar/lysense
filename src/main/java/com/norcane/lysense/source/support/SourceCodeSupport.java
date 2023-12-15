@@ -6,6 +6,7 @@ import com.norcane.lysense.configuration.api.HeaderStyle;
 import com.norcane.lysense.resource.Resource;
 import com.norcane.lysense.resource.exception.CannotReadResourceException;
 import com.norcane.lysense.source.HeaderDetectionRules;
+import com.norcane.lysense.source.LanguageId;
 import com.norcane.lysense.source.SourceCode;
 import com.norcane.lysense.source.comment.CommentDetectorFactory;
 import com.norcane.lysense.source.metadata.Metadata;
@@ -25,19 +26,19 @@ import java.util.regex.Pattern;
 
 /**
  * Represents support for loading and processing source codes of selected programming/scripting language identified by {@link #languageId()}. To construct new
- * instance, use the <i>staged builder</i> obtained via {@link #builder} method..
+ * instance, use the <i>staged builder</i> obtained via {@link #builder} method.
  */
 public final class SourceCodeSupport {
 
     private final Configuration configuration;
-    private final String languageId;
+    private final LanguageId languageId;
     private final Set<String> resourceTypes;
     private final Function<HeaderStyle, CommentDetectorFactory> commentDetectorFactoryFn;
     private final HeaderDetectionRules headerDetectionRules;
     private final VariablesExtractor variablesExtractor;
 
     private SourceCodeSupport(Configuration configuration,
-                              String languageId,
+                              LanguageId languageId,
                               Set<String> resourceTypes,
                               Function<HeaderStyle, CommentDetectorFactory> commentDetectorFactoryFn,
                               HeaderDetectionRules headerDetectionRules,
@@ -59,7 +60,7 @@ public final class SourceCodeSupport {
      * @param resourceTypes set of resource types of the programming/scripting language resources
      * @return builder
      */
-    public static Builder.CommentDetectorFactoryStep builder(Configuration configuration, String languageId, Set<String> resourceTypes) {
+    public static Builder.CommentDetectorFactoryStep builder(Configuration configuration, LanguageId languageId, Set<String> resourceTypes) {
         return commentDetectorFactory -> headerDetectionRules -> variablesExtractor ->
             new Builder.FinalStep(configuration, languageId, resourceTypes, commentDetectorFactory, headerDetectionRules, variablesExtractor);
     }
@@ -68,7 +69,7 @@ public final class SourceCodeSupport {
      * Unique identification of the supported programming or scripting language. Please prefer machine-friendly identifiers, such as {@code java} for
      * <i>Java</i> programming language. This ID is later used as a key for specific {@link com.norcane.lysense.configuration.api.HeaderConfig} configuration.
      */
-    public String languageId() {
+    public LanguageId languageId() {
         return languageId;
     }
 
@@ -133,7 +134,7 @@ public final class SourceCodeSupport {
              * @return next step
              */
             default HeaderDetectionRulesStep lineHeaderSyntax(Pattern lineCommentStart) {
-                return commentDetectorFactory(headerStyle -> CommentDetectorFactory.lineSyntax(lineCommentStart));
+                return commentDetectorFactory(_ -> CommentDetectorFactory.lineSyntax(lineCommentStart));
             }
 
             /**
@@ -230,14 +231,14 @@ public final class SourceCodeSupport {
         public static final class FinalStep {
 
             private final Configuration configuration;
-            private final String languageId;
+            private final LanguageId languageId;
             private final Set<String> resourceTypes;
             private final Function<HeaderStyle, CommentDetectorFactory> commentDetectorFactoryFn;
             private final HeaderDetectionRules headerDetectionRules;
             private final VariablesExtractor variablesExtractor;
 
             public FinalStep(Configuration configuration,
-                             String languageId,
+                             LanguageId languageId,
                              Set<String> resourceTypes,
                              Function<HeaderStyle, CommentDetectorFactory> commentDetectorFactoryFn,
                              HeaderDetectionRules headerDetectionRules,

@@ -13,6 +13,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Inject;
 
+import static com.norcane.lysense.source.LanguageId.languageId;
 import static com.norcane.lysense.source.support.SourceCodeSupport.Builder.CommentSyntax.blockComment;
 import static com.norcane.lysense.source.support.SourceCodeSupport.Builder.CommentSyntax.lineComment;
 
@@ -40,7 +41,7 @@ public class JavaSupportFactory implements InstanceFactory<SourceCodeSupport> {
     @ApplicationScoped
     public SourceCodeSupport instance() {
         return SourceCodeSupport
-            .builder(configuration, "java", Set.of("java"))
+            .builder(configuration, languageId("java"), Set.of("java"))
 
             // use either block or line comment, based on configuration
             .configBasedHeaderSyntax(
