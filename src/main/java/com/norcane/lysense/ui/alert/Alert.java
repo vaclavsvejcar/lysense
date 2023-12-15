@@ -29,6 +29,6 @@ public interface Alert extends UIComponent {
     }
 
     private static String alert(char icon, String color, String title, String message) {
-        return "@|bold,bg(%s),white [%s] %s:|@ @|bold,%s %s|@".formatted(color, icon, title, color, message);
+        return STR."@|bold,bg(\{color}),white [\{icon}] \{title}:|@ @|bold,\{color} \{message}|@";
     }
 }

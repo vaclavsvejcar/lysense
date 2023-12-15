@@ -27,7 +27,7 @@ public record SemVer(int major, int minor, int patch, String suffix) implements 
         final Matcher matcher = pattern.matcher(rawVersion);
 
         if (!matcher.matches()) {
-            throw new IllegalArgumentException("Not a valid SemVer string: %s".formatted(rawVersion));
+            throw new IllegalArgumentException(STR."Not a valid SemVer string: \{rawVersion}");
         }
 
         final int major = Integer.parseInt(matcher.group(1));
