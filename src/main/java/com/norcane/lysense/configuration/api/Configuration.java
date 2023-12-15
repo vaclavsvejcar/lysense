@@ -1,5 +1,6 @@
 package com.norcane.lysense.configuration.api;
 
+import com.norcane.lysense.configuration.exception.HeaderConfigNotFoundException;
 import com.norcane.lysense.meta.SemVer;
 
 import java.util.List;
@@ -25,4 +26,21 @@ public interface Configuration {
     List<String> templates();
 
     Map<String, ? extends HeaderConfig> headerConfigs();
+
+    /**
+     * Returns header configuration for given language ID.
+     *
+     * @param languageId language ID
+     * @return header configuration
+     * @throws HeaderConfigNotFoundException if header configuration for given language ID is not found
+     */
+    default HeaderConfig headerConfigOrFail(String languageId) {
+        final HeaderConfig headerConfig = headerConfigs().get(languageId);
+
+        if (headerConfig == null) {
+            throw new HeaderConfigNotFoundException(languageId);
+        }
+
+        return headerConfig;
+    }
 }

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+echo "Hello, there!"
+
+# This should not be a header
+
+echo "TEST"

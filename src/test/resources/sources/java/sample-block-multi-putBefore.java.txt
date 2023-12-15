@@ -1,0 +1,12 @@
+
+package foo;
+
+/*
+ * This is not header
+ */
+
+class Test {
+    public static void main(String[] args) {
+        System.out.println("Hello!");
+    }
+}

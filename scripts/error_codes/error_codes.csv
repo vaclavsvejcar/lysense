@@ -5,6 +5,7 @@
 222,Missing base version
 242,Resource not writable
 339,Unexpected behavior
+342,Header configuration not found
 347,Duplicate templates found
 374,Missing template variable
 571,Invalid configuration

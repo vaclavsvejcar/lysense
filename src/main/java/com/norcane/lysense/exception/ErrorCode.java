@@ -6,6 +6,7 @@ public enum ErrorCode {
     CANNOT_WRITE_RESOURCE(793, "Cannot write resource"),
     DUPLICATE_TEMPLATES_FOUND(347, "Duplicate templates found"),
     ERROR_PARSING_CONFIGURATION(207, "Error parsing configuration"),
+    HEADER_CONFIG_NOT_FOUND(341, "Header configuration not found"),
     INCOMPATIBLE_CONFIGURATION(173, "Incompatible configuration"),
     INVALID_CONFIGURATION(571, "Invalid configuration"),
     MISSING_BASE_VERSION(222, "Missing base version"),

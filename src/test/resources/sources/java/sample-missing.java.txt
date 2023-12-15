@@ -1,0 +1,13 @@
+
+/**
+ * This is not header, JavaDoc is not considered as valid header for Java files
+ */
+
+
+package foo;
+
+class Test {
+    public static void main(String[] args) {
+        System.out.println("Hello!");
+    }
+}

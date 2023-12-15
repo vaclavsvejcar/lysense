@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]; then
+  # Check that a valid error message has been provided
+  echo "Error: missing error message"
+  exit 1
+fi
+
+# Set the path to the CSV file
+file_path="error_codes.csv"
