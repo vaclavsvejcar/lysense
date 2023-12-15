@@ -35,7 +35,7 @@ public final class Memoized<T> implements Stateful {
      * reset as well.
      *
      * @param parent parent stateful object
-     * @param <T> type of the memoized value
+     * @param <T>    type of the memoized value
      * @return new instance
      */
     public static <T> Memoized<T> bindTo(Stateful parent) {

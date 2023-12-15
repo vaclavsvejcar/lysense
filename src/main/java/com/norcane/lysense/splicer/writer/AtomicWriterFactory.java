@@ -16,7 +16,7 @@ public class AtomicWriterFactory {
     /**
      * Constructs a new {@link AtomicWriter} with the given target writer and line separator.
      *
-     * @param targetWriter the target writer
+     * @param targetWriter  the target writer
      * @param lineSeparator the line separator
      * @return the new {@link AtomicWriter} instance
      */

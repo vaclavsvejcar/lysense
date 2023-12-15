@@ -7,9 +7,9 @@ import java.util.regex.Pattern;
  * Simple implementation of version using the <a href="https://semver.org">Semantic versioning</a> specification. Supports basic operations such as parsing,
  * pretty printing and comparing with other version.
  *
- * @param major major version
- * @param minor minor version
- * @param patch patch level
+ * @param major  major version
+ * @param minor  minor version
+ * @param patch  patch level
  * @param suffix additional suffix (such as {@code SNAPSHOT}), may be null
  */
 public record SemVer(int major, int minor, int patch, String suffix) implements Comparable<SemVer> {

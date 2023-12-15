@@ -19,7 +19,7 @@ public class PathMatcher {
      * Matches given {@code path} against <i>GLOB</i> {@code pattern}.
      *
      * @param pattern pattern to match against
-     * @param path path to match
+     * @param path    path to match
      * @return {@code true} if {@code path} matches {@code pattern}
      */
     public boolean matches(String pattern, Path path) {
@@ -31,7 +31,7 @@ public class PathMatcher {
      * Matches given {@code path} against <i>GLOB</i> {@code pattern}.
      *
      * @param pattern pattern to match against
-     * @param path path to match
+     * @param path    path to match
      * @return {@code true} if {@code path} matches {@code pattern}
      */
     public boolean matches(String pattern, String path) {

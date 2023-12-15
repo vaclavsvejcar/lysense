@@ -13,7 +13,7 @@ public sealed interface Operation permits Operation.AddSection,
      * Adds new section to the resource at given starting line and moves the existing content. Note that lines are indexed from 1.
      *
      * @param startLine starting line
-     * @param section section to be added
+     * @param section   section to be added
      */
     record AddSection(int startLine, String section) implements Operation {
     }
@@ -22,7 +22,7 @@ public sealed interface Operation permits Operation.AddSection,
      * Drops section from the resource between given starting and ending line (including). Note that lines are indexed from 1.
      *
      * @param startLine starting line
-     * @param endLine ending line
+     * @param endLine   ending line
      */
     record DropSection(int startLine, int endLine) implements Operation {
     }
@@ -31,8 +31,8 @@ public sealed interface Operation permits Operation.AddSection,
      * Replaces section in the resource between given starting and ending line (including) with new content. Note that lines are indexed from 1.
      *
      * @param startLine starting line
-     * @param endLine ending line
-     * @param section section to be added
+     * @param endLine   ending line
+     * @param section   section to be added
      */
     record ReplaceSection(int startLine, int endLine, String section) implements Operation {
     }
@@ -41,7 +41,7 @@ public sealed interface Operation permits Operation.AddSection,
      * Adds new section to the resource at given starting line and moves the existing content. Note that lines are indexed from 1.
      *
      * @param startLine starting line
-     * @param section section to be added
+     * @param section   section to be added
      */
     static AddSection addSection(int startLine, String section) {
         return new AddSection(startLine, section);
@@ -51,7 +51,7 @@ public sealed interface Operation permits Operation.AddSection,
      * Drops section from the resource between given starting and ending line (including). Note that lines are indexed from 1.
      *
      * @param startLine starting line
-     * @param endLine ending line
+     * @param endLine   ending line
      */
     static DropSection dropSection(int startLine, int endLine) {
         return new DropSection(startLine, endLine);
@@ -61,8 +61,8 @@ public sealed interface Operation permits Operation.AddSection,
      * Replaces section in the resource between given starting and ending line (including) with new content. Note that lines are indexed from 1.
      *
      * @param startLine starting line
-     * @param endLine ending line
-     * @param section section to be added
+     * @param endLine   ending line
+     * @param section   section to be added
      */
     static ReplaceSection replaceSection(int startLine, int endLine, String section) {
         return new ReplaceSection(startLine, endLine, section);

@@ -20,7 +20,7 @@ public interface Template {
     /**
      * Renders the template using provided placeholder {@link Variables} to given {@link Writer}.
      *
-     * @param writer writer to write rendered template into
+     * @param writer    writer to write rendered template into
      * @param variables values used to replace the placeholders
      * @return given writer for convenience
      */

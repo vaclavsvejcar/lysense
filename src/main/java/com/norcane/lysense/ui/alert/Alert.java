@@ -20,7 +20,7 @@ public interface Alert extends UIComponent {
     /**
      * Creates an {@link Alert} with a given title and message of <i>ERROR</i> severity.
      *
-     * @param title title to display
+     * @param title   title to display
      * @param message message to display
      * @return alert
      */

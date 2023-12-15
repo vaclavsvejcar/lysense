@@ -20,7 +20,7 @@ public class InMemoryAtomicWriter extends AtomicWriter {
     /**
      * Constructs a new {@link InMemoryAtomicWriter} with the given target writer and line separator.
      *
-     * @param targetWriter the target writer
+     * @param targetWriter  the target writer
      * @param lineSeparator the line separator
      */
     public InMemoryAtomicWriter(Supplier<Writer> targetWriter, LineSeparator lineSeparator) {

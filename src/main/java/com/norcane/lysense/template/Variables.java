@@ -110,7 +110,7 @@ public final class Variables {
     /**
      * Represents single variable (as a pair of its name and value)
      *
-     * @param name name of the variable
+     * @param name  name of the variable
      * @param value value of the variable
      */
     public record Variable(String name, Object value) {

@@ -15,7 +15,7 @@ public interface IterableResourceFactory extends ResourceFactory {
      * might not be supported by the concrete implementation, in such case {@link UnsupportedOperationException} will be thrown.
      *
      * @param locationGlobPattern resource(s) location as <i>GLOB pattern</i>
-     * @param filter filter to filter resources
+     * @param filter              filter to filter resources
      * @return loaded and filtered resources
      * @throws UnsupportedOperationException if current implementation doesn't support this operation
      */

@@ -14,7 +14,7 @@ public interface ResourceSplicer {
     /**
      * Splices the content of given {@link WritableResource} with the content defined by the {@link Operation}.
      *
-     * @param resource resource to be spliced
+     * @param resource  resource to be spliced
      * @param operation splicing operation
      */
     void splice(WritableResource resource, Operation operation);

@@ -61,8 +61,8 @@ public class TemplateManager implements Stateful {
      * will be loaded and cached for further use.
      *
      * @param templateKey template key class identifying the {@link TemplateSource}
-     * @param filter filter that allows to choose only templates with template key matching the predicate
-     * @param <K> template key type
+     * @param filter      filter that allows to choose only templates with template key matching the predicate
+     * @param <K>         template key type
      * @return map of templates
      */
     public <K extends TemplateKey> Map<K, Template> templates(Class<K> templateKey, Predicate<K> filter) {

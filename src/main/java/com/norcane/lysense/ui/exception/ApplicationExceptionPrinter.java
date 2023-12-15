@@ -26,7 +26,7 @@ public class ApplicationExceptionPrinter implements UIComponent {
      * Constructs new instance that will print given exception to end user, with optionally also printing the stack trace for debugging purposes.
      *
      * @param printStackTrace whether to print stack trace as well
-     * @param exception exception to print
+     * @param exception       exception to print
      */
     private ApplicationExceptionPrinter(boolean printStackTrace, ApplicationException exception) {
         this.printStackTrace = printStackTrace;

@@ -31,10 +31,10 @@ public class ResourceWalker {
     /**
      * Walks through the given {@code rootPath}, finds all paths matching the given {@code pattern} and converts them to corresponding {@link Resource}.
      *
-     * @param rootPath root path to walk through
-     * @param pattern pattern to match
+     * @param rootPath   root path to walk through
+     * @param pattern    pattern to match
      * @param toResource function to convert {@link Path} to {@link Resource}
-     * @param filter filter to apply on the resulting resources
+     * @param filter     filter to apply on the resulting resources
      * @return list of resources matching the given {@code pattern}
      * @throws UncheckedIOException if unexpected IO error occurs
      */

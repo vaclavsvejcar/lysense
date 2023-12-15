@@ -22,7 +22,7 @@ public class LowerCaseDashSeparatedEnumDeserializer<T extends Enum<T>> extends J
      * Constructs a new instance of {@link LowerCaseDashSeparatedEnumDeserializer} for the given enum class.
      *
      * @param enumClass enum class
-     * @param <T> enum type
+     * @param <T>       enum type
      * @return new instance of {@link LowerCaseDashSeparatedEnumDeserializer}
      */
     public static <T extends Enum<T>> LowerCaseDashSeparatedEnumDeserializer<T> forEnum(Class<T> enumClass) {

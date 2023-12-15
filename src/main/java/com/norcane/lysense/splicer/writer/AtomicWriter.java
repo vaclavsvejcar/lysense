@@ -24,7 +24,7 @@ public abstract class AtomicWriter extends Writer {
     /**
      * Constructs a new {@link AtomicWriter} with the given target writer and line separator.
      *
-     * @param targetWriter the target writer
+     * @param targetWriter  the target writer
      * @param lineSeparator the line separator
      */
     public AtomicWriter(Supplier<Writer> targetWriter, LineSeparator lineSeparator) {

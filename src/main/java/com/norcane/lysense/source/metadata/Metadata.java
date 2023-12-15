@@ -30,7 +30,7 @@ public class Metadata {
      * Returns <i>builder</i> used to construct new instance of {@link Metadata}.
      *
      * @param commentDetectorFactory comment detector factory
-     * @param headerDetectionRules license header detection rules
+     * @param headerDetectionRules   license header detection rules
      * @return builder instance
      */
     public static Builder builder(CommentDetectorFactory commentDetectorFactory, HeaderDetectionRules headerDetectionRules) {

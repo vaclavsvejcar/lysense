@@ -74,10 +74,10 @@ public class ResourceLoader {
      *   resources("file:**.txt", _ -> true, false);           // [resources/a.txt, resources/sub-resources/b.txt]
      *}
      *
-     * @param pattern file, directory or <i>GLOB</i> pattern
-     * @param filter filter do decide whether to include the resource in the result or not
+     * @param pattern                  file, directory or <i>GLOB</i> pattern
+     * @param filter                   filter do decide whether to include the resource in the result or not
      * @param listDirectoryRecursively if the given location is directory, then whether to list all resources in the directory recursively or only the ones in
-     * the top-level directory
+     *                                 the top-level directory
      * @return list of loaded resources
      */
     public List<Resource> resources(String pattern, Predicate<Resource> filter, boolean listDirectoryRecursively) {
