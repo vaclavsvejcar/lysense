@@ -2,14 +2,13 @@ package com.norcane.lysense.source.support;
 
 
 import com.norcane.lysense.configuration.api.Configuration;
-import com.norcane.lysense.configuration.api.HeaderConfig;
-import com.norcane.lysense.configuration.api.HeaderSpacing;
 import com.norcane.lysense.configuration.api.HeaderStyle;
 import com.norcane.lysense.resource.Resource;
 import com.norcane.lysense.resource.loader.ResourceLoader;
 import com.norcane.lysense.source.metadata.HeaderCandidate;
 import com.norcane.lysense.source.metadata.LicenseHeader;
 import com.norcane.lysense.source.metadata.Metadata;
+import com.norcane.lysense.test.TestHeaderConfig;
 import com.norcane.toolkit.InstanceFactory;
 
 import org.junit.jupiter.api.DynamicTest;
@@ -74,23 +73,5 @@ public abstract class SourceCodeSupportTestKit {
     }
 
     protected record TestSample(HeaderStyle headerStyle, String resource, LicenseHeader header, HeaderCandidate candidate) {
-    }
-
-    protected record TestHeaderConfig(HeaderStyle headerStyle) implements HeaderConfig {
-
-        @Override
-        public HeaderSpacing headerSpacing() {
-            return new HeaderSpacing() {
-                @Override
-                public Integer blankLinesAfter() {
-                    return 0;
-                }
-
-                @Override
-                public Integer blankLinesBefore() {
-                    return 0;
-                }
-            };
-        }
     }
 }

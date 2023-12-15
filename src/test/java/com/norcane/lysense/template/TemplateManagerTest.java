@@ -45,7 +45,7 @@ class TemplateManagerTest {
 
     @Test
     void templates() {
-        final Map<TestTemplateSource.TemplateKey, Template> templates = templateManager.templates(TestTemplateSource.TemplateKey.class, _ -> true);
+        final Map<TestTemplateSource.TemplateKey, Template> templates = templateManager.templates(TestTemplateSource.TemplateKey.class);
 
         assertEquals(2, templates.size());
         assertTrue(templates.containsKey(new TestTemplateSource.TemplateKey("test-template1")));

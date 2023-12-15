@@ -9,6 +9,9 @@ import com.norcane.lysense.meta.SemVer;
 
 import java.io.IOException;
 
+/**
+ * Deserializer for {@link SemVer}.
+ */
 public class SemVerDeserializer extends StdDeserializer<SemVer> {
 
     public SemVerDeserializer() {

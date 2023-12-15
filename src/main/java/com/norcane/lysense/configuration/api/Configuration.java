@@ -2,6 +2,7 @@ package com.norcane.lysense.configuration.api;
 
 import com.norcane.lysense.configuration.exception.HeaderConfigNotFoundException;
 import com.norcane.lysense.meta.SemVer;
+import com.norcane.lysense.template.Variables;
 
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,16 @@ public interface Configuration {
      */
     List<String> templates();
 
+    /**
+     * List of source code paths to be used for adding, dropping or removing license headers.
+     *
+     * @return list of source code paths
+     */
+    List<String> sources();
+
     Map<String, ? extends HeaderConfig> headerConfigs();
+
+    Variables templateVariables();
 
     /**
      * Returns header configuration for given language ID.

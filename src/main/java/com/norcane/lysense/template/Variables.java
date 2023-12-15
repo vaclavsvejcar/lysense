@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.norcane.toolkit.Prelude.nonNull;
 
@@ -81,6 +82,19 @@ public final class Variables {
      */
     public int size() {
         return variables.size();
+    }
+
+    /**
+     * Merges current variables with other ones. If both instances contain same variable names, latter one will be selected.
+     *
+     * @param other instance to merge with
+     * @return new instance with merged variables
+     */
+    public Variables mergeWith(Variables other) {
+        final Map<String, Object> mergedVariables = Stream.concat(variables.entrySet().stream(), other.variables.entrySet().stream())
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (_, v2) -> v2));
+
+        return Variables.from(mergedVariables);
     }
 
     @Override

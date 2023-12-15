@@ -65,6 +65,7 @@ class ConfigurationManagerTest {
         assertEquals(List.of("path/to/templates"), configuration.templates());
         assertEquals(0, configuration.headerConfigs().get("java").headerSpacing().blankLinesAfter());
         assertEquals(2, configuration.headerConfigs().get("java").headerSpacing().blankLinesBefore());
+        assertEquals(2, configuration.templateVariables().size());
     }
 
     @Test

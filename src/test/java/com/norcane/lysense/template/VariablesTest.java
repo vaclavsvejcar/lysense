@@ -51,6 +51,15 @@ class VariablesTest {
     }
 
     @Test
+    void mergeWith() {
+        final Variables variables1 = Variables.from(Map.of("one", 1, "two", 2));
+        final Variables variables2 = Variables.from(Map.of("two", "zwei", "three", 3));
+        final Variables expected = Variables.from(Map.of("one", 1, "two", "zwei", "three", 3));
+
+        assertEquals(expected, variables1.mergeWith(variables2));
+    }
+
+    @Test
     void testHashCode() {
         final Variables variables1 = Variables.from(Map.of("one", 1));
         final Variables variables2 = Variables.from(Map.of("two", 2));

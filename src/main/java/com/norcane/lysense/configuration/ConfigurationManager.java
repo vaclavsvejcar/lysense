@@ -12,6 +12,7 @@ import com.norcane.lysense.configuration.exception.InvalidConfigurationException
 import com.norcane.lysense.configuration.exception.MissingBaseVersionException;
 import com.norcane.lysense.configuration.serialization.LowerCaseDashSeparatedEnumDeserializer;
 import com.norcane.lysense.configuration.serialization.SemVerDeserializer;
+import com.norcane.lysense.configuration.serialization.VariablesDeserializer;
 import com.norcane.lysense.configuration.yaml.BaseVersionWrapper;
 import com.norcane.lysense.configuration.yaml.YamlConfiguration;
 import com.norcane.lysense.exception.ApplicationException;
@@ -19,6 +20,7 @@ import com.norcane.lysense.meta.RuntimeInfo;
 import com.norcane.lysense.meta.SemVer;
 import com.norcane.lysense.resource.Resource;
 import com.norcane.lysense.resource.loader.ResourceLoader;
+import com.norcane.lysense.template.Variables;
 import com.norcane.toolkit.state.Memoized;
 import com.norcane.toolkit.state.Stateful;
 
@@ -113,8 +115,9 @@ public class ConfigurationManager implements Stateful {
 
     private ObjectMapper yamlObjectMapper() {
         final SimpleModule module = new SimpleModule()
+            .addDeserializer(HeaderStyle.class, LowerCaseDashSeparatedEnumDeserializer.forEnum(HeaderStyle.class))
             .addDeserializer(SemVer.class, new SemVerDeserializer())
-            .addDeserializer(HeaderStyle.class, LowerCaseDashSeparatedEnumDeserializer.forEnum(HeaderStyle.class));
+            .addDeserializer(Variables.class, new VariablesDeserializer());
 
         return new ObjectMapper(new YAMLFactory())
             .registerModule(module)

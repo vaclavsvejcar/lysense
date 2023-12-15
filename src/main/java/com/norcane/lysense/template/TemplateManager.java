@@ -76,6 +76,18 @@ public class TemplateManager implements Stateful {
     }
 
     /**
+     * Returns a map of all templates available via {@link TemplateSource} identified by its {@link TemplateKey}. If the template source is not loaded yet, it
+     * will be loaded and cached for further use.
+     *
+     * @param templateKey template key class identifying the {@link TemplateSource}
+     * @param <K>         template key type
+     * @return map of templates
+     */
+    public <K extends TemplateKey> Map<K, Template> templates(Class<K> templateKey) {
+        return templates(templateKey, _ -> true);
+    }
+
+    /**
      * Returns a set of all template sources, represented by their {@link TemplateKey} classes, that were dynamically loaded so far.
      *
      * @return set of loaded template sources
