@@ -78,5 +78,10 @@ public interface Resource {
             return (index != -1) ? Optional.of(new Scheme(path.substring(0, index))) : Optional.empty();
 
         }
+
+        @Override
+        public String toString() {
+            return value;
+        }
     }
 }

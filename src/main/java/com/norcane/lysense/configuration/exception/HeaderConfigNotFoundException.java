@@ -12,7 +12,7 @@ public class HeaderConfigNotFoundException extends ApplicationException {
     private final LanguageId languageId;
 
     public HeaderConfigNotFoundException(LanguageId languageId) {
-        super(ErrorCode.HEADER_CONFIG_NOT_FOUND, STR."Header configuration for language '\{languageId.value()}' not found");
+        super(ErrorCode.HEADER_CONFIG_NOT_FOUND, STR."Header configuration for language '\{languageId}' not found");
 
         this.languageId = nonNull(languageId);
     }
@@ -20,8 +20,8 @@ public class HeaderConfigNotFoundException extends ApplicationException {
     @Override
     public ErrorDetail errorDetail() {
         return ErrorDetail.builder()
-            .problem(STR."Header configuration for language '\{languageId.value()}' not found")
-            .solution(STR."Please check that your configuration file contains header configuration for language '\{languageId.value()}'")
+            .problem(STR."Header configuration for language '\{languageId}' not found")
+            .solution(STR."Please check that your configuration file contains header configuration for language '\{languageId}'")
             .build();
     }
 

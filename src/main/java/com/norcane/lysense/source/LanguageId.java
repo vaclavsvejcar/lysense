@@ -18,4 +18,9 @@ public record LanguageId(String value) implements ValueClass<String> {
     public static LanguageId languageId(String value) {
         return new LanguageId(value);
     }
+
+    @Override
+    public String toString() {
+        return value;
+    }
 }

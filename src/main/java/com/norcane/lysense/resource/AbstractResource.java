@@ -34,7 +34,7 @@ public abstract class AbstractResource implements Resource {
     protected static void enforceScheme(URI uri, Resource.Scheme scheme) {
         final String uriScheme = uri.getScheme();
         if (uriScheme == null || !uriScheme.equals(scheme.value())) {
-            throw new IllegalArgumentException(STR."Illegal scheme in URI \{uri}, got '\{uriScheme}', expected '\{scheme.value()}'");
+            throw new IllegalArgumentException(STR."Illegal scheme in URI \{uri}, got '\{uriScheme}', expected '\{scheme}'");
         }
     }
 
