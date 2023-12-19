@@ -10,7 +10,7 @@ quarkus:
   native:
     resources:
       includes:
-        - config/**
+        - embedded/**
     additional-build-args:
       - --initialize-at-run-time=org.jline.nativ.JLineLibrary
       - --initialize-at-run-time=org.jline.nativ.CLibrary
@@ -20,7 +20,7 @@ quarkus:
 
 lysense:
   configuration:
-    default: classpath:/configuration/default-configuration.yaml
+    default: classpath:/embedded/default-configuration.yaml
     min-base-version: 0.0.0
 
 ## TEST CONFIGURATION
