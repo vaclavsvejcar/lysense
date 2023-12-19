@@ -47,7 +47,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -112,10 +111,7 @@ public class RunCommand extends AbstractCommand {
 
         stopwatch.stop();
         console.emptyLine();
-
-        final long elapsedMs = stopwatch.elapsed(TimeUnit.MILLISECONDS);
-        final int modifiedSourcesNo = runResult.modifiedSources().size();
-        console.printLn(STR."Modified @|bold \{modifiedSourcesNo}|@ source code file(s) in @|bold \{elapsedMs}ms|@");
+        console.printLn(STR."Modified @|bold \{runResult.modifiedSources().size()}|@ source code file(s) in @|bold \{stopwatch}|@");
 
         return ReturnCode.SUCCESS;
     }
