@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.norcane.lysense.configuration.api.Configuration;
 import com.norcane.lysense.configuration.api.RunMode;
 import com.norcane.lysense.meta.SemVer;
+import com.norcane.lysense.source.LanguageId;
 import com.norcane.lysense.template.Variables;
 
 import java.util.List;
@@ -38,7 +39,7 @@ public class YamlConfiguration implements Configuration {
     @Valid
     @NotEmpty
     @JsonProperty("license-headers")
-    private Map<String, YamlHeaderConfig> headerConfigs;
+    private Map<LanguageId, YamlHeaderConfig> headerConfigs;
 
     @NotNull
     @JsonProperty("template-variables")
@@ -65,7 +66,7 @@ public class YamlConfiguration implements Configuration {
     }
 
     @Override
-    public Map<String, YamlHeaderConfig> headerConfigs() {
+    public Map<LanguageId, YamlHeaderConfig> headerConfigs() {
         return headerConfigs;
     }
 

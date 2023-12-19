@@ -18,6 +18,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Inject;
 
+import static com.norcane.lysense.source.LanguageId.languageId;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
@@ -65,8 +66,8 @@ class ConfigurationManagerTest {
         assertEquals(SemVer.from("1.2.3"), configuration.baseVersion());
         assertEquals(RunMode.UPDATE, configuration.runMode());
         assertEquals(List.of("path/to/templates"), configuration.templates());
-        assertEquals(0, configuration.headerConfigs().get("java").headerSpacing().blankLinesAfter());
-        assertEquals(2, configuration.headerConfigs().get("java").headerSpacing().blankLinesBefore());
+        assertEquals(0, configuration.headerConfigs().get(languageId("java")).headerSpacing().blankLinesAfter());
+        assertEquals(2, configuration.headerConfigs().get(languageId("java")).headerSpacing().blankLinesBefore());
         assertEquals(2, configuration.templateVariables().size());
     }
 

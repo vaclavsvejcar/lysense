@@ -46,7 +46,7 @@ public interface Configuration {
      *
      * @return map of header configurations
      */
-    Map<String, ? extends HeaderConfig> headerConfigs();
+    Map<LanguageId, ? extends HeaderConfig> headerConfigs();
 
     Variables templateVariables();
 
@@ -58,7 +58,7 @@ public interface Configuration {
      * @throws HeaderConfigNotFoundException if header configuration for given language ID is not found
      */
     default HeaderConfig headerConfigOrFail(LanguageId languageId) {
-        final HeaderConfig headerConfig = headerConfigs().get(languageId.value());
+        final HeaderConfig headerConfig = headerConfigs().get(languageId);
 
         if (headerConfig == null) {
             throw new HeaderConfigNotFoundException(languageId);
