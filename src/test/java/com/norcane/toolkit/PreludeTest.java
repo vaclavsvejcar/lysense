@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import io.quarkus.test.junit.QuarkusTest;
 
@@ -16,6 +17,16 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @QuarkusTest
 class PreludeTest {
+
+    @Test
+    void when() {
+        final AtomicInteger counter = new AtomicInteger(0);
+
+        Prelude.when(true, counter::incrementAndGet);
+        Prelude.when(false, counter::incrementAndGet);
+
+        assertEquals(1, counter.get());
+    }
 
     @Test
     void testNonInstantiable() {

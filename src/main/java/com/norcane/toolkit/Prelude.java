@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
@@ -15,6 +16,20 @@ public final class Prelude {
     private Prelude() {
         // utility class - hence the private constructor
         throw new IllegalStateException();
+    }
+
+    /**
+     * Concise alternative for single line {@code if} expression.
+     *
+     * <br><br><strong>Example of use</strong>
+     * {@snippet lang = "java":
+     *      when(fileSaved, () -> System.out.println("File successfully saved!"));
+     *}
+     */
+    public static void when(boolean condition, Supplier<?> supplier) {
+        if (condition) {
+            supplier.get();
+        }
     }
 
     /**
