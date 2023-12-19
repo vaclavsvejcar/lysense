@@ -43,6 +43,13 @@ public class RunCommand extends AbstractCommand {
     private final ResourceLoader resourceLoader;
     private final SourceCodeProcessor sourceCodeProcessor;
 
+    @CommandLine.Option(
+        names = {"-m", "--mode"},
+        description = "run mode, available values: ${COMPLETION-CANDIDATES}",
+        paramLabel = "MODE"
+    )
+    RunMode cliRunMode;
+
     @Inject
     public RunCommand(Console console,
                       Configuration configuration,
@@ -61,7 +68,7 @@ public class RunCommand extends AbstractCommand {
     protected ReturnCode execute() {
         final Stopwatch stopwatch = Stopwatch.createStarted();
 
-        final RunMode runMode = configuration.runMode();
+        final RunMode runMode = cliRunMode != null ? cliRunMode : configuration.runMode();
 
         console.printLn(STR."Loaded configuration from \{configurationManager.userConfigurationResource().uri()}");
 
