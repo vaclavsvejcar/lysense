@@ -11,6 +11,7 @@ public enum ErrorCode {
     INVALID_CONFIGURATION(571, "Invalid configuration"),
     MISSING_BASE_VERSION(222, "Missing base version"),
     MISSING_TEMPLATE_VARIABLE(374, "Missing template variable"),
+    NO_CONFIGURATION_FOUND(370, "No configuration found"),
     RESOURCE_NOT_FOUND(45, "Resource not found"),
     RESOURCE_NOT_WRITABLE(242, "Resource not writable"),
     UNEXPECTED_BEHAVIOR(339, "Unexpected behavior");

@@ -11,6 +11,7 @@ import com.norcane.lysense.configuration.exception.ConfigurationParseException;
 import com.norcane.lysense.configuration.exception.IncompatibleConfigurationException;
 import com.norcane.lysense.configuration.exception.InvalidConfigurationException;
 import com.norcane.lysense.configuration.exception.MissingBaseVersionException;
+import com.norcane.lysense.configuration.exception.NoConfigurationFoundException;
 import com.norcane.lysense.configuration.serialization.LowerCaseDashSeparatedEnumDeserializer;
 import com.norcane.lysense.configuration.serialization.SemVerDeserializer;
 import com.norcane.lysense.configuration.serialization.VariablesDeserializer;
@@ -20,6 +21,7 @@ import com.norcane.lysense.exception.ApplicationException;
 import com.norcane.lysense.meta.RuntimeInfo;
 import com.norcane.lysense.meta.SemVer;
 import com.norcane.lysense.resource.Resource;
+import com.norcane.lysense.resource.exception.ResourceNotFoundException;
 import com.norcane.lysense.resource.loader.ResourceLoader;
 import com.norcane.lysense.template.Variables;
 import com.norcane.toolkit.state.Memoized;
@@ -65,11 +67,25 @@ public class ConfigurationManager implements Stateful {
     public Configuration configuration() {
         return configuration.computeIfAbsent(() -> {
             final Resource defaultConfigurationResource = resourceLoader.resource(properties.defaultConfiguration());
-            final Resource userConfigurationResource = resourceLoader.resource(runtimeInfo.userConfigurationPath());
+            final Resource userConfigurationResource = userConfigurationResource();
 
             verifyCompatibleBaseVersion(userConfigurationResource);
             return loadUserConfiguration(defaultConfigurationResource, userConfigurationResource);
         });
+    }
+
+    /**
+     * Returns user configuration resource.
+     *
+     * @return user configuration resource
+     * @throws NoConfigurationFoundException if no configuration file is found
+     */
+    public Resource userConfigurationResource() {
+        try {
+            return resourceLoader.resource(runtimeInfo.userConfigurationPath());
+        } catch (ResourceNotFoundException e) {
+            throw new NoConfigurationFoundException(e.location());
+        }
     }
 
     private void verifyCompatibleBaseVersion(Resource resource) {

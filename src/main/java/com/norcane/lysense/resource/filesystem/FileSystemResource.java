@@ -2,16 +2,19 @@ package com.norcane.lysense.resource.filesystem;
 
 import com.norcane.lysense.resource.AbstractResource;
 import com.norcane.lysense.resource.Resource;
+import com.norcane.lysense.resource.WritableResource;
 import com.norcane.lysense.resource.exception.CannotReadResourceException;
+import com.norcane.lysense.resource.exception.CannotWriteResourceException;
 import com.norcane.lysense.resource.exception.ResourceNotFoundException;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.io.Writer;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class FileSystemResource extends AbstractResource {
+public class FileSystemResource extends AbstractResource implements WritableResource {
 
     public static final Resource.Scheme SCHEME = new Resource.Scheme("file");
 
@@ -49,6 +52,15 @@ public class FileSystemResource extends AbstractResource {
             return Files.newBufferedReader(path);
         } catch (IOException e) {
             throw new CannotReadResourceException(this, e);
+        }
+    }
+
+    @Override
+    public Writer writer() {
+        try {
+            return Files.newBufferedWriter(path);
+        } catch (Exception e) {
+            throw new CannotWriteResourceException(this, e);
         }
     }
 }

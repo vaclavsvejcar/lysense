@@ -21,6 +21,7 @@ quarkus:
 lysense:
   configuration:
     default: classpath:/assets/default-configuration.yaml
+    min-base-version: 0.0.0
 
 ## TEST CONFIGURATION
 "%test":

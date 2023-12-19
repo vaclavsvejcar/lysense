@@ -87,7 +87,7 @@ class SourceCodeProcessorTest {
         when(templateManager.template(templateKey))
             .thenReturn(MustacheTemplate.compile(InlineResource.of("java", "mustache", "this is template from John Smith")));
 
-        final SourceModificationResult result = sourceCodeProcessor.addHeader(sourceCodeProcessor.load(resource));
+        final SourceModificationResult result = sourceCodeProcessor.addHeader(sourceCodeProcessor.process(resource));
         assertEquals(SourceModificationResult.MODIFIED, result);
         assertEquals(expected, resource.writtenString());
 
@@ -116,7 +116,7 @@ class SourceCodeProcessorTest {
             new UserLicenseTemplateSource.TemplateKey("java"), TEST_TEMPLATE
         ));
 
-        final SourceModificationResult result = sourceCodeProcessor.addHeader(sourceCodeProcessor.load(resource));
+        final SourceModificationResult result = sourceCodeProcessor.addHeader(sourceCodeProcessor.process(resource));
         assertEquals(SourceModificationResult.NOT_MODIFIED, result);
 
         // -- verify
@@ -152,7 +152,7 @@ class SourceCodeProcessorTest {
             new UserLicenseTemplateSource.TemplateKey("java"), TEST_TEMPLATE
         ));
 
-        final SourceModificationResult result = sourceCodeProcessor.dropHeader(sourceCodeProcessor.load(resource));
+        final SourceModificationResult result = sourceCodeProcessor.dropHeader(sourceCodeProcessor.process(resource));
         assertEquals(SourceModificationResult.MODIFIED, result);
         assertEquals(expected, resource.writtenString());
 
@@ -178,7 +178,7 @@ class SourceCodeProcessorTest {
             new UserLicenseTemplateSource.TemplateKey("java"), TEST_TEMPLATE
         ));
 
-        final SourceModificationResult result = sourceCodeProcessor.dropHeader(sourceCodeProcessor.load(resource));
+        final SourceModificationResult result = sourceCodeProcessor.dropHeader(sourceCodeProcessor.process(resource));
         assertEquals(SourceModificationResult.NOT_MODIFIED, result);
 
         // -- verify
@@ -230,7 +230,7 @@ class SourceCodeProcessorTest {
         when(templateManager.template(templateKey))
             .thenReturn(MustacheTemplate.compile(InlineResource.of("java", "mustache", newTemplate.trim())));
 
-        final SourceModificationResult result = sourceCodeProcessor.updateHeader(sourceCodeProcessor.load(resource));
+        final SourceModificationResult result = sourceCodeProcessor.updateHeader(sourceCodeProcessor.process(resource));
         assertEquals(SourceModificationResult.MODIFIED, result);
         assertEquals(expected, resource.writtenString());
 
@@ -272,7 +272,7 @@ class SourceCodeProcessorTest {
         when(templateManager.template(templateKey))
             .thenReturn(MustacheTemplate.compile(InlineResource.of("java", "mustache", newTemplate.trim())));
 
-        final SourceModificationResult result = sourceCodeProcessor.updateHeader(sourceCodeProcessor.load(resource));
+        final SourceModificationResult result = sourceCodeProcessor.updateHeader(sourceCodeProcessor.process(resource));
         assertEquals(SourceModificationResult.NOT_MODIFIED, result);
 
         // -- verify

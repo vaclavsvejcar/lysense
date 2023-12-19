@@ -60,13 +60,13 @@ public class SourceCodeProcessor implements Stateful {
     }
 
     /**
-     * Loads and analyzes {@link SourceCode}.
+     * Processes and analyzes {@link SourceCode}.
      *
-     * @param resource resource to load source code from
-     * @return loaded source code
+     * @param resource resource to process source code from
+     * @return processed source code
      */
-    public SourceCode load(Resource resource) {
-        return languageIdToSupport().get(resource.extension()).load(resource);
+    public SourceCode process(Resource resource) {
+        return sourceCodeSupports().get(resource.extension()).load(resource);
     }
 
     /**
@@ -133,6 +133,19 @@ public class SourceCodeProcessor implements Stateful {
         }
     }
 
+    public Map<String, SourceCodeSupport> sourceCodeSupports() {
+        return languageIdToSupport.computeIfAbsent(() -> {
+            final Set<String> templateNames = templateManager.templates(UserLicenseTemplateSource.TemplateKey.class).keySet().stream()
+                .map(UserLicenseTemplateSource.TemplateKey::languageId)
+                .collect(Collectors.toSet());
+
+            return sourceCodeSupports.stream()
+                .filter(support -> templateNames.contains(support.languageId().value()))  // filter only source codes for which template exists
+                .flatMap(support -> support.resourceTypes().stream().map(ext -> Map.entry(ext, support)))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        });
+    }
+
     private boolean headerUpdateNeeded(String newHeader, SourceCode sourceCode) {
         if (sourceCode.metadata().header().isPresent()) {
             final LicenseHeader header = sourceCode.metadata().header().get();
@@ -172,18 +185,5 @@ public class SourceCodeProcessor implements Stateful {
         return (startLine == endLine)
                ? Operation.addSection(startLine, renderedHeader)
                : Operation.replaceSection(startLine, endLine - 1, renderedHeader);
-    }
-
-    private Map<String, SourceCodeSupport> languageIdToSupport() {
-        return languageIdToSupport.computeIfAbsent(() -> {
-            final Set<String> templateNames = templateManager.templates(UserLicenseTemplateSource.TemplateKey.class).keySet().stream()
-                .map(UserLicenseTemplateSource.TemplateKey::languageId)
-                .collect(Collectors.toSet());
-
-            return sourceCodeSupports.stream()
-                .filter(support -> templateNames.contains(support.languageId().value()))  // filter only source codes for which template exists
-                .flatMap(support -> support.resourceTypes().stream().map(ext -> Map.entry(ext, support)))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-        });
     }
 }

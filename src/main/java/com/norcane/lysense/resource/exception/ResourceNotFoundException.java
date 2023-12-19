@@ -6,28 +6,31 @@ import com.norcane.lysense.exception.ErrorDetail;
 
 import java.net.URI;
 
-import static com.norcane.toolkit.Prelude.nonNull;
-
+/**
+ * Exception thrown when resource is not found.
+ */
 public class ResourceNotFoundException extends ApplicationException {
 
-    private final String location;
+    private final URI location;
 
-    public ResourceNotFoundException(String location) {
-        super(ErrorCode.RESOURCE_NOT_FOUND, STR."Resource not found: \{location}");
-
-        this.location = location;
-    }
-
+    /**
+     * Creates new instance of {@link ResourceNotFoundException}.
+     *
+     * @param uri URI of the resource that was not found
+     */
     public ResourceNotFoundException(URI uri) {
         super(ErrorCode.RESOURCE_NOT_FOUND, STR."Resource not found: \{uri}");
 
-        this.location = uri.toString();
+        this.location = uri;
     }
 
-    public ResourceNotFoundException(String location, Throwable cause) {
-        super(ErrorCode.RESOURCE_NOT_FOUND, STR."Resource not found: \{location}", cause);
-
-        this.location = nonNull(location);
+    /**
+     * Returns the location of the resource that was not found.
+     *
+     * @return location uri
+     */
+    public URI location() {
+        return location;
     }
 
     @Override

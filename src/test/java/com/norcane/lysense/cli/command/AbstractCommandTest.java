@@ -6,6 +6,8 @@ import com.norcane.lysense.ui.console.Console;
 
 import org.junit.jupiter.api.Test;
 
+import java.net.URI;
+
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
 
@@ -44,7 +46,7 @@ class AbstractCommandTest {
         @Override
         protected ReturnCode execute() {
             executed = true;
-            throw new ResourceNotFoundException("testing exception handling");
+            throw new ResourceNotFoundException(URI.create("classpath:non-existing-file.txt"));
         }
     }
 
