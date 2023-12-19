@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.norcane.lysense.configuration.api.Configuration;
 import com.norcane.lysense.configuration.api.HeaderStyle;
+import com.norcane.lysense.configuration.api.RunMode;
 import com.norcane.lysense.configuration.exception.ConfigurationParseException;
 import com.norcane.lysense.configuration.exception.IncompatibleConfigurationException;
 import com.norcane.lysense.configuration.exception.InvalidConfigurationException;
@@ -116,6 +117,7 @@ public class ConfigurationManager implements Stateful {
     private ObjectMapper yamlObjectMapper() {
         final SimpleModule module = new SimpleModule()
             .addDeserializer(HeaderStyle.class, LowerCaseDashSeparatedEnumDeserializer.forEnum(HeaderStyle.class))
+            .addDeserializer(RunMode.class, LowerCaseDashSeparatedEnumDeserializer.forEnum(RunMode.class))
             .addDeserializer(SemVer.class, new SemVerDeserializer())
             .addDeserializer(Variables.class, new VariablesDeserializer());
 

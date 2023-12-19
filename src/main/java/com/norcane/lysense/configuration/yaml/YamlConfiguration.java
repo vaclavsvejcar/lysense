@@ -3,6 +3,7 @@ package com.norcane.lysense.configuration.yaml;
 import com.fasterxml.jackson.annotation.JsonMerge;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.norcane.lysense.configuration.api.Configuration;
+import com.norcane.lysense.configuration.api.RunMode;
 import com.norcane.lysense.meta.SemVer;
 import com.norcane.lysense.template.Variables;
 
@@ -20,6 +21,10 @@ public class YamlConfiguration implements Configuration {
     @NotNull
     @JsonProperty("base-version")
     private SemVer baseVersion;
+
+    @NotNull
+    @JsonProperty("run-mode")
+    private RunMode runMode;
 
     @NotEmpty
     @JsonProperty("templates")
@@ -42,6 +47,11 @@ public class YamlConfiguration implements Configuration {
     @Override
     public SemVer baseVersion() {
         return baseVersion;
+    }
+
+    @Override
+    public RunMode runMode() {
+        return runMode;
     }
 
     @Override

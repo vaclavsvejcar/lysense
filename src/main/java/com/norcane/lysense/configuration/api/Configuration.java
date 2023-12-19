@@ -21,6 +21,13 @@ public interface Configuration {
     SemVer baseVersion();
 
     /**
+     * Mode of the <i>run command</i> of the application. Defines how should be existing license headers handled.
+     *
+     * @return run mode
+     */
+    RunMode runMode();
+
+    /**
      * List of templates paths to be used for generating the license.
      *
      * @return list of template paths

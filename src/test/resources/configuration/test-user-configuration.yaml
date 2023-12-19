@@ -1,5 +1,7 @@
 base-version: 1.2.3
 
+run-mode: update
+
 templates:
   - path/to/templates
 

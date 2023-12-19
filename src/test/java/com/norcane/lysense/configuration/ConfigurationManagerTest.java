@@ -1,6 +1,7 @@
 package com.norcane.lysense.configuration;
 
 import com.norcane.lysense.configuration.api.Configuration;
+import com.norcane.lysense.configuration.api.RunMode;
 import com.norcane.lysense.configuration.exception.IncompatibleConfigurationException;
 import com.norcane.lysense.meta.RuntimeInfo;
 import com.norcane.lysense.meta.SemVer;
@@ -62,6 +63,7 @@ class ConfigurationManagerTest {
 
         // -- assertions
         assertEquals(SemVer.from("1.2.3"), configuration.baseVersion());
+        assertEquals(RunMode.UPDATE, configuration.runMode());
         assertEquals(List.of("path/to/templates"), configuration.templates());
         assertEquals(0, configuration.headerConfigs().get("java").headerSpacing().blankLinesAfter());
         assertEquals(2, configuration.headerConfigs().get("java").headerSpacing().blankLinesBefore());
