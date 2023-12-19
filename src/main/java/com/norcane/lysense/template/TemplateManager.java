@@ -151,7 +151,7 @@ public class TemplateManager implements Stateful {
         }
 
         final TemplateSource<?> templateSource = nonNullOrThrow(templateSources.get(templateKey),
-                                                                "No template source found for template key: " + templateKey);
+                                                                STR."No template source found for template key: \{templateKey}");
 
         loadedTemplateSources.add(templateKey);
         rawTemplates.putAll(templateSource.templateResources());

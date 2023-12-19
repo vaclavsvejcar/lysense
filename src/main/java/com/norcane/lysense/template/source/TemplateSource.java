@@ -91,7 +91,7 @@ public abstract class TemplateSource<K extends TemplateKey> {
                     throw new DuplicateTemplatesFoundException(templateName, paths);
                 }
 
-                final Resource templateResource = templateResources.get(0);
+                final Resource templateResource = templateResources.getFirst();
                 return Map.entry(templateKey(templateResource), templateResource);
             })
             .collect(Collectors.collectingAndThen(

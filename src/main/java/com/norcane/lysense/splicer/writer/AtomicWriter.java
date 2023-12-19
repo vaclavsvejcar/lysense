@@ -38,6 +38,8 @@ import java.io.Reader;
 import java.io.Writer;
 import java.util.function.Supplier;
 
+import jakarta.annotation.Nonnull;
+
 import static com.norcane.toolkit.Prelude.nonNull;
 
 /**
@@ -87,7 +89,7 @@ public abstract class AtomicWriter extends Writer {
     }
 
     @Override
-    public void write(char[] cbuf, int off, int len) throws IOException {
+    public void write(@Nonnull char[] cbuf, int off, int len) throws IOException {
         ensureTempWriter();
         tempWriter.write(cbuf, off, len);
     }

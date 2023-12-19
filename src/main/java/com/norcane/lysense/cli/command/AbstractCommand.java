@@ -91,7 +91,7 @@ public abstract class AbstractCommand implements Callable<Integer> {
         Log.error(e);
         console.emptyLine();
         console.emptyLine();
-        console.render(Alert.error("ERROR " + errorCode, e.getMessage()));
+        console.render(Alert.error(STR."ERROR \{errorCode}", e.getMessage()));
         console.render(ApplicationExceptionPrinter.of(printStackTrace, e));
     }
 }

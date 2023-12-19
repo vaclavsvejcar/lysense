@@ -129,7 +129,7 @@ public class ResourceLoader {
         final String dirSuffix = listDirectoryRecursively ? GLOB_RECURSIVE_DIR : GLOB_SINGLE_DIR;
         final String patternOrDirectory = pathMatcher.isPattern(patternWithoutScheme)
                                           ? patternWithoutScheme
-                                          : patternWithoutScheme + "/" + dirSuffix;
+                                          : STR."\{patternWithoutScheme}/\{dirSuffix}";
 
         return iterableFactory.resources(patternOrDirectory, filter);
     }
@@ -143,7 +143,7 @@ public class ResourceLoader {
 
     private String dropScheme(String path) {
         return Resource.Scheme.parse(path)
-            .filter(scheme -> path.startsWith(scheme.value() + ":"))
+            .filter(scheme -> path.startsWith(STR."\{scheme.value()}:"))
             .map(scheme -> path.substring(scheme.value().length() + 1))
             .orElse(path);
     }

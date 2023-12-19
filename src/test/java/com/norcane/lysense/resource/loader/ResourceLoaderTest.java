@@ -82,7 +82,7 @@ class ResourceLoaderTest {
         assertTrue(resources1.stream().anyMatch(resource -> resource.uri().toString().endsWith("b.txt")));
 
         // check that all resources from given directory are recursively loaded when using '**' GLOB
-        final List<Resource> resources2 = resourceLoader.resources(tempDirectory + "/**", _ -> true, true);
+        final List<Resource> resources2 = resourceLoader.resources(STR."\{tempDirectory}/**", _ -> true, true);
         assertEquals(2, resources2.size());
         assertTrue(resources2.stream().anyMatch(resource -> resource.uri().toString().endsWith("a.txt")));
         assertTrue(resources2.stream().anyMatch(resource -> resource.uri().toString().endsWith("b.txt")));

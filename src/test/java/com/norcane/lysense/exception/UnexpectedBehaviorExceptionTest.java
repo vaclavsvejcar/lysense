@@ -35,8 +35,8 @@ import java.io.IOException;
 
 import io.quarkus.test.junit.QuarkusTest;
 
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @QuarkusTest
 class UnexpectedBehaviorExceptionTest {
@@ -51,6 +51,6 @@ class UnexpectedBehaviorExceptionTest {
 
     @Test
     void getCause() {
-        assertTrue(exceptionWithCause.getCause() instanceof IOException);
+        assertInstanceOf(IOException.class, exceptionWithCause.getCause());
     }
 }

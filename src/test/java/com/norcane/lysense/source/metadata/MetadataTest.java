@@ -47,9 +47,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @QuarkusTest
 class MetadataTest {
 
-    static CommentDetectorFactory commentDetectorFactory = CommentDetectorFactory.blockSyntax(Pattern.compile("^/\\*(?!\\*)"), Pattern.compile("\\*/$"));
-    static HeaderDetectionRules headerDetectionRules = HeaderDetectionRules.putBefore(Pattern.compile("^package"));
-    static HeaderDetectionRules headerDetectionRulesPutAfter = HeaderDetectionRules.from(Pattern.compile("^PA"), Pattern.compile("^package"));
+    static final CommentDetectorFactory commentDetectorFactory = CommentDetectorFactory.blockSyntax(Pattern.compile("^/\\*(?!\\*)"), Pattern.compile("\\*/$"));
+    static final HeaderDetectionRules headerDetectionRules = HeaderDetectionRules.putBefore(Pattern.compile("^package"));
+    static final HeaderDetectionRules headerDetectionRulesPutAfter = HeaderDetectionRules.from(Pattern.compile("^PA"), Pattern.compile("^package"));
 
     @Test
     void header_noHeaderFound() {

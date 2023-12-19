@@ -52,7 +52,7 @@ public class PathMatcher {
      * @return {@code true} if {@code path} matches {@code pattern}
      */
     public boolean matches(String pattern, Path path) {
-        final String syntaxAndPattern = PATH_MATCHER_SYNTAX + ":" + pattern;
+        final String syntaxAndPattern = STR."\{PATH_MATCHER_SYNTAX}:\{pattern}";
         return FileSystems.getDefault().getPathMatcher(syntaxAndPattern).matches(path);
     }
 

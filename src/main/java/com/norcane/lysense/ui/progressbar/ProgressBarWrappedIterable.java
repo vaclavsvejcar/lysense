@@ -35,6 +35,8 @@ import com.norcane.lysense.ui.console.Console;
 import java.util.Iterator;
 import java.util.function.Function;
 
+import jakarta.annotation.Nonnull;
+
 import static com.norcane.toolkit.Prelude.nonNull;
 
 
@@ -70,6 +72,7 @@ public class ProgressBarWrappedIterable<T> implements Iterable<T> {
         this.console = nonNull(console);
     }
 
+    @Nonnull
     @Override
     public Iterator<T> iterator() {
         return new Iterator<>() {
