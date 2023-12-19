@@ -6,7 +6,7 @@ templates:
   - assets/license_templates
 
 sources:
-  - doc/**/*.sh
+  - scripts/**/*.sh
   - src/main/java
   - src/test/java
 
