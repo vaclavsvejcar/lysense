@@ -47,7 +47,8 @@ public class VariablesDeserializer extends JsonDeserializer<Variables> {
     @Override
     public Variables deserialize(JsonParser jsonParser, DeserializationContext context) throws IOException {
         final ObjectMapper mapper = (ObjectMapper) jsonParser.getCodec();
-        final Map<String, Object> variablesMap = mapper.readValue(jsonParser, new TypeReference<>() {});
+        final Map<String, Object> variablesMap = mapper.readValue(jsonParser, new TypeReference<>() {
+        });
 
         return Variables.from(variablesMap);
     }

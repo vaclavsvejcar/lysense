@@ -32,15 +32,14 @@ package com.norcane.lysense.resource.loader;
 import com.norcane.lysense.resource.Resource;
 import com.norcane.lysense.resource.exception.ResourceNotFoundException;
 import com.norcane.lysense.resource.util.PathMatcher;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Instance;
+import jakarta.inject.Inject;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Predicate;
-
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.Instance;
-import jakarta.inject.Inject;
 
 import static com.norcane.toolkit.Prelude.nonNull;
 import static com.norcane.toolkit.Prelude.toMap;
@@ -128,8 +127,8 @@ public class ResourceLoader {
         // if the pattern points to directory, return recursively all resources in it
         final String dirSuffix = listDirectoryRecursively ? GLOB_RECURSIVE_DIR : GLOB_SINGLE_DIR;
         final String patternOrDirectory = pathMatcher.isPattern(patternWithoutScheme)
-                                          ? patternWithoutScheme
-                                          : STR."\{patternWithoutScheme}/\{dirSuffix}";
+                ? patternWithoutScheme
+                : STR."\{patternWithoutScheme}/\{dirSuffix}";
 
         return iterableFactory.resources(patternOrDirectory, filter);
     }
@@ -137,15 +136,15 @@ public class ResourceLoader {
     private ResourceFactory findFactory(String path) {
         final Optional<Resource.Scheme> maybeScheme = Resource.Scheme.parse(path);
         return maybeScheme
-            .flatMap(scheme -> Optional.ofNullable(factories.get(scheme)))
-            .orElse(defaultFactory);
+                .flatMap(scheme -> Optional.ofNullable(factories.get(scheme)))
+                .orElse(defaultFactory);
     }
 
     private String dropScheme(String path) {
         return Resource.Scheme.parse(path)
-            .filter(scheme -> path.startsWith(STR."\{scheme.value()}:"))
-            .map(scheme -> path.substring(scheme.value().length() + 1))
-            .orElse(path);
+                .filter(scheme -> path.startsWith(STR."\{scheme.value()}:"))
+                .map(scheme -> path.substring(scheme.value().length() + 1))
+                .orElse(path);
     }
 
     private Resource resourceOrNull(ResourceFactory factory, String path) {

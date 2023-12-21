@@ -29,9 +29,9 @@
  */
 package com.norcane.lysense.meta;
 
-import java.io.File;
-
 import jakarta.enterprise.context.ApplicationScoped;
+
+import java.io.File;
 
 @ApplicationScoped
 public class RuntimeInfo {

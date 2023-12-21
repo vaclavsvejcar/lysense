@@ -51,8 +51,8 @@ public class MissingTemplateVariableException extends ApplicationException {
     @Override
     public ErrorDetail errorDetail() {
         return ErrorDetail.builder()
-            .problem(STR."Template '\{templateName}' contains placeholder with name '\{variableName}', but no such variable was provided.")
-            .solution(STR."Please check if you defined variable '\{variableName}' in the configuration file.")
-            .build();
+                .problem(STR."Template '\{templateName}' contains placeholder with name '\{variableName}', but no such variable was provided.")
+                .solution(STR."Please check if you defined variable '\{variableName}' in the configuration file.")
+                .build();
     }
 }

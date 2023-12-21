@@ -33,16 +33,15 @@ import com.norcane.lysense.configuration.api.Configuration;
 import com.norcane.lysense.resource.Resource;
 import com.norcane.lysense.resource.loader.ResourceLoader;
 import com.norcane.lysense.template.TemplateFactory;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Instance;
+import jakarta.inject.Inject;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
-
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.Instance;
-import jakarta.inject.Inject;
 
 import static com.norcane.toolkit.Prelude.toMap;
 
@@ -51,7 +50,7 @@ import static com.norcane.toolkit.Prelude.toMap;
  * {@link Configuration#templates()}} and {@link Resource#extension()} as <i>template type</i>>.
  *
  * <br><br>
- *
+ * <p>
  * For example, if templates are loaded from file system, then file name will be used as <i>template name</i> and file extension as <i>template type</i>:
  * <pre>
  *     /foo/bar/my-awesome-template.mustache
@@ -97,9 +96,9 @@ public class UserLicenseTemplateSource extends TemplateSource<UserLicenseTemplat
         final Predicate<Resource> filter = resource -> templateTypes.contains(resource.extension());
 
         return templatePaths.stream()
-            .map(location -> resourceLoader.resources(location, filter, true))
-            .flatMap(Collection::stream)
-            .toList();
+                .map(location -> resourceLoader.resources(location, filter, true))
+                .flatMap(Collection::stream)
+                .toList();
     }
 
     /**

@@ -65,8 +65,8 @@ public class ResourceNotFoundException extends ApplicationException {
     @Override
     public ErrorDetail errorDetail() {
         return ErrorDetail.builder()
-            .problem(STR."Resource not found: \{location}")
-            .solution("Please check if given resource exists.")
-            .build();
+                .problem(STR."Resource not found: \{location}")
+                .solution("Please check if given resource exists.")
+                .build();
     }
 }

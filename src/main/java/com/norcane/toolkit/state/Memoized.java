@@ -82,8 +82,8 @@ public final class Memoized<T> implements Stateful {
      */
     public T computeIfAbsent(Supplier<T> supplier) {
         return value == null
-               ? (value = supplier.get())
-               : value;
+                ? (value = supplier.get())
+                : value;
     }
 
     /**
@@ -112,7 +112,7 @@ public final class Memoized<T> implements Stateful {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
-            .add("value", nonNullOrDefault(value, "<absent>"))
-            .toString();
+                .add("value", nonNullOrDefault(value, "<absent>"))
+                .toString();
     }
 }

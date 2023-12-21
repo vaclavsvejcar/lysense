@@ -29,11 +29,7 @@
  */
 package com.norcane.toolkit;
 
-import java.util.Enumeration;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Spliterator;
-import java.util.Spliterators;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;

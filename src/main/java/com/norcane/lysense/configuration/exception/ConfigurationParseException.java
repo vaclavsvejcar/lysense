@@ -51,14 +51,14 @@ public class ConfigurationParseException extends ApplicationException {
     @Override
     public ErrorDetail errorDetail() {
         return ErrorDetail.builder()
-            .problem(STR."Error loading configuration from '\{resource}': \{cause.getMessage()}")
-            .solution(
-                """
-                    Please check that some of the following isn't wrong:
-                                
-                      - syntax of the configuration file is invalid
-                      - you don't have enough right to access the configuration file"""
-            )
-            .build();
+                .problem(STR."Error loading configuration from '\{resource}': \{cause.getMessage()}")
+                .solution(
+                        """
+                                Please check that some of the following isn't wrong:
+                                            
+                                  - syntax of the configuration file is invalid
+                                  - you don't have enough right to access the configuration file"""
+                )
+                .build();
     }
 }

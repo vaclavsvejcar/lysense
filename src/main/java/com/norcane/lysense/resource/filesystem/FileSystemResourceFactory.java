@@ -34,15 +34,14 @@ import com.norcane.lysense.resource.loader.DefaultResourceFactory;
 import com.norcane.lysense.resource.loader.IterableResourceFactory;
 import com.norcane.lysense.resource.util.PathMatcher;
 import com.norcane.lysense.resource.util.ResourceWalker;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
-
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
 @ApplicationScoped
 @DefaultResourceFactory

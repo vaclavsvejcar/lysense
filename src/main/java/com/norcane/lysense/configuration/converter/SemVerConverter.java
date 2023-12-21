@@ -30,7 +30,6 @@
 package com.norcane.lysense.configuration.converter;
 
 import com.norcane.lysense.meta.SemVer;
-
 import org.eclipse.microprofile.config.spi.Converter;
 
 /**

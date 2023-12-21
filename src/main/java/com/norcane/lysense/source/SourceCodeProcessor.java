@@ -44,14 +44,13 @@ import com.norcane.lysense.template.Variables;
 import com.norcane.lysense.template.source.UserLicenseTemplateSource;
 import com.norcane.toolkit.state.Memoized;
 import com.norcane.toolkit.state.Stateful;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Instance;
+import jakarta.inject.Inject;
 
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.Instance;
-import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class SourceCodeProcessor implements Stateful {
@@ -84,8 +83,8 @@ public class SourceCodeProcessor implements Stateful {
      */
     public Set<LanguageId> supportedLanguageIds() {
         return sourceCodeSupports.stream()
-            .map(SourceCodeSupport::languageId)
-            .collect(Collectors.toSet());
+                .map(SourceCodeSupport::languageId)
+                .collect(Collectors.toSet());
     }
 
     /**
@@ -165,13 +164,13 @@ public class SourceCodeProcessor implements Stateful {
     public Map<String, SourceCodeSupport> sourceCodeSupports() {
         return languageIdToSupport.computeIfAbsent(() -> {
             final Set<String> templateNames = templateManager.templates(UserLicenseTemplateSource.TemplateKey.class).keySet().stream()
-                .map(UserLicenseTemplateSource.TemplateKey::languageId)
-                .collect(Collectors.toSet());
+                    .map(UserLicenseTemplateSource.TemplateKey::languageId)
+                    .collect(Collectors.toSet());
 
             return sourceCodeSupports.stream()
-                .filter(support -> templateNames.contains(support.languageId().value()))  // filter only source codes for which template exists
-                .flatMap(support -> support.resourceTypes().stream().map(ext -> Map.entry(ext, support)))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+                    .filter(support -> templateNames.contains(support.languageId().value()))  // filter only source codes for which template exists
+                    .flatMap(support -> support.resourceTypes().stream().map(ext -> Map.entry(ext, support)))
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         });
     }
 
@@ -212,7 +211,7 @@ public class SourceCodeProcessor implements Stateful {
         final int endLine = startLine + candidate.blankLinesAfter();
 
         return (startLine == endLine)
-               ? Operation.addSection(startLine, renderedHeader)
-               : Operation.replaceSection(startLine, endLine - 1, renderedHeader);
+                ? Operation.addSection(startLine, renderedHeader)
+                : Operation.replaceSection(startLine, endLine - 1, renderedHeader);
     }
 }

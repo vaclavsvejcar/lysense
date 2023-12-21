@@ -30,19 +30,17 @@
 package com.norcane.lysense.ui.console;
 
 import com.norcane.toolkit.state.Memoized;
-
-import org.jline.terminal.Terminal;
-import org.jline.terminal.TerminalBuilder;
-import org.jline.utils.InfoCmp;
-
-import java.io.IOException;
-
 import io.quarkus.arc.Unremovable;
 import io.quarkus.runtime.LaunchMode;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.enterprise.context.ApplicationScoped;
+import org.jline.terminal.Terminal;
+import org.jline.terminal.TerminalBuilder;
+import org.jline.utils.InfoCmp;
 import picocli.CommandLine;
+
+import java.io.IOException;
 
 /**
  * Implementation of {@link Console} using <a href="https://jline.github.io">jLine</a> as the terminal backend library.
@@ -85,9 +83,9 @@ public class JLineConsole implements Console {
     @Override
     public boolean isInteractive() {
         return interactive.computeIfAbsent(
-            () -> LaunchMode.current() == LaunchMode.NORMAL &&
-                  terminal.getStringCapability(InfoCmp.Capability.cursor_up) != null &&
-                  terminal.getStringCapability(InfoCmp.Capability.cursor_down) != null);
+                () -> LaunchMode.current() == LaunchMode.NORMAL &&
+                        terminal.getStringCapability(InfoCmp.Capability.cursor_up) != null &&
+                        terminal.getStringCapability(InfoCmp.Capability.cursor_down) != null);
     }
 
     private String ansiString(final String text) {

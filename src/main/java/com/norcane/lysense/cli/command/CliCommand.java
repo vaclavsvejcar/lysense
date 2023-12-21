@@ -36,11 +36,10 @@ import com.norcane.lysense.meta.ProductInfo;
 import com.norcane.lysense.ui.alert.Alert;
 import com.norcane.lysense.ui.console.Console;
 import com.norcane.lysense.ui.exception.ApplicationExceptionPrinter;
-
-import java.util.concurrent.Callable;
-
 import io.quarkus.logging.Log;
 import picocli.CommandLine;
+
+import java.util.concurrent.Callable;
 
 import static com.norcane.toolkit.Prelude.nonNull;
 import static java.util.FormatProcessor.FMT;
@@ -48,14 +47,14 @@ import static java.util.FormatProcessor.FMT;
 /**
  * Base class to all <i>CLI</i> subcommands.
  */
-public abstract class AbstractCommand implements Callable<Integer> {
+public abstract class CliCommand implements Callable<Integer> {
 
     @CommandLine.Option(names = {"--print-stack-trace"}, description = "print stack trace for errors", hidden = true)
     protected boolean printStackTrace;
 
     protected final Console console;
 
-    public AbstractCommand(Console console) {
+    public CliCommand(Console console) {
         this.console = nonNull(console);
     }
 

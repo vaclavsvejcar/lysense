@@ -30,7 +30,6 @@
 package com.norcane.lysense.ui.exception;
 
 import com.google.common.base.Throwables;
-
 import com.norcane.lysense.exception.ApplicationException;
 import com.norcane.lysense.exception.ErrorDetail;
 import com.norcane.lysense.meta.ProductInfo;
@@ -74,7 +73,7 @@ public class ApplicationExceptionPrinter implements UIComponent {
         final String listOfLinks = linksToDisplay.stream().map(link -> STR."  - @|underline \{link}|@").collect(Collectors.joining("\n"));
 
         final String baseMessage =
-            STR."""
+                STR."""
 
                 @|bold,underline Problem:|@
                 \{errorDetails.problem()}

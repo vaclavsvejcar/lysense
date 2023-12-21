@@ -27,56 +27,20 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package com.norcane.lysense.cli.command;
+package com.norcane.lysense.cli.command.setup;
 
-import com.norcane.lysense.cli.ReturnCode;
-import com.norcane.lysense.resource.exception.ResourceNotFoundException;
-import com.norcane.lysense.ui.console.Console;
+import picocli.CommandLine;
 
-import org.junit.jupiter.api.Test;
-
-import java.net.URI;
-
-import io.quarkus.test.InjectMock;
-import io.quarkus.test.junit.QuarkusTest;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-@QuarkusTest
-class AbstractCommandTest {
-
-    @InjectMock
-    Console console;
-
-    @Test
-    void run() {
-        final TestCommand command = new TestCommand(console);
-
-        command.call();
-        assertTrue(command.executed);
-    }
-
-    @Test
-    void printProductHeader() {
-        final AbstractCommand command = new TestCommand(console);
-
-        command.printProductHeader();
-    }
-
-
-    static class TestCommand extends AbstractCommand {
-
-        boolean executed = false;
-
-        public TestCommand(Console console) {
-            super(console);
-        }
-
-        @Override
-        protected ReturnCode execute() {
-            executed = true;
-            throw new ResourceNotFoundException(URI.create("classpath:non-existing-file.txt"));
-        }
-    }
-
+@CommandLine.Command(
+        name = "setup",
+        description = "set up zen in current project",
+        usageHelpAutoWidth = true,
+        mixinStandardHelpOptions = true,
+        subcommands = {InstallCommand.class},
+        headerHeading = "@|bold,underline Usage|@:%n%n",
+        descriptionHeading = "%n@|bold,underline Description|@:%n%n",
+        parameterListHeading = "%n@|bold,underline Parameters|@:%n",
+        optionListHeading = "%n@|bold,underline Options|@:%n"
+)
+public class SetupCommand {
 }

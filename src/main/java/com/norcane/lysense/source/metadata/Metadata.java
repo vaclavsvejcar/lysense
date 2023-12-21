@@ -77,11 +77,11 @@ public class Metadata {
             final int putBeforeIndex = putBeforeIndex().orElse(lines.size());
 
             final List<Line> headerLines = lines.stream()
-                .skip(putAfterIndex)
-                .limit(putBeforeIndex - putAfterIndex)
-                .dropWhile(line -> line.type() != LineType.COMMENT)
-                .takeWhile(line -> line.type() == LineType.COMMENT)
-                .toList();
+                    .skip(putAfterIndex)
+                    .limit(putBeforeIndex - putAfterIndex)
+                    .dropWhile(line -> line.type() != LineType.COMMENT)
+                    .takeWhile(line -> line.type() == LineType.COMMENT)
+                    .toList();
 
             if (headerLines.isEmpty()) {
                 return null;
@@ -115,33 +115,33 @@ public class Metadata {
 
     Optional<Integer> putAfterIndex() {
         return lines.stream()
-            .filter(line -> line.type() == LineType.PUT_AFTER_PATTERN)
-            .findFirst()
-            .map(Line::lineIndex);
+                .filter(line -> line.type() == LineType.PUT_AFTER_PATTERN)
+                .findFirst()
+                .map(Line::lineIndex);
     }
 
     Optional<Integer> putBeforeIndex() {
         return lines.stream()
-            .filter(line -> line.type() == LineType.PUT_BEFORE_PATTERN)
-            .reduce((first, _) -> first)
-            .map(Line::lineIndex);
+                .filter(line -> line.type() == LineType.PUT_BEFORE_PATTERN)
+                .reduce((first, _) -> first)
+                .map(Line::lineIndex);
     }
 
     private int blankLinesAfter(int lineIndex) {
         return lines.stream()
-            .skip(lineIndex)
-            .takeWhile(line -> line.type() == LineType.BLANK)
-            .toList()
-            .size();
+                .skip(lineIndex)
+                .takeWhile(line -> line.type() == LineType.BLANK)
+                .toList()
+                .size();
     }
 
     private int blankLinesBefore(int lineIndex) {
         return lines.stream()
-            .limit(lineIndex)
-            .sorted(Comparator.comparing(Line::lineIndex).reversed())
-            .takeWhile(line -> line.type() == LineType.BLANK)
-            .toList()
-            .size();
+                .limit(lineIndex)
+                .sorted(Comparator.comparing(Line::lineIndex).reversed())
+                .takeWhile(line -> line.type() == LineType.BLANK)
+                .toList()
+                .size();
     }
 
     /**

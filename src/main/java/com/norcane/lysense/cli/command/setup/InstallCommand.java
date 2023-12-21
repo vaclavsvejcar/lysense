@@ -27,31 +27,49 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package com.norcane.lysense.configuration.yaml;
+package com.norcane.lysense.cli.command.setup;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.norcane.lysense.configuration.api.HeaderSpacing;
-import io.quarkus.runtime.annotations.RegisterForReflection;
-import jakarta.validation.constraints.NotNull;
+import com.norcane.lysense.cli.ReturnCode;
+import com.norcane.lysense.cli.command.CliCommand;
+import com.norcane.lysense.cli.command.exception.ProductAlreadyInstalledException;
+import com.norcane.lysense.configuration.ConfigurationLookup;
+import com.norcane.lysense.configuration.ConfigurationManager;
+import com.norcane.lysense.ui.console.Console;
+import jakarta.inject.Inject;
+import picocli.CommandLine;
 
-@RegisterForReflection
-public class YamlHeaderSpacing implements HeaderSpacing {
+@CommandLine.Command(
+        name = "install",
+        description = "install and configure zen in current project",
+        usageHelpAutoWidth = true,
+        headerHeading = "@|bold,underline Usage|@:%n%n",
+        descriptionHeading = "%n@|bold,underline Description|@:%n%n",
+        parameterListHeading = "%n@|bold,underline Parameters|@:%n",
+        optionListHeading = "%n@|bold,underline Options|@:%n"
+)
+public class InstallCommand extends CliCommand {
 
-    @NotNull
-    @JsonProperty("blank-lines-after")
-    private Integer blankLinesAfter;
+    private final ConfigurationManager configurationManager;
 
-    @NotNull
-    @JsonProperty("blank-lines-before")
-    private Integer blankLinesBefore;
+    @Inject
+    public InstallCommand(Console console,
+                          ConfigurationManager configurationManager) {
 
-    @Override
-    public Integer blankLinesAfter() {
-        return blankLinesAfter;
+        super(console);
+
+        this.configurationManager = configurationManager;
     }
 
     @Override
-    public Integer blankLinesBefore() {
-        return blankLinesBefore;
+    protected ReturnCode execute() {
+        checkIfAlreadyInstalled();
+
+        return ReturnCode.SUCCESS;
+    }
+
+    private void checkIfAlreadyInstalled() {
+        if (configurationManager.findConfigurationResource() instanceof ConfigurationLookup.Found found) {
+            throw new ProductAlreadyInstalledException(found.resource());
+        }
     }
 }

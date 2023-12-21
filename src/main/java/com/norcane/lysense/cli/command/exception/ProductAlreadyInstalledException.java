@@ -27,31 +27,39 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package com.norcane.lysense.configuration.yaml;
+package com.norcane.lysense.cli.command.exception;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.norcane.lysense.configuration.api.HeaderSpacing;
-import io.quarkus.runtime.annotations.RegisterForReflection;
-import jakarta.validation.constraints.NotNull;
+import com.norcane.lysense.exception.ApplicationException;
+import com.norcane.lysense.exception.ErrorCode;
+import com.norcane.lysense.exception.ErrorDetail;
+import com.norcane.lysense.meta.ProductInfo;
+import com.norcane.lysense.resource.Resource;
 
-@RegisterForReflection
-public class YamlHeaderSpacing implements HeaderSpacing {
+/**
+ * Exception thrown when user attempts to install the product in directory where user configuration has been already found.
+ */
+public class ProductAlreadyInstalledException extends ApplicationException {
 
-    @NotNull
-    @JsonProperty("blank-lines-after")
-    private Integer blankLinesAfter;
+    private final Resource existingUserConfiguration;
 
-    @NotNull
-    @JsonProperty("blank-lines-before")
-    private Integer blankLinesBefore;
+    public ProductAlreadyInstalledException(Resource existingUserConfiguration) {
+        super(ErrorCode.PRODUCT_ALREADY_INSTALLED, STR."\{ProductInfo.NAME} already installed, found user configuration: \{existingUserConfiguration}");
 
-    @Override
-    public Integer blankLinesAfter() {
-        return blankLinesAfter;
+        this.existingUserConfiguration = existingUserConfiguration;
     }
 
+
     @Override
-    public Integer blankLinesBefore() {
-        return blankLinesBefore;
+    public ErrorDetail errorDetail() {
+        return ErrorDetail.builder()
+                .problem(
+                        STR."It seems you're attempting to install \{ProductInfo.NAME} in current directory, but user configuration has been already found in \{existingUserConfiguration}."
+                )
+
+                .solution(
+                        STR."Please check that you're installing \{ProductInfo.NAME} in correct directory."
+                )
+
+                .build();
     }
 }

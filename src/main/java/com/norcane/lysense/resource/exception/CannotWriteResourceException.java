@@ -53,8 +53,8 @@ public class CannotWriteResourceException extends ApplicationException {
     @Override
     public ErrorDetail errorDetail() {
         return ErrorDetail.builder()
-            .problem(STR."Cannot write resource \{resource.uri()}")
-            .solution("Please check if target resource exists and you have write privileges.")
-            .build();
+                .problem(STR."Cannot write resource \{resource.uri()}")
+                .solution("Please check if target resource exists and you have write privileges.")
+                .build();
     }
 }

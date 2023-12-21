@@ -27,31 +27,15 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package com.norcane.lysense.configuration.yaml;
+package com.norcane.lysense.configuration.api;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.norcane.lysense.configuration.api.HeaderSpacing;
-import io.quarkus.runtime.annotations.RegisterForReflection;
-import jakarta.validation.constraints.NotNull;
+import com.norcane.lysense.resource.Resource;
 
-@RegisterForReflection
-public class YamlHeaderSpacing implements HeaderSpacing {
-
-    @NotNull
-    @JsonProperty("blank-lines-after")
-    private Integer blankLinesAfter;
-
-    @NotNull
-    @JsonProperty("blank-lines-before")
-    private Integer blankLinesBefore;
-
-    @Override
-    public Integer blankLinesAfter() {
-        return blankLinesAfter;
-    }
-
-    @Override
-    public Integer blankLinesBefore() {
-        return blankLinesBefore;
-    }
+/**
+ * Configuration reference, contains the user configuration object and resource.
+ *
+ * @param configuration user configuration
+ * @param resource      user configuration resource
+ */
+public record ConfigurationRef(Configuration configuration, Resource resource) {
 }

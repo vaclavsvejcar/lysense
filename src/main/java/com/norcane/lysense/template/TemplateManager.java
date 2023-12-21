@@ -32,18 +32,13 @@ package com.norcane.lysense.template;
 import com.norcane.lysense.resource.Resource;
 import com.norcane.lysense.template.source.TemplateSource;
 import com.norcane.toolkit.state.Stateful;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Instance;
 import jakarta.inject.Inject;
+
+import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import static com.norcane.toolkit.Prelude.nonNullOrThrow;
 import static com.norcane.toolkit.Prelude.toMap;
@@ -98,10 +93,10 @@ public class TemplateManager implements Stateful {
         loadRawTemplates(templateKey);
 
         return rawTemplates.keySet().stream()
-            .filter(templateKey::isInstance)
-            .map(templateKey::cast)
-            .filter(filter)
-            .collect(Collectors.toMap(k -> k, this::template));
+                .filter(templateKey::isInstance)
+                .map(templateKey::cast)
+                .filter(filter)
+                .collect(Collectors.toMap(k -> k, this::template));
     }
 
     /**
@@ -139,7 +134,7 @@ public class TemplateManager implements Stateful {
 
         final Resource rawTemplate = nonNullOrThrow(rawTemplates.get(templateKey), STR."No raw template found for template key '\{templateKey}'");
         final TemplateFactory templateFactory = nonNullOrThrow(templateFactories.get(rawTemplate.extension()),
-                                                               STR."No template factory found for template type '\{rawTemplate.extension()}'");
+                STR."No template factory found for template type '\{rawTemplate.extension()}'");
         final Template template = templateFactory.compile(rawTemplate);
 
         compiledTemplates.put(templateKey, template);
@@ -151,7 +146,7 @@ public class TemplateManager implements Stateful {
         }
 
         final TemplateSource<?> templateSource = nonNullOrThrow(templateSources.get(templateKey),
-                                                                STR."No template source found for template key: \{templateKey}");
+                STR."No template source found for template key: \{templateKey}");
 
         loadedTemplateSources.add(templateKey);
         rawTemplates.putAll(templateSource.templateResources());

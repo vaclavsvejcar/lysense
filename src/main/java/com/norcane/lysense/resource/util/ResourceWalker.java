@@ -31,6 +31,8 @@ package com.norcane.lysense.resource.util;
 
 
 import com.norcane.lysense.resource.Resource;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -40,9 +42,6 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
-
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
 /**
  * Utility class for walking through the NIO file system and finding resources.
@@ -70,11 +69,11 @@ public class ResourceWalker {
     public List<Resource> walk(Path rootPath, String pattern, Function<Path, Resource> toResource, Predicate<Resource> filter) {
         try (final Stream<Path> stream = Files.walk(rootPath)) {
             return stream
-                .filter(Files::isRegularFile)
-                .filter(path -> pathMatcher.matches(pattern, rootPath.relativize(path)))
-                .map(toResource)
-                .filter(filter)
-                .toList();
+                    .filter(Files::isRegularFile)
+                    .filter(path -> pathMatcher.matches(pattern, rootPath.relativize(path)))
+                    .map(toResource)
+                    .filter(filter)
+                    .toList();
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }

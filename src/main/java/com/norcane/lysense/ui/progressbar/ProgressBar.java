@@ -30,7 +30,6 @@
 package com.norcane.lysense.ui.progressbar;
 
 import com.google.common.collect.Iterables;
-
 import com.norcane.lysense.ui.InteractiveUIComponent;
 import com.norcane.lysense.ui.console.Console;
 import com.norcane.lysense.ui.progressbar.checklist.CheckListProgressBar;

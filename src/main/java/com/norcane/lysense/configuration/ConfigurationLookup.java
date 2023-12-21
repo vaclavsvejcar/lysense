@@ -27,31 +27,32 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package com.norcane.lysense.configuration.yaml;
+package com.norcane.lysense.configuration;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.norcane.lysense.configuration.api.HeaderSpacing;
-import io.quarkus.runtime.annotations.RegisterForReflection;
-import jakarta.validation.constraints.NotNull;
+import com.norcane.lysense.resource.Resource;
 
-@RegisterForReflection
-public class YamlHeaderSpacing implements HeaderSpacing {
+import java.net.URI;
 
-    @NotNull
-    @JsonProperty("blank-lines-after")
-    private Integer blankLinesAfter;
+/**
+ * Result of the lookup for user configuration.
+ */
+public sealed interface ConfigurationLookup
+        permits ConfigurationLookup.Found,
+                ConfigurationLookup.NotFound {
 
-    @NotNull
-    @JsonProperty("blank-lines-before")
-    private Integer blankLinesBefore;
-
-    @Override
-    public Integer blankLinesAfter() {
-        return blankLinesAfter;
+    /**
+     * User configuration file has been found.
+     *
+     * @param resource user configuration resource
+     */
+    record Found(Resource resource) implements ConfigurationLookup {
     }
 
-    @Override
-    public Integer blankLinesBefore() {
-        return blankLinesBefore;
+    /**
+     * User configuration file has not been found.
+     *
+     * @param location location where user configuration file should be
+     */
+    record NotFound(URI location) implements ConfigurationLookup {
     }
 }

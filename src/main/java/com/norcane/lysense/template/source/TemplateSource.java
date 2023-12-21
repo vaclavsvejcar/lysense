@@ -78,25 +78,25 @@ public abstract class TemplateSource<K extends TemplateKey> {
     public final Map<K, Resource> templateResources() {
 
         final Map<String, List<Resource>> templateNameToResource = resources().stream()
-            .collect(Collectors.groupingBy(Resource::name));
+                .collect(Collectors.groupingBy(Resource::name));
 
         return templateNameToResource.entrySet().stream()
-            .map(entry -> {
-                final String templateName = entry.getKey();
-                final List<Resource> templateResources = entry.getValue();
+                .map(entry -> {
+                    final String templateName = entry.getKey();
+                    final List<Resource> templateResources = entry.getValue();
 
-                // found multiple template resources with same template name
-                if (templateResources.size() > 1) {
-                    final List<URI> paths = templateResources.stream().map(Resource::uri).toList();
-                    throw new DuplicateTemplatesFoundException(templateName, paths);
-                }
+                    // found multiple template resources with same template name
+                    if (templateResources.size() > 1) {
+                        final List<URI> paths = templateResources.stream().map(Resource::uri).toList();
+                        throw new DuplicateTemplatesFoundException(templateName, paths);
+                    }
 
-                final Resource templateResource = templateResources.getFirst();
-                return Map.entry(templateKey(templateResource), templateResource);
-            })
-            .collect(Collectors.collectingAndThen(
-                Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue),
-                Collections::unmodifiableMap
-            ));
+                    final Resource templateResource = templateResources.getFirst();
+                    return Map.entry(templateKey(templateResource), templateResource);
+                })
+                .collect(Collectors.collectingAndThen(
+                        Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue),
+                        Collections::unmodifiableMap
+                ));
     }
 }

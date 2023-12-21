@@ -34,13 +34,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.norcane.lysense.configuration.api.Configuration;
+import com.norcane.lysense.configuration.api.ConfigurationRef;
 import com.norcane.lysense.configuration.api.HeaderStyle;
 import com.norcane.lysense.configuration.api.RunMode;
-import com.norcane.lysense.configuration.exception.ConfigurationParseException;
-import com.norcane.lysense.configuration.exception.IncompatibleConfigurationException;
-import com.norcane.lysense.configuration.exception.InvalidConfigurationException;
-import com.norcane.lysense.configuration.exception.MissingBaseVersionException;
-import com.norcane.lysense.configuration.exception.NoConfigurationFoundException;
+import com.norcane.lysense.configuration.exception.*;
 import com.norcane.lysense.configuration.serialization.LowerCaseDashSeparatedEnumDeserializer;
 import com.norcane.lysense.configuration.serialization.SemVerDeserializer;
 import com.norcane.lysense.configuration.serialization.VariablesDeserializer;
@@ -55,10 +52,6 @@ import com.norcane.lysense.resource.loader.ResourceLoader;
 import com.norcane.lysense.template.Variables;
 import com.norcane.toolkit.state.Memoized;
 import com.norcane.toolkit.state.Stateful;
-
-import java.io.Reader;
-import java.util.Set;
-
 import io.smallrye.config.ConfigMapping;
 import io.smallrye.config.WithName;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -66,6 +59,9 @@ import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Inject;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
+
+import java.io.Reader;
+import java.util.Set;
 
 @ApplicationScoped
 public class ConfigurationManager implements Stateful {
@@ -75,7 +71,7 @@ public class ConfigurationManager implements Stateful {
     private final RuntimeInfo runtimeInfo;
     private final Validator validator;
     private final ObjectMapper objectMapper;
-    private final Memoized<Configuration> configuration = Memoized.bindTo(this);
+    private final Memoized<ConfigurationRef> configurationRef = Memoized.bindTo(this);
 
     @Inject
     public ConfigurationManager(Properties properties,
@@ -94,26 +90,27 @@ public class ConfigurationManager implements Stateful {
     @Produces
     @ApplicationScoped
     public Configuration configuration() {
-        return configuration.computeIfAbsent(() -> {
+        return configurationRef().configuration();
+    }
+
+    public ConfigurationRef configurationRef() {
+        return configurationRef.computeIfAbsent(() -> {
             final Resource defaultConfigurationResource = resourceLoader.resource(properties.defaultConfiguration());
-            final Resource userConfigurationResource = userConfigurationResource();
+            final Resource userConfigurationResource = switch (findConfigurationResource()) {
+                case ConfigurationLookup.Found(var resource) -> resource;
+                case ConfigurationLookup.NotFound(var uri) -> throw new NoConfigurationFoundException(uri);
+            };
 
             verifyCompatibleBaseVersion(userConfigurationResource);
             return loadUserConfiguration(defaultConfigurationResource, userConfigurationResource);
         });
     }
 
-    /**
-     * Returns user configuration resource.
-     *
-     * @return user configuration resource
-     * @throws NoConfigurationFoundException if no configuration file is found
-     */
-    public Resource userConfigurationResource() {
+    public ConfigurationLookup findConfigurationResource() {
         try {
-            return resourceLoader.resource(runtimeInfo.userConfigurationPath());
+            return new ConfigurationLookup.Found(resourceLoader.resource(runtimeInfo.userConfigurationPath()));
         } catch (ResourceNotFoundException e) {
-            throw new NoConfigurationFoundException(e.location());
+            return new ConfigurationLookup.NotFound(e.location());
         }
     }
 
@@ -136,14 +133,14 @@ public class ConfigurationManager implements Stateful {
         }
     }
 
-    private Configuration loadUserConfiguration(Resource defaultConfigurationResource, Resource userConfigurationResource) {
+    private ConfigurationRef loadUserConfiguration(Resource defaultConfigurationResource, Resource userConfigurationResource) {
         try (final Reader defaultConfigReader = defaultConfigurationResource.reader();
              final Reader userConfigReader = userConfigurationResource.reader()) {
 
             // merge default and user configuration
             final YamlConfiguration defaultConfiguration = objectMapper.readValue(defaultConfigReader, YamlConfiguration.class);
             final YamlConfiguration mergedConfiguration =
-                objectMapper.readerForUpdating(defaultConfiguration).readValue(userConfigReader, YamlConfiguration.class);
+                    objectMapper.readerForUpdating(defaultConfiguration).readValue(userConfigReader, YamlConfiguration.class);
 
             // validate final configuration
             final Set<ConstraintViolation<Configuration>> violations = validator.validate(mergedConfiguration);
@@ -151,7 +148,7 @@ public class ConfigurationManager implements Stateful {
                 throw new InvalidConfigurationException(violations);
             }
 
-            return mergedConfiguration;
+            return new ConfigurationRef(mergedConfiguration, userConfigurationResource);
         } catch (ApplicationException e) {
             throw e;
         } catch (Exception e) {
@@ -161,14 +158,14 @@ public class ConfigurationManager implements Stateful {
 
     private ObjectMapper yamlObjectMapper() {
         final SimpleModule module = new SimpleModule()
-            .addDeserializer(HeaderStyle.class, LowerCaseDashSeparatedEnumDeserializer.forEnum(HeaderStyle.class))
-            .addDeserializer(RunMode.class, LowerCaseDashSeparatedEnumDeserializer.forEnum(RunMode.class))
-            .addDeserializer(SemVer.class, new SemVerDeserializer())
-            .addDeserializer(Variables.class, new VariablesDeserializer());
+                .addDeserializer(HeaderStyle.class, LowerCaseDashSeparatedEnumDeserializer.forEnum(HeaderStyle.class))
+                .addDeserializer(RunMode.class, LowerCaseDashSeparatedEnumDeserializer.forEnum(RunMode.class))
+                .addDeserializer(SemVer.class, new SemVerDeserializer())
+                .addDeserializer(Variables.class, new VariablesDeserializer());
 
         return new ObjectMapper(new YAMLFactory())
-            .registerModule(module)
-            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+                .registerModule(module)
+                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
     @ConfigMapping(prefix = "lysense.configuration")

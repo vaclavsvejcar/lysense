@@ -30,30 +30,25 @@
 package com.norcane.lysense.configuration;
 
 import com.norcane.lysense.configuration.api.Configuration;
+import com.norcane.lysense.configuration.api.ConfigurationRef;
 import com.norcane.lysense.configuration.api.RunMode;
 import com.norcane.lysense.configuration.exception.IncompatibleConfigurationException;
 import com.norcane.lysense.meta.RuntimeInfo;
 import com.norcane.lysense.meta.SemVer;
-
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.Mock;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Inject;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static com.norcane.lysense.source.LanguageId.languageId;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @QuarkusTest
 class ConfigurationManagerTest {
@@ -77,14 +72,15 @@ class ConfigurationManagerTest {
     }
 
     @Test
-    void configuration() {
+    void configurationRef() {
 
         // -- mocks
         when(properties.defaultConfiguration()).thenReturn(DEFAULT_CONFIGURATION_PATH);
         when(properties.minBaseVersion()).thenReturn(SemVer.from("1.1.1"));
         when(runtimeInfo.userConfigurationPath()).thenReturn(USER_CONFIGURATION_PATH);
 
-        final Configuration configuration = configurationManager.configuration();
+        final ConfigurationRef configurationRef = configurationManager.configurationRef();
+        final Configuration configuration = configurationRef.configuration();
 
         // -- verify
         verify(properties).defaultConfiguration();
@@ -98,6 +94,7 @@ class ConfigurationManagerTest {
         assertEquals(0, configuration.headerConfigs().get(languageId("java")).headerSpacing().blankLinesAfter());
         assertEquals(2, configuration.headerConfigs().get(languageId("java")).headerSpacing().blankLinesBefore());
         assertEquals(2, configuration.templateVariables().size());
+        assertEquals(USER_CONFIGURATION_PATH, configurationRef.resource().uri().toString());
     }
 
     @Test
@@ -114,6 +111,40 @@ class ConfigurationManagerTest {
         verify(properties).defaultConfiguration();
         verify(properties).minBaseVersion();
         verify(runtimeInfo).userConfigurationPath();
+    }
+
+    @Test
+    void findConfigurationResource_found() {
+
+        // -- mocks
+        when(runtimeInfo.userConfigurationPath()).thenReturn(USER_CONFIGURATION_PATH);
+
+        final ConfigurationLookup configurationLookup = configurationManager.findConfigurationResource();
+
+        // -- verify
+        verify(runtimeInfo).userConfigurationPath();
+
+        // -- assertions
+        assertInstanceOf(ConfigurationLookup.Found.class, configurationLookup);
+        assertEquals(USER_CONFIGURATION_PATH, ((ConfigurationLookup.Found) configurationLookup).resource().uri().toString());
+    }
+
+    @Test
+    void findConfigurationResource_notFound() {
+
+        final String nonExistingPath = "classpath:/configuration/non-existing.yaml";
+
+        // -- mocks
+        when(runtimeInfo.userConfigurationPath()).thenReturn(nonExistingPath);
+
+        final ConfigurationLookup configurationLookup = configurationManager.findConfigurationResource();
+
+        // -- verify
+        verify(runtimeInfo).userConfigurationPath();
+
+        // -- assertions
+        assertInstanceOf(ConfigurationLookup.NotFound.class, configurationLookup);
+        assertEquals(nonExistingPath, ((ConfigurationLookup.NotFound) configurationLookup).location().toString());
     }
 
     @Produces

@@ -27,31 +27,54 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package com.norcane.lysense.configuration.yaml;
+package com.norcane.lysense.cli.command;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.norcane.lysense.configuration.api.HeaderSpacing;
-import io.quarkus.runtime.annotations.RegisterForReflection;
-import jakarta.validation.constraints.NotNull;
+import com.norcane.lysense.cli.ReturnCode;
+import com.norcane.lysense.resource.exception.ResourceNotFoundException;
+import com.norcane.lysense.ui.console.Console;
+import io.quarkus.test.InjectMock;
+import io.quarkus.test.junit.QuarkusTest;
+import org.junit.jupiter.api.Test;
 
-@RegisterForReflection
-public class YamlHeaderSpacing implements HeaderSpacing {
+import java.net.URI;
 
-    @NotNull
-    @JsonProperty("blank-lines-after")
-    private Integer blankLinesAfter;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-    @NotNull
-    @JsonProperty("blank-lines-before")
-    private Integer blankLinesBefore;
+@QuarkusTest
+class CliCommandTest {
 
-    @Override
-    public Integer blankLinesAfter() {
-        return blankLinesAfter;
+    @InjectMock
+    Console console;
+
+    @Test
+    void run() {
+        final TestCommand command = new TestCommand(console);
+
+        command.call();
+        assertTrue(command.executed);
     }
 
-    @Override
-    public Integer blankLinesBefore() {
-        return blankLinesBefore;
+    @Test
+    void printProductHeader() {
+        final CliCommand command = new TestCommand(console);
+
+        command.printProductHeader();
     }
+
+
+    static class TestCommand extends CliCommand {
+
+        boolean executed = false;
+
+        public TestCommand(Console console) {
+            super(console);
+        }
+
+        @Override
+        protected ReturnCode execute() {
+            executed = true;
+            throw new ResourceNotFoundException(URI.create("classpath:non-existing-file.txt"));
+        }
+    }
+
 }

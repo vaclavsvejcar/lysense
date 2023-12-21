@@ -29,19 +29,12 @@
  */
 package com.norcane.lysense.template.mustache;
 
-import com.google.common.base.Throwables;
-
-import com.github.mustachejava.Binding;
-import com.github.mustachejava.Code;
-import com.github.mustachejava.DefaultMustacheFactory;
-import com.github.mustachejava.Mustache;
-import com.github.mustachejava.MustacheException;
-import com.github.mustachejava.MustacheFactory;
-import com.github.mustachejava.TemplateContext;
+import com.github.mustachejava.*;
 import com.github.mustachejava.reflect.GuardedBinding;
 import com.github.mustachejava.reflect.MissingWrapper;
 import com.github.mustachejava.reflect.ReflectionObjectHandler;
 import com.github.mustachejava.util.Wrapper;
+import com.google.common.base.Throwables;
 import com.norcane.lysense.exception.ApplicationException;
 import com.norcane.lysense.resource.Resource;
 import com.norcane.lysense.template.Template;

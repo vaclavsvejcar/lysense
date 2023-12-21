@@ -35,12 +35,11 @@ import com.norcane.lysense.splicer.Operation;
 import com.norcane.lysense.splicer.ResourceSplicer;
 import com.norcane.lysense.splicer.writer.AtomicWriter;
 import com.norcane.lysense.splicer.writer.AtomicWriterFactory;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
 /**
  * Implementation of {@link ResourceSplicer} that weaves the changes defined by the {@link Operation} into the resource in a single pass. To achieve this, it
@@ -69,8 +68,8 @@ public class WeavingResourceSplicer implements ResourceSplicer {
             for (int currentLine = 0; shouldContinue; currentLine++) {
 
                 shouldContinue = currentLine == executionPlan.line()
-                                 ? interpretInstruction(executionPlan.instruction(), reader, writer)
-                                 : currentLine <= 0 || copyLine(reader, writer);
+                        ? interpretInstruction(executionPlan.instruction(), reader, writer)
+                        : currentLine <= 0 || copyLine(reader, writer);
             }
 
         } catch (IOException e) {

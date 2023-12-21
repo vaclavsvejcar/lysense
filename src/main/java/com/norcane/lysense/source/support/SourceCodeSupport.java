@@ -84,14 +84,14 @@ public final class SourceCodeSupport {
     /**
      * Creates new <i>staged builder</i> for given configuration, <i>language ID</i> and <i>resource types</i>.
      *
-     * @param configuration     application configuration
+     * @param configuration application configuration
      * @param languageId    unique ID of the supported programming/scripting language
      * @param resourceTypes set of resource types of the programming/scripting language resources
      * @return builder
      */
     public static Builder.CommentDetectorFactoryStep builder(Configuration configuration, LanguageId languageId, Set<String> resourceTypes) {
         return commentDetectorFactory -> headerDetectionRules -> variablesExtractor ->
-            new Builder.FinalStep(configuration, languageId, resourceTypes, commentDetectorFactory, headerDetectionRules, variablesExtractor);
+                new Builder.FinalStep(configuration, languageId, resourceTypes, commentDetectorFactory, headerDetectionRules, variablesExtractor);
     }
 
     /**
@@ -178,7 +178,8 @@ public final class SourceCodeSupport {
                                                                      CommentSyntax.LineCommentSyntax lineCommentSyntax) {
 
                 return commentDetectorFactory(headerStyle -> switch (headerStyle) {
-                    case BLOCK_COMMENT -> CommentDetectorFactory.blockSyntax(blockCommentSyntax.start(), blockCommentSyntax.end());
+                    case BLOCK_COMMENT ->
+                            CommentDetectorFactory.blockSyntax(blockCommentSyntax.start(), blockCommentSyntax.end());
                     case LINE_COMMENT -> CommentDetectorFactory.lineSyntax(lineCommentSyntax.pattern());
                 });
             }

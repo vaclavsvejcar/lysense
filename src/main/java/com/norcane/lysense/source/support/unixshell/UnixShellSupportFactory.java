@@ -32,13 +32,12 @@ package com.norcane.lysense.source.support.unixshell;
 import com.norcane.lysense.configuration.api.Configuration;
 import com.norcane.lysense.source.support.SourceCodeSupport;
 import com.norcane.toolkit.InstanceFactory;
-
-import java.util.Set;
-import java.util.regex.Pattern;
-
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Inject;
+
+import java.util.Set;
+import java.util.regex.Pattern;
 
 import static com.norcane.lysense.source.LanguageId.languageId;
 
@@ -62,19 +61,19 @@ public class UnixShellSupportFactory implements InstanceFactory<SourceCodeSuppor
     public SourceCodeSupport instance() {
         return SourceCodeSupport
 
-            // languageId is 'unix-shell', file extensions are 'sh'
-            .builder(configuration, languageId("unix-shell"), Set.of("sh"))
+                // languageId is 'unix-shell', file extensions are 'sh'
+                .builder(configuration, languageId("unix-shell"), Set.of("sh"))
 
-            // use line comment syntax for license headers
-            .lineHeaderSyntax(Pattern.compile("^#(?!!)"))
+                // use line comment syntax for license headers
+                .lineHeaderSyntax(Pattern.compile("^#(?!!)"))
 
-            // detect header after hashbang and before any actual code
-            .detectHeaderAfterAndBeforeLines(Pattern.compile("^#!"), Pattern.compile("^(?!#).*"))
+                // detect header after hashbang and before any actual code
+                .detectHeaderAfterAndBeforeLines(Pattern.compile("^#!"), Pattern.compile("^(?!#).*"))
 
-            // no dynamic variables extraction
-            .noDynamicVariables()
+                // no dynamic variables extraction
+                .noDynamicVariables()
 
-            // build the instance
-            .build();
+                // build the instance
+                .build();
     }
 }

@@ -4,6 +4,7 @@
 207,Error parsing configuration
 222,Missing base version
 242,Resource not writable
+329,Product already installed
 339,Unexpected behavior
 342,Header configuration not found
 347,Duplicate templates found

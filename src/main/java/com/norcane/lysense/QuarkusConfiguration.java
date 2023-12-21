@@ -40,6 +40,6 @@ public class QuarkusConfiguration {
     @Produces
     CommandLine customCommandLine(PicocliCommandLineFactory factory) {
         return factory.create()
-            .setCaseInsensitiveEnumValuesAllowed(true);
+                .setCaseInsensitiveEnumValuesAllowed(true);
     }
 }
