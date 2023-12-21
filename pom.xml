@@ -23,6 +23,7 @@
         <jansi.version>2.4.1</jansi.version>
         <jline.version>3.24.1</jline.version>
         <mustache.java.version>0.9.11</mustache.java.version>
+        <record.builder.version>37</record.builder.version>
     </properties>
 
     <dependencyManagement>
@@ -79,6 +80,14 @@
             <version>${mustache.java.version}</version>
         </dependency>
 
+        <!-- Annotation processors -->
+        <dependency>
+            <groupId>io.soabase.record-builder</groupId>
+            <artifactId>record-builder-processor</artifactId>
+            <version>${record.builder.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- Other tools -->
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -89,6 +98,7 @@
             <artifactId>jackson-dataformat-yaml</artifactId>
         </dependency>
 
+        <!-- Testing -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-junit5</artifactId>
@@ -137,6 +147,13 @@
                         <arg>-parameters</arg>
                         <arg>--enable-preview</arg>
                     </compilerArgs>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>io.soabase.record-builder</groupId>
+                            <artifactId>record-builder-processor</artifactId>
+                            <version>${record.builder.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
             <plugin>
