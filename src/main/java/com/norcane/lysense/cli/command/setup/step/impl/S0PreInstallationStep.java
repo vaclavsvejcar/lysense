@@ -27,51 +27,39 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package com.norcane.lysense.cli.command.setup;
+package com.norcane.lysense.cli.command.setup.step.impl;
 
-import com.norcane.lysense.cli.ReturnCode;
-import com.norcane.lysense.cli.command.CliCommand;
+import com.norcane.lysense.cli.command.exception.ProductAlreadyInstalledException;
 import com.norcane.lysense.cli.command.setup.step.InstallStep;
-import com.norcane.lysense.ui.console.Console;
-import com.norcane.lysense.ui.progressbar.ProgressBar;
-import jakarta.enterprise.inject.Instance;
+import com.norcane.lysense.configuration.ConfigurationLookup;
+import com.norcane.lysense.configuration.ConfigurationManager;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import picocli.CommandLine;
 
-import java.util.Comparator;
-import java.util.List;
+@ApplicationScoped
+public class S0PreInstallationStep implements InstallStep {
 
-@CommandLine.Command(
-        name = "install",
-        description = "install and configure zen in current project",
-        usageHelpAutoWidth = true,
-        headerHeading = "@|bold,underline Usage|@:%n%n",
-        descriptionHeading = "%n@|bold,underline Description|@:%n%n",
-        parameterListHeading = "%n@|bold,underline Parameters|@:%n",
-        optionListHeading = "%n@|bold,underline Options|@:%n"
-)
-public class InstallCommand extends CliCommand {
-
-    private final Instance<InstallStep> installSteps;
+    private final ConfigurationManager configurationManager;
 
     @Inject
-    public InstallCommand(Console console,
-                          Instance<InstallStep> installSteps) {
-
-        super(console);
-        this.installSteps = installSteps;
+    public S0PreInstallationStep(ConfigurationManager configurationManager) {
+        this.configurationManager = configurationManager;
     }
 
     @Override
-    protected ReturnCode execute() {
-        final List<InstallStep> orderedInstallSteps = installSteps.stream()
-                .sorted(Comparator.comparingInt(InstallStep::order))
-                .toList();
+    public int order() {
+        return 0;
+    }
 
-        for (final InstallStep step : ProgressBar.checkList(orderedInstallSteps, InstallStep::installationMessage, console)) {
-            step.install();
+    @Override
+    public String installationMessage() {
+        return "Checking if product is already installed";
+    }
+
+    @Override
+    public void install() {
+        if (configurationManager.findConfigurationResource() instanceof ConfigurationLookup.Found found) {
+            throw new ProductAlreadyInstalledException(found.resource());
         }
-
-        return ReturnCode.SUCCESS;
     }
 }

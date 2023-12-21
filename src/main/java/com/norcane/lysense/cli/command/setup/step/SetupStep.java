@@ -27,51 +27,18 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package com.norcane.lysense.cli.command.setup;
+package com.norcane.lysense.cli.command.setup.step;
 
-import com.norcane.lysense.cli.ReturnCode;
-import com.norcane.lysense.cli.command.CliCommand;
-import com.norcane.lysense.cli.command.setup.step.InstallStep;
-import com.norcane.lysense.ui.console.Console;
-import com.norcane.lysense.ui.progressbar.ProgressBar;
-import jakarta.enterprise.inject.Instance;
-import jakarta.inject.Inject;
-import picocli.CommandLine;
+/**
+ * Represents a single step in the installation/uninstallation process.
+ */
+public interface SetupStep {
 
-import java.util.Comparator;
-import java.util.List;
-
-@CommandLine.Command(
-        name = "install",
-        description = "install and configure zen in current project",
-        usageHelpAutoWidth = true,
-        headerHeading = "@|bold,underline Usage|@:%n%n",
-        descriptionHeading = "%n@|bold,underline Description|@:%n%n",
-        parameterListHeading = "%n@|bold,underline Parameters|@:%n",
-        optionListHeading = "%n@|bold,underline Options|@:%n"
-)
-public class InstallCommand extends CliCommand {
-
-    private final Instance<InstallStep> installSteps;
-
-    @Inject
-    public InstallCommand(Console console,
-                          Instance<InstallStep> installSteps) {
-
-        super(console);
-        this.installSteps = installSteps;
-    }
-
-    @Override
-    protected ReturnCode execute() {
-        final List<InstallStep> orderedInstallSteps = installSteps.stream()
-                .sorted(Comparator.comparingInt(InstallStep::order))
-                .toList();
-
-        for (final InstallStep step : ProgressBar.checkList(orderedInstallSteps, InstallStep::installationMessage, console)) {
-            step.install();
-        }
-
-        return ReturnCode.SUCCESS;
-    }
+    /**
+     * Returns the order of this step. Steps with lower order will be executed first during installation and in reverse
+     * order during uninstallation.
+     *
+     * @return order of this step
+     */
+    int order();
 }
