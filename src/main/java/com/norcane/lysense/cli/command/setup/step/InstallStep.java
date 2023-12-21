@@ -43,6 +43,8 @@ public interface InstallStep extends SetupStep {
 
     /**
      * Logic to be executed during installation of this step.
+     *
+     * @param context setup context
      */
-    void install();
+    void install(SetupContext context);
 }

@@ -32,6 +32,7 @@ package com.norcane.lysense.cli.command.setup;
 import com.norcane.lysense.cli.ReturnCode;
 import com.norcane.lysense.cli.command.CliCommand;
 import com.norcane.lysense.cli.command.setup.step.InstallStep;
+import com.norcane.lysense.cli.command.setup.step.SetupContext;
 import com.norcane.lysense.ui.console.Console;
 import com.norcane.lysense.ui.progressbar.ProgressBar;
 import jakarta.enterprise.inject.Instance;
@@ -54,6 +55,14 @@ public class InstallCommand extends CliCommand {
 
     private final Instance<InstallStep> installSteps;
 
+    @CommandLine.Option(
+            names = {"-s", "--source"},
+            description = "specify path to source code file/directory",
+            paramLabel = "PATH",
+            required = true
+    )
+    List<String> sourcePaths;
+
     @Inject
     public InstallCommand(Console console,
                           Instance<InstallStep> installSteps) {
@@ -64,12 +73,16 @@ public class InstallCommand extends CliCommand {
 
     @Override
     protected ReturnCode execute() {
+        final SetupContext context = new SetupContext();
         final List<InstallStep> orderedInstallSteps = installSteps.stream()
                 .sorted(Comparator.comparingInt(InstallStep::order))
                 .toList();
 
+        // initialize context
+        context.put("source-paths", sourcePaths);
+
         for (final InstallStep step : ProgressBar.checkList(orderedInstallSteps, InstallStep::installationMessage, console)) {
-            step.install();
+            step.install(context);
         }
 
         return ReturnCode.SUCCESS;

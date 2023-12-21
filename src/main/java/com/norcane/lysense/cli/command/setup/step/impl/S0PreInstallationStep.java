@@ -31,6 +31,7 @@ package com.norcane.lysense.cli.command.setup.step.impl;
 
 import com.norcane.lysense.cli.command.exception.ProductAlreadyInstalledException;
 import com.norcane.lysense.cli.command.setup.step.InstallStep;
+import com.norcane.lysense.cli.command.setup.step.SetupContext;
 import com.norcane.lysense.configuration.ConfigurationLookup;
 import com.norcane.lysense.configuration.ConfigurationManager;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -57,7 +58,7 @@ public class S0PreInstallationStep implements InstallStep {
     }
 
     @Override
-    public void install() {
+    public void install(SetupContext context) {
         if (configurationManager.findConfigurationResource() instanceof ConfigurationLookup.Found found) {
             throw new ProductAlreadyInstalledException(found.resource());
         }
