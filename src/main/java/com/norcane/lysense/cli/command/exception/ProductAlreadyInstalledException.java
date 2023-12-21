@@ -43,7 +43,7 @@ public class ProductAlreadyInstalledException extends ApplicationException {
     private final Resource existingUserConfiguration;
 
     public ProductAlreadyInstalledException(Resource existingUserConfiguration) {
-        super(ErrorCode.PRODUCT_ALREADY_INSTALLED, STR."\{ProductInfo.NAME} already installed, found user configuration: \{existingUserConfiguration}");
+        super(ErrorCode.PRODUCT_ALREADY_INSTALLED, STR."\{ProductInfo.NAME} already installed, found user configuration: \{existingUserConfiguration.uri()}");
 
         this.existingUserConfiguration = existingUserConfiguration;
     }
@@ -53,7 +53,7 @@ public class ProductAlreadyInstalledException extends ApplicationException {
     public ErrorDetail errorDetail() {
         return ErrorDetail.builder()
                 .problem(
-                        STR."It seems you're attempting to install \{ProductInfo.NAME} in current directory, but user configuration has been already found in \{existingUserConfiguration}."
+                        STR."It seems you're attempting to install \{ProductInfo.NAME} in current directory, but user configuration has been already found in @|bold \{existingUserConfiguration.uri()}|@."
                 )
 
                 .solution(

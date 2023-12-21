@@ -30,6 +30,7 @@
 package com.norcane.lysense.cli;
 
 import com.norcane.lysense.cli.command.RunCommand;
+import com.norcane.lysense.cli.command.setup.SetupCommand;
 import com.norcane.lysense.meta.ProductInfo;
 import io.quarkus.picocli.runtime.annotations.TopCommand;
 import picocli.CommandLine;
@@ -41,7 +42,7 @@ import picocli.CommandLine;
         version = ProductInfo.VERSION_STRING,
         mixinStandardHelpOptions = true,
         usageHelpAutoWidth = true,
-        subcommands = {RunCommand.class},
+        subcommands = {RunCommand.class, SetupCommand.class},
         headerHeading = "@|bold,underline Usage|@:%n%n",
         descriptionHeading = "%n@|bold,underline Description|@:%n%n",
         parameterListHeading = "%n@|bold,underline Parameters|@:%n",
