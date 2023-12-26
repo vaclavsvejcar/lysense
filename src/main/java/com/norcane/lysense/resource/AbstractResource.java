@@ -38,24 +38,29 @@ import com.norcane.toolkit.state.Memoized;
 
 import java.io.Reader;
 import java.net.URI;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
- * Abstract implementation of {@link Resource} interface that implements common functionality such as <i>line separator</i> detection, <i>equals</i> and
+ * Abstract implementation of {@link Resource} interface that implements common functionality such as <i>line
+ * separator</i> detection, <i>equals</i> and
  * <i>hashCode</i>, etc.
  */
 public abstract class AbstractResource implements Resource {
 
     protected final String name;
     protected final String extension;
+    protected final String parent;
     protected final URI location;
 
     private final Memoized<LineSeparator> lineSeparator = Memoized.detached();
 
-    protected AbstractResource(String name, String extension, URI location) {
+    protected AbstractResource(String name, String extension, String parent, URI location) {
         this.name = name;
         this.extension = extension;
+        this.parent = parent;
         this.location = location;
     }
 
@@ -66,6 +71,11 @@ public abstract class AbstractResource implements Resource {
         }
     }
 
+    protected static String parent(String path) {
+        final Path parent = Path.of(path).getParent();
+        return parent != null ? parent.toString() : null;
+    }
+
     @Override
     public String name() {
         return name;
@@ -74,6 +84,11 @@ public abstract class AbstractResource implements Resource {
     @Override
     public String extension() {
         return extension;
+    }
+
+    @Override
+    public Optional<String> parent() {
+        return Optional.ofNullable(parent);
     }
 
     @Override

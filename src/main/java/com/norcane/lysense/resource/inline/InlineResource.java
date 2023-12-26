@@ -30,6 +30,7 @@
 package com.norcane.lysense.resource.inline;
 
 
+import com.google.common.io.Files;
 import com.norcane.lysense.resource.AbstractResource;
 import com.norcane.lysense.resource.Resource;
 import com.norcane.toolkit.net.URIs;
@@ -49,8 +50,8 @@ public class InlineResource extends AbstractResource {
 
     private final String content;
 
-    protected InlineResource(String name, String type, String content, URI location) {
-        super(name, type, location);
+    protected InlineResource(String path, String extension, String parent, String content, URI location) {
+        super(path, extension, parent, location);
 
         this.content = content;
     }
@@ -60,26 +61,30 @@ public class InlineResource extends AbstractResource {
         enforceScheme(uri, SCHEME);
 
         final String[] chunks = uri.getSchemeSpecificPart().split(";");
-        final String type = chunks[0];
-        final String name = chunks[1].split("=")[1];
+        final String extension = chunks[0];
+        final String path = chunks[1].split("=")[1];
+        final String name = Files.getNameWithoutExtension(path);
+        final String parent = parent(path);
         final String content = new String(Base64.getDecoder().decode(chunks[2].split(",")[1].getBytes()));
 
-        return new InlineResource(name, type, content, uri);
+        return new InlineResource(name, extension, parent, content, uri);
     }
 
     public static InlineResource of(String content) {
         return of(DEFAULT_NAME, DEFAULT_EXTENSION, nonNull(content));
     }
 
-    public static InlineResource of(String name, String extension, String content) {
-        nonNull(name);
+    public static InlineResource of(String path, String extension, String content) {
+        nonNull(path);
         nonNull(extension);
         nonNull(content);
 
         final String encodedContent = Base64.getEncoder().encodeToString(content.getBytes());
-        final String encodedName = URIs.escape(name);
+        final String name = Files.getNameWithoutExtension(path);
+        final String encodedName = URIs.escape(path);
+        final String parent = parent(path);
         final URI uri = URIs.create(STR."\{SCHEME.value()}:\{extension};name=\{encodedName};base64,\{encodedContent}");
-        return new InlineResource(name, extension, content, uri);
+        return new InlineResource(name, extension, parent, content, uri);
     }
 
     @Override

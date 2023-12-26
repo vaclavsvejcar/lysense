@@ -56,6 +56,13 @@ public interface Resource {
     String extension();
 
     /**
+     * Returns the parent of the resource (i.e. directory name of the file, parent URL, etc.)
+     *
+     * @return parent of the resource
+     */
+    Optional<String> parent();
+
+    /**
      * Location of the resource (i.e. absolute path of file, URL of network resource, etc.)
      *
      * @return location of the resource
@@ -63,7 +70,8 @@ public interface Resource {
     URI uri();
 
     /**
-     * Tries to automatically detect the <i>line separator</i> of the resource. If automatic detection fails, returns system line separator.
+     * Tries to automatically detect the <i>line separator</i> of the resource. If automatic detection fails, returns
+     * system line separator.
      *
      * @return line separator
      */
@@ -77,14 +85,16 @@ public interface Resource {
     Reader reader();
 
     /**
-     * Reads the resource content into string. For larger resources always consider using {@link #reader()} instead as this might lead to large memory use.
+     * Reads the resource content into string. For larger resources always consider using {@link #reader()} instead as
+     * this might lead to large memory use.
      *
      * @return resource content as a string
      */
     String readAsString();
 
     /**
-     * Reads the resource as list of lines. For larger resources always consider using {@link #reader()} instead as this might lead to large memory use.
+     * Reads the resource as list of lines. For larger resources always consider using {@link #reader()} instead as this
+     * might lead to large memory use.
      *
      * @return resource content as list of lines
      */

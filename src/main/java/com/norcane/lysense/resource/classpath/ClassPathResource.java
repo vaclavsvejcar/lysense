@@ -47,7 +47,10 @@ public class ClassPathResource extends AbstractResource {
     static final Resource.Scheme SCHEME = new Resource.Scheme("classpath");
 
     private ClassPathResource(URI uri) {
-        super(Files.getNameWithoutExtension(uri.getSchemeSpecificPart()), Files.getFileExtension(uri.getSchemeSpecificPart()), uri);
+        super(Files.getNameWithoutExtension(uri.getSchemeSpecificPart()),
+              Files.getFileExtension(uri.getSchemeSpecificPart()),
+              parent(uri.getSchemeSpecificPart()),
+              uri);
     }
 
     public static ClassPathResource of(URI uri) {

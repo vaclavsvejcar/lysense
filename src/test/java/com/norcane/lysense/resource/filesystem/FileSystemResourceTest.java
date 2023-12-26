@@ -30,11 +30,10 @@
 package com.norcane.lysense.resource.filesystem;
 
 import com.google.common.io.CharStreams;
-
 import com.norcane.lysense.resource.Resource;
 import com.norcane.lysense.resource.exception.ResourceNotFoundException;
 import com.norcane.lysense.resource.util.LineSeparator;
-
+import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -43,8 +42,7 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import io.quarkus.test.junit.QuarkusTest;
-
+import static com.norcane.lysense.test.Assertions.assertIsPresent;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -54,19 +52,21 @@ class FileSystemResourceTest {
     private static final String content = "Hello\nthere!";
     private static Resource resource;
     private static URI uri;
+    private static Path path;
 
     @BeforeEach
     void init() throws Exception {
-        final Path tempFile = Files.createTempFile(null, null);
-        Files.writeString(tempFile, content);
+        path = Files.createTempFile(null, null);
+        Files.writeString(path, content);
 
-        uri = tempFile.toUri();
+        uri = path.toUri();
         resource = FileSystemResource.of(uri);
     }
 
     @Test
     void of() {
         assertEquals(resource, FileSystemResource.of(uri));
+        assertIsPresent(path.getParent().toString(), resource.parent());
         assertThrows(ResourceNotFoundException.class, () -> FileSystemResource.of("fo"));
     }
 

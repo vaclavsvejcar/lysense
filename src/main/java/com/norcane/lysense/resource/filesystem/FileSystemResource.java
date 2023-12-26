@@ -51,8 +51,9 @@ public class FileSystemResource extends AbstractResource implements WritableReso
 
     private FileSystemResource(Path path, URI uri) {
         super(com.google.common.io.Files.getNameWithoutExtension(path.toString()),
-                com.google.common.io.Files.getFileExtension(path.toString()),
-                uri);
+              com.google.common.io.Files.getFileExtension(path.toString()),
+              path.getParent() != null ? path.getParent().toString() : null,
+              uri);
 
         this.path = path;
     }

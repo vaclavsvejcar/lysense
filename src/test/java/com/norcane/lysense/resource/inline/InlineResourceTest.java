@@ -31,13 +31,12 @@ package com.norcane.lysense.resource.inline;
 
 import com.norcane.lysense.resource.util.LineSeparator;
 import com.norcane.toolkit.net.URIs;
-
+import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
 
 import java.net.URI;
 
-import io.quarkus.test.junit.QuarkusTest;
-
+import static com.norcane.lysense.test.Assertions.assertIsPresent;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -46,11 +45,12 @@ class InlineResourceTest {
 
     @Test
     void of_uri() {
-        final URI uri = URI.create("inline:java;name=hello%20world;base64,VGhlIENha2UgaXMgYSBMaWUh");
+        final URI uri = URI.create("inline:java;name=foo/hello%20world;base64,VGhlIENha2UgaXMgYSBMaWUh");
         final InlineResource resource = InlineResource.of(uri);
 
         assertEquals("java", resource.extension());
         assertEquals("hello world", resource.name());
+        assertIsPresent("foo", resource.parent());
         assertEquals("The Cake is a Lie!", resource.readAsString());
         assertEquals(uri, resource.uri());
         assertEquals(LineSeparator.platform(), resource.lineSeparator());
@@ -63,11 +63,12 @@ class InlineResourceTest {
 
     @Test
     void of_params() {
-        final URI uri = URIs.create("inline:java;name=hello%20world;base64,VGhlIENha2UgaXMgYSBMaWUh");
-        final InlineResource resource = InlineResource.of("hello world", "java", "The Cake is a Lie!");
+        final URI uri = URIs.create("inline:java;name=/foo/hello%20world;base64,VGhlIENha2UgaXMgYSBMaWUh");
+        final InlineResource resource = InlineResource.of("/foo/hello world", "java", "The Cake is a Lie!");
 
         assertEquals("java", resource.extension());
         assertEquals("hello world", resource.name());
+        assertIsPresent("/foo", resource.parent());
         assertEquals("The Cake is a Lie!", resource.readAsString());
         assertEquals(uri, resource.uri());
     }

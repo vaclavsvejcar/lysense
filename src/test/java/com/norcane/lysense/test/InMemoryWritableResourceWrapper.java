@@ -38,6 +38,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import static com.norcane.toolkit.Prelude.nonNull;
 
@@ -66,6 +67,11 @@ public class InMemoryWritableResourceWrapper implements WritableResource {
     @Override
     public String extension() {
         return resource.extension();
+    }
+
+    @Override
+    public Optional<String> parent() {
+        return resource.parent();
     }
 
     @Override
