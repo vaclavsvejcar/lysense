@@ -44,6 +44,7 @@ import jakarta.inject.Inject;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
+import java.nio.file.Path;
 import java.util.List;
 
 import static com.norcane.lysense.source.LanguageId.languageId;
@@ -77,7 +78,7 @@ class ConfigurationManagerTest {
         // -- mocks
         when(properties.defaultConfiguration()).thenReturn(DEFAULT_CONFIGURATION_PATH);
         when(properties.minBaseVersion()).thenReturn(SemVer.from("1.1.1"));
-        when(runtimeInfo.userConfigurationPath()).thenReturn(USER_CONFIGURATION_PATH);
+        when(runtimeInfo.userConfigurationPath()).thenReturn(Path.of(USER_CONFIGURATION_PATH));
 
         final ConfigurationRef configurationRef = configurationManager.configurationRef();
         final Configuration configuration = configurationRef.configuration();
@@ -103,7 +104,7 @@ class ConfigurationManagerTest {
         // -- mocks
         when(properties.defaultConfiguration()).thenReturn(DEFAULT_CONFIGURATION_PATH);
         when(properties.minBaseVersion()).thenReturn(SemVer.from("999.999.999"));
-        when(runtimeInfo.userConfigurationPath()).thenReturn(USER_CONFIGURATION_PATH);
+        when(runtimeInfo.userConfigurationPath()).thenReturn(Path.of(USER_CONFIGURATION_PATH));
 
         assertThrows(IncompatibleConfigurationException.class, configurationManager::configuration);
 
@@ -117,7 +118,7 @@ class ConfigurationManagerTest {
     void findConfigurationResource_found() {
 
         // -- mocks
-        when(runtimeInfo.userConfigurationPath()).thenReturn(USER_CONFIGURATION_PATH);
+        when(runtimeInfo.userConfigurationPath()).thenReturn(Path.of(USER_CONFIGURATION_PATH));
 
         final ConfigurationLookup configurationLookup = configurationManager.findConfigurationResource();
 
@@ -135,7 +136,7 @@ class ConfigurationManagerTest {
         final String nonExistingPath = "classpath:/configuration/non-existing.yaml";
 
         // -- mocks
-        when(runtimeInfo.userConfigurationPath()).thenReturn(nonExistingPath);
+        when(runtimeInfo.userConfigurationPath()).thenReturn(Path.of(nonExistingPath));
 
         final ConfigurationLookup configurationLookup = configurationManager.findConfigurationResource();
 

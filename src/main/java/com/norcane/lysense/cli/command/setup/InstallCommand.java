@@ -33,6 +33,10 @@ import com.norcane.lysense.cli.ReturnCode;
 import com.norcane.lysense.cli.command.CliCommand;
 import com.norcane.lysense.cli.command.setup.step.InstallStep;
 import com.norcane.lysense.cli.command.setup.step.SetupContext;
+import com.norcane.lysense.cli.command.setup.step.impl.SetupContextKeys;
+import com.norcane.lysense.meta.ProductInfo;
+import com.norcane.lysense.meta.RuntimeInfo;
+import com.norcane.lysense.ui.alert.Alert;
 import com.norcane.lysense.ui.console.Console;
 import com.norcane.lysense.ui.progressbar.ProgressBar;
 import jakarta.enterprise.inject.Instance;
@@ -54,6 +58,7 @@ import java.util.List;
 public class InstallCommand extends CliCommand {
 
     private final Instance<InstallStep> installSteps;
+    private final RuntimeInfo runtimeInfo;
 
     @CommandLine.Option(
             names = {"-s", "--source"},
@@ -65,23 +70,31 @@ public class InstallCommand extends CliCommand {
 
     @Inject
     public InstallCommand(Console console,
-                          Instance<InstallStep> installSteps) {
+                          Instance<InstallStep> installSteps,
+                          RuntimeInfo runtimeInfo) {
 
         super(console);
         this.installSteps = installSteps;
+        this.runtimeInfo = runtimeInfo;
     }
 
     @Override
     protected ReturnCode execute() {
+        console.render(Alert.info(STR."Beginning installing \{ProductInfo.NAME}"));
+
         final SetupContext context = new SetupContext();
         final List<InstallStep> orderedInstallSteps = installSteps.stream()
                 .sorted(Comparator.comparingInt(InstallStep::order))
                 .toList();
 
         // initialize context
-        context.put("source-paths", sourcePaths);
+        context.put(SetupContextKeys.TEMPLATES_DIR, runtimeInfo.generatedTemplatesPath());
+        context.put(SetupContextKeys.SOURCE_PATHS, sourcePaths);
 
-        for (final InstallStep step : ProgressBar.checkList(orderedInstallSteps, InstallStep::installationMessage, console)) {
+        for (final InstallStep step : ProgressBar.checkList(orderedInstallSteps,
+                                                            step -> step.installationMessage(context),
+                                                            console)) {
+
             step.install(context);
         }
 

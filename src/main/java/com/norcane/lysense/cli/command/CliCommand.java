@@ -81,6 +81,7 @@ public abstract class CliCommand implements Callable<Integer> {
     }
 
     void printProductHeader() {
+        console.emptyLine();
         console.printLn(ProductInfo.productHeader());
     }
 

@@ -106,9 +106,14 @@ public class ConfigurationManager implements Stateful {
         });
     }
 
+    /**
+     * Finds user configuration resource (if present).
+     *
+     * @return {@link ConfigurationLookup} instance
+     */
     public ConfigurationLookup findConfigurationResource() {
         try {
-            return new ConfigurationLookup.Found(resourceLoader.resource(runtimeInfo.userConfigurationPath()));
+            return new ConfigurationLookup.Found(resourceLoader.resource(runtimeInfo.userConfigurationPath().toString()));
         } catch (ResourceNotFoundException e) {
             return new ConfigurationLookup.NotFound(e.location());
         }

@@ -39,7 +39,7 @@ public interface InstallStep extends SetupStep {
      *
      * @return installation message
      */
-    String installationMessage();
+    String installationMessage(SetupContext context);
 
     /**
      * Logic to be executed during installation of this step.

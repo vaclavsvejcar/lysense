@@ -29,38 +29,39 @@
  */
 package com.norcane.lysense.cli.command.setup.step.impl;
 
-import com.norcane.lysense.cli.command.exception.ProductAlreadyInstalledException;
 import com.norcane.lysense.cli.command.setup.step.InstallStep;
 import com.norcane.lysense.cli.command.setup.step.SetupContext;
-import com.norcane.lysense.configuration.ConfigurationLookup;
-import com.norcane.lysense.configuration.ConfigurationManager;
+import com.norcane.lysense.meta.RuntimeInfo;
+import com.norcane.toolkit.io.FileSystem;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 @ApplicationScoped
-public class S0PreInstallationStep implements InstallStep {
+public class S01TemplatesStep implements InstallStep {
 
-    private final ConfigurationManager configurationManager;
+    private final FileSystem fileSystem;
+    private final RuntimeInfo runtimeInfo;
 
     @Inject
-    public S0PreInstallationStep(ConfigurationManager configurationManager) {
-        this.configurationManager = configurationManager;
+    public S01TemplatesStep(FileSystem fileSystem,
+                            RuntimeInfo runtimeInfo) {
+
+        this.fileSystem = fileSystem;
+        this.runtimeInfo = runtimeInfo;
     }
 
     @Override
     public int order() {
-        return 0;
+        return 1;
     }
 
     @Override
-    public String installationMessage() {
-        return "Checking if product is already installed";
+    public String installationMessage(SetupContext context) {
+        return STR."Generating templates to \{context.get(SetupContextKeys.TEMPLATES_DIR, String.class)}";
     }
 
     @Override
     public void install(SetupContext context) {
-        if (configurationManager.findConfigurationResource() instanceof ConfigurationLookup.Found found) {
-            throw new ProductAlreadyInstalledException(found.resource());
-        }
+
     }
 }

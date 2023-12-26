@@ -27,29 +27,42 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package com.norcane.lysense.meta;
+package com.norcane.toolkit.io;
 
-import com.norcane.toolkit.io.FileSystem;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
+import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
+/**
+ * Provides access to file system.
+ */
 @ApplicationScoped
-public class RuntimeInfo {
+public class FileSystem {
 
-    private final FileSystem fileSystem;
-
-    @Inject
-    public RuntimeInfo(FileSystem fileSystem) {
-        this.fileSystem = fileSystem;
+    /**
+     * Returns the current directory.
+     *
+     * @return current directory
+     */
+    public Path currentDirectory() {
+        return Path.of(System.getProperty("user.dir"));
     }
 
-    public Path userConfigurationPath() {
-        return fileSystem.currentDirectory().resolve(ProductInfo.USER_CONFIGURATION_FILE);
-    }
-
-    public Path generatedTemplatesPath() {
-        return fileSystem.currentDirectory().resolve(ProductInfo.TEMPLATES_DIR);
+    /**
+     * Creates a new directory at given {@code path}.
+     *
+     * @param path path to the directory to be created
+     * @throws UncheckedIOException if the directory cannot be created
+     */
+    public void createDirectory(Path path) {
+        try {
+            Files.createDirectory(path);
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
+        ;
     }
 }

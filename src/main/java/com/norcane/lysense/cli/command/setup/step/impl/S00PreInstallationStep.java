@@ -27,29 +27,45 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package com.norcane.lysense.meta;
+package com.norcane.lysense.cli.command.setup.step.impl;
 
+import com.norcane.lysense.cli.command.exception.ProductAlreadyInstalledException;
+import com.norcane.lysense.cli.command.setup.step.InstallStep;
+import com.norcane.lysense.cli.command.setup.step.SetupContext;
+import com.norcane.lysense.configuration.ConfigurationLookup;
+import com.norcane.lysense.configuration.ConfigurationManager;
 import com.norcane.toolkit.io.FileSystem;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
-import java.nio.file.Path;
-
 @ApplicationScoped
-public class RuntimeInfo {
+public class S00PreInstallationStep implements InstallStep {
 
+    private final ConfigurationManager configurationManager;
     private final FileSystem fileSystem;
 
     @Inject
-    public RuntimeInfo(FileSystem fileSystem) {
+    public S00PreInstallationStep(ConfigurationManager configurationManager,
+                                  FileSystem fileSystem) {
+
+        this.configurationManager = configurationManager;
         this.fileSystem = fileSystem;
     }
 
-    public Path userConfigurationPath() {
-        return fileSystem.currentDirectory().resolve(ProductInfo.USER_CONFIGURATION_FILE);
+    @Override
+    public int order() {
+        return 0;
     }
 
-    public Path generatedTemplatesPath() {
-        return fileSystem.currentDirectory().resolve(ProductInfo.TEMPLATES_DIR);
+    @Override
+    public String installationMessage(SetupContext context) {
+        return STR."Checking if product is already installed in @|bold \{fileSystem.currentDirectory()}|@";
+    }
+
+    @Override
+    public void install(SetupContext context) {
+        if (configurationManager.findConfigurationResource() instanceof ConfigurationLookup.Found found) {
+            throw new ProductAlreadyInstalledException(found.resource());
+        }
     }
 }

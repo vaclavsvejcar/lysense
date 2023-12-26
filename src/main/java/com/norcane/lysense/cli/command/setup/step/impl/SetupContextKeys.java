@@ -27,29 +27,15 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package com.norcane.lysense.meta;
+package com.norcane.lysense.cli.command.setup.step.impl;
 
-import com.norcane.toolkit.io.FileSystem;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
+public class SetupContextKeys {
 
-import java.nio.file.Path;
-
-@ApplicationScoped
-public class RuntimeInfo {
-
-    private final FileSystem fileSystem;
-
-    @Inject
-    public RuntimeInfo(FileSystem fileSystem) {
-        this.fileSystem = fileSystem;
+    private SetupContextKeys() {
+        // utility class - hence the private constructor
+        throw new IllegalStateException("This class is not meant to be instantiated");
     }
 
-    public Path userConfigurationPath() {
-        return fileSystem.currentDirectory().resolve(ProductInfo.USER_CONFIGURATION_FILE);
-    }
-
-    public Path generatedTemplatesPath() {
-        return fileSystem.currentDirectory().resolve(ProductInfo.TEMPLATES_DIR);
-    }
+    public static final String TEMPLATES_DIR = "templates-dir";
+    public static final String SOURCE_PATHS = "source-paths";
 }
