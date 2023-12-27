@@ -39,7 +39,7 @@ import jakarta.inject.Inject;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import static com.norcane.lysense.source.LanguageId.languageId;
+import static com.norcane.lysense.domain.LanguageId.languageId;
 
 
 /**

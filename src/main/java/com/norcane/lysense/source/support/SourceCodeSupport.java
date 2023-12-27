@@ -32,10 +32,10 @@ package com.norcane.lysense.source.support;
 import com.norcane.lysense.configuration.api.Configuration;
 import com.norcane.lysense.configuration.api.HeaderConfig;
 import com.norcane.lysense.configuration.api.HeaderStyle;
+import com.norcane.lysense.domain.LanguageId;
 import com.norcane.lysense.resource.Resource;
 import com.norcane.lysense.resource.exception.CannotReadResourceException;
 import com.norcane.lysense.source.HeaderDetectionRules;
-import com.norcane.lysense.source.LanguageId;
 import com.norcane.lysense.source.SourceCode;
 import com.norcane.lysense.source.comment.CommentDetectorFactory;
 import com.norcane.lysense.source.metadata.Metadata;
@@ -52,10 +52,10 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 
-
 /**
- * Represents support for loading and processing source codes of selected programming/scripting language identified by {@link #languageId()}. To construct new
- * instance, use the <i>staged builder</i> obtained via {@link #builder} method.
+ * Represents support for loading and processing source codes of selected programming/scripting language identified by
+ * {@link #languageId()}. To construct new instance, use the <i>staged builder</i> obtained via {@link #builder}
+ * method.
  */
 public final class SourceCodeSupport {
 
@@ -95,23 +95,26 @@ public final class SourceCodeSupport {
     }
 
     /**
-     * Unique identification of the supported programming or scripting language. Please prefer machine-friendly identifiers, such as {@code java} for
-     * <i>Java</i> programming language. This ID is later used as a key for specific {@link com.norcane.lysense.configuration.api.HeaderConfig} configuration.
+     * Unique identification of the supported programming or scripting language. Please prefer machine-friendly
+     * identifiers, such as {@code java} for
+     * <i>Java</i> programming language. This ID is later used as a key for specific
+     * {@link com.norcane.lysense.configuration.api.HeaderConfig} configuration.
      */
     public LanguageId languageId() {
         return languageId;
     }
 
     /**
-     * <i>Resource types</i> handled by this implementation. Resource type usually means file extension, so for example implementation of support for <i>UNIX
-     * Shell</i> might use  {@code Set.of("sh")}.
+     * <i>Resource types</i> handled by this implementation. Resource type usually means file extension, so for example
+     * implementation of support for <i>UNIX Shell</i> might use  {@code Set.of("sh")}.
      */
     public Set<String> resourceTypes() {
         return resourceTypes;
     }
 
     /**
-     * Loads and analyzes source code from given resource. <i>Analysis</i> means trying to find any existing <i>license header</i> and extracting all needed
+     * Loads and analyzes source code from given resource. <i>Analysis</i> means trying to find any existing <i>license
+     * header</i> and extracting all needed
      * <i>dynamic variables</i>.
      *
      * @param resource resource to load source code from
@@ -149,7 +152,8 @@ public final class SourceCodeSupport {
         public interface CommentDetectorFactoryStep {
 
             /**
-             * Accepts a function that returns {@link CommentDetectorFactory} corresponding to the passed {@link HeaderStyle}.
+             * Accepts a function that returns {@link CommentDetectorFactory} corresponding to the passed
+             * {@link HeaderStyle}.
              *
              * @param commentDetectorFactoryFn function
              * @return next step
@@ -167,20 +171,20 @@ public final class SourceCodeSupport {
             }
 
             /**
-             * Detect comments of either given <i>block syntax</i> or <i>line syntax</i> in the supported source code, based on the
-             * {@link HeaderConfig#headerStyle()} defined in the {@link Configuration} passed earlier to this builder.
+             * Detect comments of either given <i>block syntax</i> or <i>line syntax</i> in the supported source code,
+             * based on the {@link HeaderConfig#headerStyle()} defined in the {@link Configuration} passed earlier to
+             * this builder.
              *
-             * @param blockCommentSyntax describes the possible block comment syntax
-             * @param lineCommentSyntax  describes the possible line comment syntax
+             * @param blockComment describes the possible block comment syntax
+             * @param lineComment  describes the possible line comment syntax
              * @return next step
              */
-            default HeaderDetectionRulesStep configBasedHeaderSyntax(CommentSyntax.BlockCommentSyntax blockCommentSyntax,
-                                                                     CommentSyntax.LineCommentSyntax lineCommentSyntax) {
+            default HeaderDetectionRulesStep configBasedHeaderSyntax(CommentSyntax.BlockCommentSyntax blockComment,
+                                                                     CommentSyntax.LineCommentSyntax lineComment) {
 
                 return commentDetectorFactory(headerStyle -> switch (headerStyle) {
-                    case BLOCK_COMMENT ->
-                            CommentDetectorFactory.blockSyntax(blockCommentSyntax.start(), blockCommentSyntax.end());
-                    case LINE_COMMENT -> CommentDetectorFactory.lineSyntax(lineCommentSyntax.pattern());
+                    case BLOCK_COMMENT -> CommentDetectorFactory.blockSyntax(blockComment.start(), blockComment.end());
+                    case LINE_COMMENT -> CommentDetectorFactory.lineSyntax(lineComment.pattern());
                 });
             }
         }
@@ -192,7 +196,8 @@ public final class SourceCodeSupport {
         public interface HeaderDetectionRulesStep {
 
             /**
-             * Detect <i>license header</i> in the supported source code based on the given {@link HeaderDetectionRules}.
+             * Detect <i>license header</i> in the supported source code based on the given
+             * {@link HeaderDetectionRules}.
              *
              * @param headerDetectionRules header detection rules
              * @return next step

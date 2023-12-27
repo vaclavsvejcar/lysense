@@ -1,6 +1,6 @@
 /*
- * lysense :: license header manager
- * Copyright (c) 2023-2024 Vaclav Svejcar
+ * {{ project }}
+ * Copyright (c) {{ year }} {{ author }}
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -27,29 +27,3 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package com.norcane.lysense.source;
-
-import com.norcane.toolkit.ValueClass;
-
-/**
- * Type-safe wrapper for <i>language id</i>, which is a string that uniquely identifies programming language.
- *
- * @param value string representation of the language id
- */
-public record LanguageId(String value) implements ValueClass<String> {
-
-    /**
-     * Creates new instance of {@link LanguageId}.
-     *
-     * @param value string representation of the language id
-     * @return new instance of {@link LanguageId}
-     */
-    public static LanguageId languageId(String value) {
-        return new LanguageId(value);
-    }
-
-    @Override
-    public String toString() {
-        return value;
-    }
-}

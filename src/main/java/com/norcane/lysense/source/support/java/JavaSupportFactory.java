@@ -29,7 +29,6 @@
  */
 package com.norcane.lysense.source.support.java;
 
-
 import com.norcane.lysense.configuration.api.Configuration;
 import com.norcane.lysense.source.support.SourceCodeSupport;
 import com.norcane.toolkit.InstanceFactory;
@@ -41,13 +40,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import static com.norcane.lysense.source.LanguageId.languageId;
+import static com.norcane.lysense.domain.LanguageId.languageId;
 import static com.norcane.lysense.source.support.SourceCodeSupport.Builder.CommentSyntax.blockComment;
 import static com.norcane.lysense.source.support.SourceCodeSupport.Builder.CommentSyntax.lineComment;
 
-
 /**
- * Produces instance of{@link SourceCodeSupport} to support managing license headers in <i>Java</i> source code. This implementation extracts following
+ * Produces instance of{@link SourceCodeSupport} to support managing license headers in <i>Java</i> source code. This
+ * implementation extracts following
  * <i>dynamic variables</i> from analyzed source codes:
  *
  * <ul>

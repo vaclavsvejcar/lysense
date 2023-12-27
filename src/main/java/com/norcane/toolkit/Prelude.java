@@ -94,7 +94,8 @@ public final class Prelude {
     }
 
     /**
-     * Returns back the given object if not {@code null}, otherwise throws {@link IllegalArgumentException} with the provided message.
+     * Returns back the given object if not {@code null}, otherwise throws {@link IllegalArgumentException} with the
+     * provided message.
      *
      * <br><br><strong>Example of use</strong>
      * {@snippet lang = "java":
@@ -108,8 +109,22 @@ public final class Prelude {
      * @throws IllegalArgumentException when object is {@code null}
      */
     public static <R> R nonNullOrThrow(R object, String exceptionMessage) {
+        return nonNullOrThrow(object, () -> new IllegalArgumentException(exceptionMessage));
+    }
+
+    /**
+     * Returns back the given object if not {@code null}, otherwise throws {@link RuntimeException} provided by the
+     * given supplier.
+     *
+     * @param object            object to check for nullity and return if not {@code null}
+     * @param throwableSupplier supplier of the exception to throw if object is {@code null}
+     * @param <R>               type of the object
+     * @return checked object
+     * @throws RuntimeException when object is {@code null}
+     */
+    public static <R> R nonNullOrThrow(R object, Supplier<RuntimeException> throwableSupplier) {
         if (object == null) {
-            throw new IllegalArgumentException(exceptionMessage);
+            throw throwableSupplier.get();
         }
 
         return object;

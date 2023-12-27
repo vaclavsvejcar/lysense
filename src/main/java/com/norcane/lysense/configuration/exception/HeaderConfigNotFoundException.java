@@ -29,10 +29,10 @@
  */
 package com.norcane.lysense.configuration.exception;
 
+import com.norcane.lysense.domain.LanguageId;
 import com.norcane.lysense.exception.ApplicationException;
 import com.norcane.lysense.exception.ErrorCode;
 import com.norcane.lysense.exception.ErrorDetail;
-import com.norcane.lysense.source.LanguageId;
 
 import static com.norcane.toolkit.Prelude.nonNull;
 

@@ -31,6 +31,7 @@ package com.norcane.lysense.source;
 
 import com.norcane.lysense.configuration.api.Configuration;
 import com.norcane.lysense.configuration.api.HeaderConfig;
+import com.norcane.lysense.domain.LanguageId;
 import com.norcane.lysense.resource.Resource;
 import com.norcane.lysense.resource.util.LineSeparator;
 import com.norcane.lysense.source.metadata.HeaderCandidate;

@@ -65,7 +65,7 @@ public class UserLicenseTemplateSource extends TemplateSource<UserLicenseTemplat
 
     private final Configuration configuration;
     private final ResourceLoader resourceLoader;
-    private final Map<String, TemplateFactory> templateTypeToFactory;
+    private final Map<String, TemplateFactory> templateFactories;
 
 
     @Inject
@@ -75,7 +75,7 @@ public class UserLicenseTemplateSource extends TemplateSource<UserLicenseTemplat
 
         this.configuration = configuration;
         this.resourceLoader = resourceLoader;
-        this.templateTypeToFactory = toMap(TemplateFactory::templateType, templateFactories);
+        this.templateFactories = toMap(TemplateFactory::templateType, templateFactories);
     }
 
     @Override
@@ -91,7 +91,7 @@ public class UserLicenseTemplateSource extends TemplateSource<UserLicenseTemplat
     @Override
     protected List<Resource> resources() {
         final List<String> templatePaths = configuration.templates();
-        final Set<String> templateTypes = templateTypeToFactory.keySet();
+        final Set<String> templateTypes = templateFactories.keySet();
 
         final Predicate<Resource> filter = resource -> templateTypes.contains(resource.extension());
 

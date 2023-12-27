@@ -47,7 +47,7 @@ import org.junit.jupiter.api.Test;
 import java.nio.file.Path;
 import java.util.List;
 
-import static com.norcane.lysense.source.LanguageId.languageId;
+import static com.norcane.lysense.domain.LanguageId.languageId;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
