@@ -31,8 +31,8 @@ package com.norcane.lysense.cli.command.setup;
 
 import com.norcane.lysense.cli.ReturnCode;
 import com.norcane.lysense.cli.command.CliCommand;
+import com.norcane.lysense.cli.command.setup.context.SetupContext;
 import com.norcane.lysense.cli.command.setup.step.InstallStep;
-import com.norcane.lysense.cli.command.setup.step.SetupContext;
 import com.norcane.lysense.cli.command.setup.step.impl.SetupContextKeys;
 import com.norcane.lysense.meta.ProductInfo;
 import com.norcane.lysense.meta.RuntimeInfo;

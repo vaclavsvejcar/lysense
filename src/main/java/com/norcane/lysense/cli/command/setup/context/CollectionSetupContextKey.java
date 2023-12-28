@@ -31,6 +31,14 @@ package com.norcane.lysense.cli.command.setup.context;
 
 import java.util.Collection;
 
+/**
+ * Represents a key for collection value in {@link SetupContext}.
+ *
+ * @param <C> type of the collection
+ * @param <V> type of the value
+ * @see SetupContextKey
+ * @see SetupContext
+ */
 public final class CollectionSetupContextKey<C extends Collection<V>, V> {
     private final Class<V> valueClass;
 
@@ -38,10 +46,23 @@ public final class CollectionSetupContextKey<C extends Collection<V>, V> {
         this.valueClass = valueClass;
     }
 
+    /**
+     * Constructs a new instance of {@link CollectionSetupContextKey} for given {@code valueClass}.
+     *
+     * @param valueClass class of the value
+     * @param <C>        type of the collection
+     * @param <V>        type of the value
+     * @return new instance of {@link CollectionSetupContextKey}
+     */
     public static <C extends Collection<V>, V> CollectionSetupContextKey<C, V> of(Class<V> valueClass) {
         return new CollectionSetupContextKey<>(valueClass);
     }
 
+    /**
+     * Returns the class of the corresponding value.
+     *
+     * @return class of the value
+     */
     public Class<V> valueClass() {
         return valueClass;
     }

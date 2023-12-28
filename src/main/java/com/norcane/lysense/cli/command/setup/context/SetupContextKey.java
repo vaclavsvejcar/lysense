@@ -29,17 +29,37 @@
  */
 package com.norcane.lysense.cli.command.setup.context;
 
+/**
+ * Represents a key for non-collection value in {@link SetupContext}.
+ *
+ * @param <V> type of the value
+ * @see CollectionSetupContextKey
+ * @see SetupContext
+ */
 public final class SetupContextKey<V> {
+
     private final Class<V> valueClass;
 
     private SetupContextKey(Class<V> valueClass) {
         this.valueClass = valueClass;
     }
 
+    /**
+     * Constructs a new instance of {@link SetupContextKey} for given {@code valueClass}.
+     *
+     * @param valueClass class of the value
+     * @param <V>        type of the value
+     * @return new instance of {@link SetupContextKey}
+     */
     public static <V> SetupContextKey<V> of(Class<V> valueClass) {
         return new SetupContextKey<>(valueClass);
     }
 
+    /**
+     * Returns the class of the corresponding value.
+     *
+     * @return class of the value
+     */
     public Class<V> valueClass() {
         return valueClass;
     }

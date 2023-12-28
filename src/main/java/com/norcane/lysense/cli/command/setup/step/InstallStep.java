@@ -29,6 +29,8 @@
  */
 package com.norcane.lysense.cli.command.setup.step;
 
+import com.norcane.lysense.cli.command.setup.context.SetupContext;
+
 /**
  * Represents a single step in the installation process.
  */

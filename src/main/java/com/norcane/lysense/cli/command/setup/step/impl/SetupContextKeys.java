@@ -29,6 +29,13 @@
  */
 package com.norcane.lysense.cli.command.setup.step.impl;
 
+import com.norcane.lysense.cli.command.setup.context.CollectionSetupContextKey;
+import com.norcane.lysense.cli.command.setup.context.SetupContextKey;
+import com.norcane.lysense.domain.LanguageId;
+
+import java.nio.file.Path;
+import java.util.Set;
+
 public class SetupContextKeys {
 
     private SetupContextKeys() {
@@ -36,7 +43,7 @@ public class SetupContextKeys {
         throw new IllegalStateException("This class is not meant to be instantiated");
     }
 
-    public static final String DETECTED_LANGUAGE_IDS = "detected-language-ids";
-    public static final String TEMPLATES_DIR = "templates-dir";
-    public static final String SOURCE_PATHS = "source-paths";
+    public static final CollectionSetupContextKey<Set<LanguageId>, LanguageId> DETECTED_LANGUAGE_IDS = CollectionSetupContextKey.of(LanguageId.class);
+    public static final SetupContextKey<Path> TEMPLATES_DIR = SetupContextKey.of(Path.class);
+    public static final CollectionSetupContextKey<Set<String>, String> SOURCE_PATHS = CollectionSetupContextKey.of(String.class);
 }

@@ -29,8 +29,8 @@
  */
 package com.norcane.lysense.cli.command.setup.step.impl;
 
+import com.norcane.lysense.cli.command.setup.context.SetupContext;
 import com.norcane.lysense.cli.command.setup.step.InstallStep;
-import com.norcane.lysense.cli.command.setup.step.SetupContext;
 import com.norcane.lysense.domain.LanguageId;
 import com.norcane.lysense.meta.RuntimeInfo;
 import com.norcane.lysense.template.TemplateManager;
@@ -60,13 +60,13 @@ public class S02CopyTemplatesStep implements InstallStep {
 
     @Override
     public String installationMessage(SetupContext context) {
-        return STR."Generating templates to \{context.get(SetupContextKeys.TEMPLATES_DIR, String.class)}";
+        return STR."Generating templates to \{context.get(SetupContextKeys.TEMPLATES_DIR)}";
     }
 
     @Override
     public void install(SetupContext context) {
-        final Path templatesDir = Path.of(context.get(SetupContextKeys.TEMPLATES_DIR, String.class));
-        final Set<LanguageId> detectedLanguageIds = context.getSet(SetupContextKeys.DETECTED_LANGUAGE_IDS, LanguageId.class);
+        final Path templatesDir = context.get(SetupContextKeys.TEMPLATES_DIR);
+        final Set<LanguageId> detectedLanguageIds = context.get(SetupContextKeys.DETECTED_LANGUAGE_IDS);
 
         ensureTemplatesDirectoryExists(templatesDir);
         copyOssTemplates(templatesDir, detectedLanguageIds);

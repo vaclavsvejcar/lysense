@@ -29,8 +29,8 @@
  */
 package com.norcane.lysense.cli.command.setup.step.impl;
 
+import com.norcane.lysense.cli.command.setup.context.SetupContext;
 import com.norcane.lysense.cli.command.setup.step.InstallStep;
-import com.norcane.lysense.cli.command.setup.step.SetupContext;
 import com.norcane.lysense.domain.LanguageId;
 import com.norcane.lysense.resource.Resource;
 import com.norcane.lysense.resource.loader.ResourceLoader;
@@ -58,13 +58,13 @@ public class S01DetectSourcesStep implements InstallStep {
 
     @Override
     public String installationMessage(SetupContext context) {
-        final Set<String> sourcePaths = context.getSet(SetupContextKeys.SOURCE_PATHS, String.class);
+        final Set<String> sourcePaths = context.get(SetupContextKeys.SOURCE_PATHS);
         return STR."Searching for source code files in @|bold \{sourcePaths}|@";
     }
 
     @Override
     public void install(SetupContext context) {
-        final Set<String> sourcePaths = context.getSet(SetupContextKeys.SOURCE_PATHS, String.class);
+        final Set<String> sourcePaths = context.get(SetupContextKeys.SOURCE_PATHS);
 
         final Set<LanguageId> languageIds = sourcePaths.stream()
                 .map(this::detectLanguageIds)

@@ -33,18 +33,48 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Represents a mutable context for setup steps. Uses {@link SetupContextKey} and {@link CollectionSetupContextKey} as a
+ * type-safe keys that also defines the type of the value for given key.
+ *
+ * @see SetupContextKey
+ * @see CollectionSetupContextKey
+ */
 public class SetupContext {
 
     private final Map<Object, Object> values = new HashMap<>();
 
+    /**
+     * Puts the given {@code value} into the context under the given {@code key}.
+     *
+     * @param key   key to be used for storing the value
+     * @param value value to be stored
+     * @param <V>   type of the value
+     */
     public <V> void put(SetupContextKey<V> key, V value) {
         values.put(key, key.valueClass().cast(value));
     }
 
+    /**
+     * Puts the given collection {@code value} into the context under the given {@code key}.
+     *
+     * @param key   key to be used for storing the value
+     * @param value collection to be stored
+     * @param <V>   type of the collection value
+     * @param <C>   type of the collection
+     */
     public <V, C extends Collection<V>> void put(CollectionSetupContextKey<C, V> key, C value) {
         values.put(key, value);
     }
 
+    /**
+     * Returns the value stored under the given {@code key}.
+     *
+     * @param key key to be used for retrieving the value
+     * @param <V> type of the value
+     * @return value stored under the given {@code key}
+     * @throws IllegalArgumentException if no value is found for given {@code key}
+     */
     public <V> V get(SetupContextKey<V> key) {
         final Object value = values.get(key);
 
@@ -55,6 +85,15 @@ public class SetupContext {
         return key.valueClass().cast(value);
     }
 
+    /**
+     * Returns the collection value stored under the given {@code key}.
+     *
+     * @param key key to be used for retrieving the value
+     * @param <V> type of the collection value
+     * @param <C> type of the collection
+     * @return collection value stored under the given {@code key}
+     * @throws IllegalArgumentException if no value is found for given {@code key}
+     */
     @SuppressWarnings("unchecked")
     public <V, C extends Collection<V>> C get(CollectionSetupContextKey<C, V> key) {
         final Object value = values.get(key);
