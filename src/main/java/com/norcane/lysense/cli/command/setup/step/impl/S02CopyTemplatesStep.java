@@ -59,11 +59,6 @@ public class S02CopyTemplatesStep implements InstallStep {
     }
 
     @Override
-    public int order() {
-        return 2;
-    }
-
-    @Override
     public String installationMessage(SetupContext context) {
         return STR."Generating templates to \{context.get(SetupContextKeys.TEMPLATES_DIR, String.class)}";
     }

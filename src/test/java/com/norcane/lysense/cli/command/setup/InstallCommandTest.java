@@ -27,40 +27,40 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package com.norcane.lysense.cli.command.setup.step.impl;
+package com.norcane.lysense.cli.command.setup;
 
-import com.norcane.lysense.cli.command.exception.ProductAlreadyInstalledException;
 import com.norcane.lysense.cli.command.setup.step.InstallStep;
-import com.norcane.lysense.cli.command.setup.step.SetupContext;
-import com.norcane.lysense.configuration.ConfigurationLookup;
-import com.norcane.lysense.configuration.ConfigurationManager;
-import com.norcane.toolkit.io.FileSystem;
-import jakarta.enterprise.context.ApplicationScoped;
+import com.norcane.lysense.cli.command.setup.step.impl.S00PreInstallationStep;
+import com.norcane.lysense.cli.command.setup.step.impl.S02CopyTemplatesStep;
+import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
+import org.junit.jupiter.api.Test;
 
-@ApplicationScoped
-public class S00PreInstallationStep implements InstallStep {
+import java.util.List;
 
-    private final ConfigurationManager configurationManager;
-    private final FileSystem fileSystem;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+@QuarkusTest
+class InstallCommandTest {
 
     @Inject
-    public S00PreInstallationStep(ConfigurationManager configurationManager,
-                                  FileSystem fileSystem) {
+    InstallCommand installCommand;
 
-        this.configurationManager = configurationManager;
-        this.fileSystem = fileSystem;
-    }
+    @Test
+    void orderedInstallSteps() {
+        final List<Class<? extends InstallStep>> classes = List.of(
+                S00PreInstallationStep.class,
+                S02CopyTemplatesStep.class
+        );
 
-    @Override
-    public String installationMessage(SetupContext context) {
-        return STR."Checking if product is already installed in @|bold \{fileSystem.currentDirectory()}|@";
-    }
+        final List<String> expected = classes.stream()
+                .map(Class::getSimpleName)
+                .toList();
+        final List<String> actual = installCommand.orderedInstallSteps().stream()
+                .map(installStep -> installStep.getClass().getSimpleName())
+                .map(className -> className.replace("_ClientProxy", ""))
+                .toList();
 
-    @Override
-    public void install(SetupContext context) {
-        if (configurationManager.findConfigurationResource() instanceof ConfigurationLookup.Found found) {
-            throw new ProductAlreadyInstalledException(found.resource());
-        }
+        assertEquals(expected, actual);
     }
 }

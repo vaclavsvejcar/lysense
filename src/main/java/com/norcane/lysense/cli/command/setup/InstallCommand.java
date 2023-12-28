@@ -83,9 +83,7 @@ public class InstallCommand extends CliCommand {
         console.render(Alert.info(STR."Beginning installing \{ProductInfo.NAME}"));
 
         final SetupContext context = new SetupContext();
-        final List<InstallStep> orderedInstallSteps = installSteps.stream()
-                .sorted(Comparator.comparingInt(InstallStep::order))
-                .toList();
+        final List<InstallStep> orderedInstallSteps = orderedInstallSteps();
 
         // initialize context
         context.put(SetupContextKeys.TEMPLATES_DIR, runtimeInfo.generatedTemplatesPath());
@@ -99,5 +97,11 @@ public class InstallCommand extends CliCommand {
         }
 
         return ReturnCode.SUCCESS;
+    }
+
+    List<InstallStep> orderedInstallSteps() {
+        return installSteps.stream()
+                .sorted(Comparator.comparing(installStep -> installStep.getClass().getSimpleName()))
+                .toList();
     }
 }

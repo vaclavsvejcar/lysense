@@ -33,12 +33,4 @@ package com.norcane.lysense.cli.command.setup.step;
  * Represents a single step in the installation/uninstallation process.
  */
 public interface SetupStep {
-
-    /**
-     * Returns the order of this step. Steps with lower order will be executed first during installation and in reverse
-     * order during uninstallation.
-     *
-     * @return order of this step
-     */
-    int order();
 }
