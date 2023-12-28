@@ -31,6 +31,7 @@ package com.norcane.lysense.cli.command.setup;
 
 import com.norcane.lysense.cli.command.setup.step.InstallStep;
 import com.norcane.lysense.cli.command.setup.step.impl.S00PreInstallationStep;
+import com.norcane.lysense.cli.command.setup.step.impl.S01DetectSourcesStep;
 import com.norcane.lysense.cli.command.setup.step.impl.S02CopyTemplatesStep;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
@@ -50,6 +51,7 @@ class InstallCommandTest {
     void orderedInstallSteps() {
         final List<Class<? extends InstallStep>> classes = List.of(
                 S00PreInstallationStep.class,
+                S01DetectSourcesStep.class,
                 S02CopyTemplatesStep.class
         );
 

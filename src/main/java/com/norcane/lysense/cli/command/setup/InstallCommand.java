@@ -45,6 +45,7 @@ import picocli.CommandLine;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 @CommandLine.Command(
         name = "install",
@@ -66,7 +67,7 @@ public class InstallCommand extends CliCommand {
             paramLabel = "PATH",
             required = true
     )
-    List<String> sourcePaths;
+    Set<String> sourcePaths;
 
     @Inject
     public InstallCommand(Console console,
