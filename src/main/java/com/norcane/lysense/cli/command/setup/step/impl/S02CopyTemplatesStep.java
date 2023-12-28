@@ -31,28 +31,36 @@ package com.norcane.lysense.cli.command.setup.step.impl;
 
 import com.norcane.lysense.cli.command.setup.step.InstallStep;
 import com.norcane.lysense.cli.command.setup.step.SetupContext;
+import com.norcane.lysense.domain.LanguageId;
 import com.norcane.lysense.meta.RuntimeInfo;
+import com.norcane.lysense.template.TemplateManager;
+import com.norcane.lysense.template.source.OssLicenseTemplateSource;
 import com.norcane.toolkit.io.FileSystem;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
+import java.nio.file.Path;
+import java.util.Set;
+
 @ApplicationScoped
-public class S01TemplatesStep implements InstallStep {
+public class S02CopyTemplatesStep implements InstallStep {
 
     private final FileSystem fileSystem;
     private final RuntimeInfo runtimeInfo;
+    private final TemplateManager templateManager;
 
     @Inject
-    public S01TemplatesStep(FileSystem fileSystem,
-                            RuntimeInfo runtimeInfo) {
+    public S02CopyTemplatesStep(FileSystem fileSystem,
+                                RuntimeInfo runtimeInfo, TemplateManager templateManager) {
 
         this.fileSystem = fileSystem;
         this.runtimeInfo = runtimeInfo;
+        this.templateManager = templateManager;
     }
 
     @Override
     public int order() {
-        return 1;
+        return 2;
     }
 
     @Override
@@ -62,6 +70,26 @@ public class S01TemplatesStep implements InstallStep {
 
     @Override
     public void install(SetupContext context) {
+        final Path templatesDir = Path.of(context.get(SetupContextKeys.TEMPLATES_DIR, String.class));
+        final Set<LanguageId> detectedLanguageIds = context.getSet(SetupContextKeys.DETECTED_LANGUAGE_IDS, LanguageId.class);
 
+        ensureTemplatesDirectoryExists(templatesDir);
+        copyOssTemplates(templatesDir, detectedLanguageIds);
+    }
+
+    private void ensureTemplatesDirectoryExists(Path templatesDir) {
+        fileSystem.createDirectory(templatesDir);
+    }
+
+    private void copyOssTemplates(Path templatesDir, Set<LanguageId> detectedLanguageIds) {
+        templateManager
+                .templates(OssLicenseTemplateSource.TemplateKey.class, templateKey -> detectedLanguageIds.contains(templateKey.languageId()))
+                .forEach((templateKey, template) -> {
+
+                    // write template to <templatesDir>/<languageId>.<extension> (e.g. /foo/bar/java.mustache)
+                    final String templateName = STR."\{templateKey.languageId().value()}.\{template.resource().extension()}";
+                    final Path templateFile = templatesDir.resolve(templateName);
+                    fileSystem.write(template.resource(), templateFile);
+                });
     }
 }

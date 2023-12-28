@@ -29,12 +29,15 @@
  */
 package com.norcane.toolkit.io;
 
+import com.google.common.base.Charsets;
+import com.google.common.io.CharStreams;
+import com.norcane.lysense.resource.Resource;
 import jakarta.enterprise.context.ApplicationScoped;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 /**
  * Provides access to file system.
@@ -52,17 +55,36 @@ public class FileSystem {
     }
 
     /**
-     * Creates a new directory at given {@code path}.
+     * Creates a new directory at given {@code path}. If the directory already exists, nothing happens.
      *
      * @param path path to the directory to be created
      * @throws UncheckedIOException if the directory cannot be created
      */
     public void createDirectory(Path path) {
         try {
-            Files.createDirectory(path);
+            if (!Files.exists(path)) {
+                Files.createDirectory(path);
+            }
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
-        ;
+    }
+
+    /**
+     * Creates a new file defined by target path using the content of given resource. If the target file already exists,
+     * it will be replaced.
+     *
+     * @param resource resource to use for content
+     * @param target   target path of the file
+     * @throws UncheckedIOException if the file cannot be created
+     */
+    public void write(Resource resource, Path target) {
+        try (final Reader reader = resource.reader();
+             final InputStream stream = new ByteArrayInputStream(CharStreams.toString(reader).getBytes(Charsets.UTF_8))) {
+
+            Files.copy(stream, target, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
     }
 }

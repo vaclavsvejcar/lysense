@@ -36,6 +36,7 @@ public class SetupContextKeys {
         throw new IllegalStateException("This class is not meant to be instantiated");
     }
 
+    public static final String DETECTED_LANGUAGE_IDS = "detected-language-ids";
     public static final String TEMPLATES_DIR = "templates-dir";
     public static final String SOURCE_PATHS = "source-paths";
 }

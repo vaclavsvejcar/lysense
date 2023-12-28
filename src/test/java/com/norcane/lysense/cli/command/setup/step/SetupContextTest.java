@@ -34,6 +34,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -58,6 +59,18 @@ class SetupContextTest {
         assertThrows(IllegalArgumentException.class, () -> context.getList("foo", String.class));
 
         assertEquals(List.of(1, 2, 3), context.getList("foo", Integer.class));
+    }
+
+    @Test
+    void getSet() {
+        final SetupContext context = new SetupContext();
+
+        context.put("foo", Set.of(1, 2, 3));
+
+        assertThrows(IllegalArgumentException.class, () -> context.get("bar", Integer.class));
+        assertThrows(IllegalArgumentException.class, () -> context.getSet("foo", String.class));
+
+        assertEquals(Set.of(1, 2, 3), context.getSet("foo", Integer.class));
     }
 
     @Test

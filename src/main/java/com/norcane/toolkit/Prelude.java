@@ -102,29 +102,29 @@ public final class Prelude {
      *      final User user = nonNullOrThrow(findUser(username), "no user found for username");
      *}
      *
-     * @param object           object to check for nullity and return if not {@code null}
-     * @param exceptionMessage message to use in the exception if object is {@code null}
-     * @param <R>              type of the object
+     * @param object                          object to check for nullity and return if not {@code null}
+     * @param illegalArgumentExceptionMessage message to use in the exception if object is {@code null}
+     * @param <R>                             type of the object
      * @return checked object
      * @throws IllegalArgumentException when object is {@code null}
      */
-    public static <R> R nonNullOrThrow(R object, String exceptionMessage) {
-        return nonNullOrThrow(object, () -> new IllegalArgumentException(exceptionMessage));
+    public static <R> R nonNullOrThrow(R object, String illegalArgumentExceptionMessage) {
+        return nonNullOrThrow(object, () -> new IllegalArgumentException(illegalArgumentExceptionMessage));
     }
 
     /**
      * Returns back the given object if not {@code null}, otherwise throws {@link RuntimeException} provided by the
      * given supplier.
      *
-     * @param object            object to check for nullity and return if not {@code null}
-     * @param throwableSupplier supplier of the exception to throw if object is {@code null}
-     * @param <R>               type of the object
+     * @param object           object to check for nullity and return if not {@code null}
+     * @param runtimeException supplier of the exception to throw if object is {@code null}
+     * @param <R>              type of the object
      * @return checked object
      * @throws RuntimeException when object is {@code null}
      */
-    public static <R> R nonNullOrThrow(R object, Supplier<RuntimeException> throwableSupplier) {
+    public static <R> R nonNullOrThrow(R object, Supplier<RuntimeException> runtimeException) {
         if (object == null) {
-            throw throwableSupplier.get();
+            throw runtimeException.get();
         }
 
         return object;

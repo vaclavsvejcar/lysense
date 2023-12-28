@@ -31,10 +31,7 @@ package com.norcane.lysense.cli.command.setup.step;
 
 import com.google.common.base.MoreObjects;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 import static com.norcane.toolkit.Prelude.nonNull;
 
@@ -91,19 +88,40 @@ public class SetupContext {
      */
     @SuppressWarnings("unchecked")
     public <T> List<T> getList(String key, Class<T> elementType) {
+        return get(key, List.class, elementType);
+    }
+
+    /**
+     * Returns value of type {@link Set} for given key.
+     *
+     * @param key         key
+     * @param elementType element type class
+     * @param <T>         element type
+     * @return set of values
+     * @throws IllegalArgumentException if no value found for given key
+     */
+    @SuppressWarnings("unchecked")
+    public <T> Set<T> getSet(String key, Class<T> elementType) {
+        return get(key, Set.class, elementType);
+    }
+
+    private <T, C extends Collection<T>> C get(String key, Class<C> collectionType, Class<T> elementType) {
         final Object value = context.get(key);
 
         if (value == null) {
             throw new IllegalArgumentException(STR."No value found for key: \{key}");
         }
 
-        final List<?> list = (List<?>) value;
-        if (!list.isEmpty() && !elementType.isInstance(list.getFirst())) {
-            throw new IllegalArgumentException(STR."Expected list of \{elementType} but got: \{list}");
+        if (!collectionType.isInstance(value)) {
+            throw new IllegalArgumentException(STR."Expected a \{collectionType.getSimpleName()} for key: \{key}");
         }
 
+        final C collection = collectionType.cast(value);
+        if (!collection.isEmpty() && !elementType.isInstance(collection.stream().findAny().orElse(null))) {
+            throw new IllegalArgumentException(STR."Expected list of \{elementType} but got: \{collection}");
+        }
 
-        return (List<T>) value;
+        return collection;
     }
 
     /**
