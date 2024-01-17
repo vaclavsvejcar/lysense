@@ -31,10 +31,12 @@ package com.norcane.lysense.resource.inline;
 
 import com.norcane.lysense.resource.util.LineSeparator;
 import com.norcane.toolkit.net.URIs;
-import io.quarkus.test.junit.QuarkusTest;
+
 import org.junit.jupiter.api.Test;
 
 import java.net.URI;
+
+import io.quarkus.test.junit.QuarkusTest;
 
 import static com.norcane.lysense.test.Assertions.assertIsPresent;
 import static org.junit.jupiter.api.Assertions.assertEquals;

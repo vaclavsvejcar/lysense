@@ -56,19 +56,19 @@ public class DuplicateTemplatesFoundException extends ApplicationException {
     @Override
     public ErrorDetail errorDetail() {
         return ErrorDetail.builder()
-                .problem(
-                        STR."""
+            .problem(
+                STR."""
                     Template paths contain multiple templates for same source file type @|bold \{type}|@:
                     \{listOfUris()}
                     """
-                )
-                .solution("Make sure that only one template is present for selected file type")
-                .build();
+            )
+            .solution("Make sure that only one template is present for selected file type")
+            .build();
     }
 
     private String listOfUris() {
         return uris.stream()
-                .map(uri -> STR."  - @|bold \{uri}|@")
-                .collect(Collectors.joining("\n"));
+            .map(uri -> STR."  - @|bold \{uri}|@")
+            .collect(Collectors.joining("\n"));
     }
 }

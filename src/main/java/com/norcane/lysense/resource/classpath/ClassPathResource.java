@@ -31,6 +31,7 @@ package com.norcane.lysense.resource.classpath;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.io.Files;
+
 import com.norcane.lysense.resource.AbstractResource;
 import com.norcane.lysense.resource.Resource;
 import com.norcane.lysense.resource.exception.ResourceNotFoundException;
@@ -76,7 +77,7 @@ public class ClassPathResource extends AbstractResource {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
-                .add("location", location)
-                .toString();
+            .add("location", location)
+            .toString();
     }
 }

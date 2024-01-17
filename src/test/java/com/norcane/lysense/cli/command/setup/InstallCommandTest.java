@@ -33,11 +33,13 @@ import com.norcane.lysense.cli.command.setup.step.InstallStep;
 import com.norcane.lysense.cli.command.setup.step.impl.S00PreInstallationStep;
 import com.norcane.lysense.cli.command.setup.step.impl.S01DetectSourcesStep;
 import com.norcane.lysense.cli.command.setup.step.impl.S02CopyTemplatesStep;
-import io.quarkus.test.junit.QuarkusTest;
-import jakarta.inject.Inject;
+
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+
+import io.quarkus.test.junit.QuarkusTest;
+import jakarta.inject.Inject;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -50,18 +52,18 @@ class InstallCommandTest {
     @Test
     void orderedInstallSteps() {
         final List<Class<? extends InstallStep>> classes = List.of(
-                S00PreInstallationStep.class,
-                S01DetectSourcesStep.class,
-                S02CopyTemplatesStep.class
+            S00PreInstallationStep.class,
+            S01DetectSourcesStep.class,
+            S02CopyTemplatesStep.class
         );
 
         final List<String> expected = classes.stream()
-                .map(Class::getSimpleName)
-                .toList();
+            .map(Class::getSimpleName)
+            .toList();
         final List<String> actual = installCommand.orderedInstallSteps().stream()
-                .map(installStep -> installStep.getClass().getSimpleName())
-                .map(className -> className.replace("_ClientProxy", ""))
-                .toList();
+            .map(installStep -> installStep.getClass().getSimpleName())
+            .map(className -> className.replace("_ClientProxy", ""))
+            .toList();
 
         assertEquals(expected, actual);
     }

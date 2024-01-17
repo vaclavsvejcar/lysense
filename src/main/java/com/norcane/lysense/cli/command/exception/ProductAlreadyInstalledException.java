@@ -52,14 +52,14 @@ public class ProductAlreadyInstalledException extends ApplicationException {
     @Override
     public ErrorDetail errorDetail() {
         return ErrorDetail.builder()
-                .problem(
-                        STR."It seems you're attempting to install \{ProductInfo.NAME} in current directory, but user configuration has been already found in @|bold \{existingUserConfiguration.uri()}|@."
-                )
+            .problem(
+                STR."It seems you're attempting to install \{ProductInfo.NAME} in current directory, but user configuration has been already found in @|bold \{existingUserConfiguration.uri()}|@."
+            )
 
-                .solution(
-                        STR."Please check that you're installing \{ProductInfo.NAME} in correct directory."
-                )
+            .solution(
+                STR."Please check that you're installing \{ProductInfo.NAME} in correct directory."
+            )
 
-                .build();
+            .build();
     }
 }

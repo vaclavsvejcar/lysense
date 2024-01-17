@@ -31,6 +31,7 @@ package com.norcane.lysense.configuration.yaml;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.norcane.lysense.configuration.api.HeaderSpacing;
+
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import jakarta.validation.constraints.NotNull;
 

@@ -102,9 +102,9 @@ public interface Stateful {
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add("id", id)
-                    .add("registered", registered)
-                    .toString();
+                .add("id", id)
+                .add("registered", registered)
+                .toString();
         }
     }
 }

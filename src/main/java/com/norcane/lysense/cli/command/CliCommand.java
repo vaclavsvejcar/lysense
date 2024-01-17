@@ -36,10 +36,11 @@ import com.norcane.lysense.meta.ProductInfo;
 import com.norcane.lysense.ui.alert.Alert;
 import com.norcane.lysense.ui.console.Console;
 import com.norcane.lysense.ui.exception.ApplicationExceptionPrinter;
-import io.quarkus.logging.Log;
-import picocli.CommandLine;
 
 import java.util.concurrent.Callable;
+
+import io.quarkus.logging.Log;
+import picocli.CommandLine;
 
 import static com.norcane.toolkit.Prelude.nonNull;
 import static java.util.FormatProcessor.FMT;

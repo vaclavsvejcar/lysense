@@ -33,7 +33,6 @@ import com.norcane.toolkit.ValueClass;
 
 /**
  * Type-safe wrapper for <i>license id</i>, which is a string that uniquely identifies license (e.g. {@code bsd3}).
- * @param value
  */
 public record LicenseId(String value) implements ValueClass<String> {
 

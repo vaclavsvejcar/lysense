@@ -37,7 +37,11 @@ import com.norcane.lysense.configuration.api.Configuration;
 import com.norcane.lysense.configuration.api.ConfigurationRef;
 import com.norcane.lysense.configuration.api.HeaderStyle;
 import com.norcane.lysense.configuration.api.RunMode;
-import com.norcane.lysense.configuration.exception.*;
+import com.norcane.lysense.configuration.exception.ConfigurationParseException;
+import com.norcane.lysense.configuration.exception.IncompatibleConfigurationException;
+import com.norcane.lysense.configuration.exception.InvalidConfigurationException;
+import com.norcane.lysense.configuration.exception.MissingBaseVersionException;
+import com.norcane.lysense.configuration.exception.NoConfigurationFoundException;
 import com.norcane.lysense.configuration.serialization.LowerCaseDashSeparatedEnumDeserializer;
 import com.norcane.lysense.configuration.serialization.SemVerDeserializer;
 import com.norcane.lysense.configuration.serialization.VariablesDeserializer;
@@ -52,6 +56,10 @@ import com.norcane.lysense.resource.loader.ResourceLoader;
 import com.norcane.lysense.template.Variables;
 import com.norcane.toolkit.state.Memoized;
 import com.norcane.toolkit.state.Stateful;
+
+import java.io.Reader;
+import java.util.Set;
+
 import io.smallrye.config.ConfigMapping;
 import io.smallrye.config.WithName;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -59,9 +67,6 @@ import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Inject;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
-
-import java.io.Reader;
-import java.util.Set;
 
 @ApplicationScoped
 public class ConfigurationManager implements Stateful {
@@ -145,7 +150,7 @@ public class ConfigurationManager implements Stateful {
             // merge default and user configuration
             final YamlConfiguration defaultConfiguration = objectMapper.readValue(defaultConfigReader, YamlConfiguration.class);
             final YamlConfiguration mergedConfiguration =
-                    objectMapper.readerForUpdating(defaultConfiguration).readValue(userConfigReader, YamlConfiguration.class);
+                objectMapper.readerForUpdating(defaultConfiguration).readValue(userConfigReader, YamlConfiguration.class);
 
             // validate final configuration
             final Set<ConstraintViolation<Configuration>> violations = validator.validate(mergedConfiguration);
@@ -163,14 +168,14 @@ public class ConfigurationManager implements Stateful {
 
     private ObjectMapper yamlObjectMapper() {
         final SimpleModule module = new SimpleModule()
-                .addDeserializer(HeaderStyle.class, LowerCaseDashSeparatedEnumDeserializer.forEnum(HeaderStyle.class))
-                .addDeserializer(RunMode.class, LowerCaseDashSeparatedEnumDeserializer.forEnum(RunMode.class))
-                .addDeserializer(SemVer.class, new SemVerDeserializer())
-                .addDeserializer(Variables.class, new VariablesDeserializer());
+            .addDeserializer(HeaderStyle.class, LowerCaseDashSeparatedEnumDeserializer.forEnum(HeaderStyle.class))
+            .addDeserializer(RunMode.class, LowerCaseDashSeparatedEnumDeserializer.forEnum(RunMode.class))
+            .addDeserializer(SemVer.class, new SemVerDeserializer())
+            .addDeserializer(Variables.class, new VariablesDeserializer());
 
         return new ObjectMapper(new YAMLFactory())
-                .registerModule(module)
-                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            .registerModule(module)
+            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
     @ConfigMapping(prefix = "lysense.configuration")

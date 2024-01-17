@@ -36,11 +36,12 @@ import com.norcane.lysense.meta.RuntimeInfo;
 import com.norcane.lysense.template.TemplateManager;
 import com.norcane.lysense.template.source.OssLicenseTemplateSource;
 import com.norcane.toolkit.io.FileSystem;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
 import java.nio.file.Path;
 import java.util.Set;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class S02CopyTemplatesStep implements InstallStep {
@@ -78,13 +79,13 @@ public class S02CopyTemplatesStep implements InstallStep {
 
     private void copyOssTemplates(Path templatesDir, Set<LanguageId> detectedLanguageIds) {
         templateManager
-                .templates(OssLicenseTemplateSource.TemplateKey.class, templateKey -> detectedLanguageIds.contains(templateKey.languageId()))
-                .forEach((templateKey, template) -> {
+            .templates(OssLicenseTemplateSource.TemplateKey.class, templateKey -> detectedLanguageIds.contains(templateKey.languageId()))
+            .forEach((templateKey, template) -> {
 
-                    // write template to <templatesDir>/<languageId>.<extension> (e.g. /foo/bar/java.mustache)
-                    final String templateName = STR."\{templateKey.languageId().value()}.\{template.resource().extension()}";
-                    final Path templateFile = templatesDir.resolve(templateName);
-                    fileSystem.write(template.resource(), templateFile);
-                });
+                // write template to <templatesDir>/<languageId>.<extension> (e.g. /foo/bar/java.mustache)
+                final String templateName = STR."\{templateKey.languageId().value()}.\{template.resource().extension()}";
+                final Path templateFile = templatesDir.resolve(templateName);
+                fileSystem.write(template.resource(), templateFile);
+            });
     }
 }

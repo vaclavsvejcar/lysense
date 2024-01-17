@@ -31,13 +31,19 @@ package com.norcane.toolkit.io;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.CharStreams;
-import com.norcane.lysense.resource.Resource;
-import jakarta.enterprise.context.ApplicationScoped;
 
-import java.io.*;
+import com.norcane.lysense.resource.Resource;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
+import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+
+import jakarta.enterprise.context.ApplicationScoped;
 
 /**
  * Provides access to file system.
@@ -71,8 +77,7 @@ public class FileSystem {
     }
 
     /**
-     * Creates a new file defined by target path using the content of given resource. If the target file already exists,
-     * it will be replaced.
+     * Creates a new file defined by target path using the content of given resource. If the target file already exists, it will be replaced.
      *
      * @param resource resource to use for content
      * @param target   target path of the file

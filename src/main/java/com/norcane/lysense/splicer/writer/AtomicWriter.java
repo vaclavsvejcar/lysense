@@ -30,10 +30,15 @@
 package com.norcane.lysense.splicer.writer;
 
 import com.norcane.lysense.resource.util.LineSeparator;
-import jakarta.annotation.Nonnull;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
 import java.util.function.Supplier;
+
+import jakarta.annotation.Nonnull;
 
 import static com.norcane.toolkit.Prelude.nonNull;
 

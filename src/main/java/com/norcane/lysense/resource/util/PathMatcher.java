@@ -29,11 +29,11 @@
  */
 package com.norcane.lysense.resource.util;
 
-import jakarta.enterprise.context.ApplicationScoped;
-
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.List;
+
+import jakarta.enterprise.context.ApplicationScoped;
 
 /**
  * Utility class for matching paths against <i>GLOB</i> patterns.

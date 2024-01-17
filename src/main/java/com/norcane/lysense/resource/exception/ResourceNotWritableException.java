@@ -52,12 +52,12 @@ public class ResourceNotWritableException extends ApplicationException {
     @Override
     public ErrorDetail errorDetail() {
         return ErrorDetail.builder()
-                .problem(STR."Resource \{resource} is not writable")
-                .solution(
-                        """
-                                It's likely you used non-writable kind of resource (classpath, HTTP(S)) in place where writable resource
-                                (file system) is required."""
-                )
-                .build();
+            .problem(STR."Resource \{resource} is not writable")
+            .solution(
+                """
+                    It's likely you used non-writable kind of resource (classpath, HTTP(S)) in place where writable resource
+                    (file system) is required."""
+            )
+            .build();
     }
 }

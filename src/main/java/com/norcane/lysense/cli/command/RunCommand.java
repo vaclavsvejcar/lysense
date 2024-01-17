@@ -30,6 +30,7 @@
 package com.norcane.lysense.cli.command;
 
 import com.google.common.base.Stopwatch;
+
 import com.norcane.lysense.cli.ReturnCode;
 import com.norcane.lysense.configuration.ConfigurationManager;
 import com.norcane.lysense.configuration.api.Configuration;
@@ -40,23 +41,28 @@ import com.norcane.lysense.source.SourceCode;
 import com.norcane.lysense.source.SourceCodeProcessor;
 import com.norcane.lysense.ui.console.Console;
 import com.norcane.lysense.ui.progressbar.ProgressBar;
-import jakarta.inject.Inject;
-import picocli.CommandLine;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
+
+import jakarta.inject.Inject;
+import picocli.CommandLine;
 
 import static com.norcane.toolkit.Prelude.when;
 
 @CommandLine.Command(
-        name = "run",
-        description = "add, drop or update license headers",
-        usageHelpAutoWidth = true,
-        headerHeading = "@|bold,underline Usage|@:%n%n",
-        descriptionHeading = "%n@|bold,underline Description|@:%n%n",
-        parameterListHeading = "%n@|bold,underline Parameters|@:%n",
-        optionListHeading = "%n@|bold,underline Options|@:%n"
+    name = "run",
+    description = "add, drop or update license headers",
+    usageHelpAutoWidth = true,
+    headerHeading = "@|bold,underline Usage|@:%n%n",
+    descriptionHeading = "%n@|bold,underline Description|@:%n%n",
+    parameterListHeading = "%n@|bold,underline Parameters|@:%n",
+    optionListHeading = "%n@|bold,underline Options|@:%n"
 )
 public class RunCommand extends CliCommand {
 
@@ -66,9 +72,9 @@ public class RunCommand extends CliCommand {
     private final SourceCodeProcessor sourceCodeProcessor;
 
     @CommandLine.Option(
-            names = {"-m", "--mode"},
-            description = "run mode, available values: ${COMPLETION-CANDIDATES}",
-            paramLabel = "MODE"
+        names = {"-m", "--mode"},
+        description = "run mode, available values: ${COMPLETION-CANDIDATES}",
+        paramLabel = "MODE"
     )
     RunMode cliRunMode;
 
@@ -114,9 +120,9 @@ public class RunCommand extends CliCommand {
         final List<SourceCode> modifiedSources = new ArrayList<>();
 
         final Function<SourceCode, String> messageFn =
-                sourceCode -> sourceCode.metadata().header().isEmpty()
-                        ? STR."Adding header to @|bold \{sourceCode.resource().uri()}|@"
-                        : STR."Header already present in @|bold \{sourceCode.resource().uri()}|@";
+            sourceCode -> sourceCode.metadata().header().isEmpty()
+                          ? STR."Adding header to @|bold \{sourceCode.resource().uri()}|@"
+                          : STR."Header already present in @|bold \{sourceCode.resource().uri()}|@";
 
         for (final SourceCode sourceCode : ProgressBar.concise(sourceCodes, messageFn, console)) {
             when(sourceCodeProcessor.addHeader(sourceCode).modified(), () -> modifiedSources.add(sourceCode));
@@ -129,9 +135,9 @@ public class RunCommand extends CliCommand {
         final List<SourceCode> modifiedSources = new ArrayList<>();
 
         final Function<SourceCode, String> messageFn =
-                sourceCode -> sourceCode.metadata().header().isPresent()
-                        ? STR."Dropping header from @|bold \{sourceCode.resource().uri()}|@"
-                        : STR."No header present in @|bold \{sourceCode.resource().uri()}|@";
+            sourceCode -> sourceCode.metadata().header().isPresent()
+                          ? STR."Dropping header from @|bold \{sourceCode.resource().uri()}|@"
+                          : STR."No header present in @|bold \{sourceCode.resource().uri()}|@";
 
         for (final SourceCode sourceCode : ProgressBar.concise(sourceCodes, messageFn, console)) {
             when(sourceCodeProcessor.dropHeader(sourceCode).modified(), () -> modifiedSources.add(sourceCode));
@@ -144,9 +150,9 @@ public class RunCommand extends CliCommand {
         final List<SourceCode> modifiedSources = new ArrayList<>();
 
         final Function<SourceCode, String> messageFn =
-                sourceCode -> sourceCode.metadata().header().isPresent()
-                        ? STR."Updating header in @|bold \{sourceCode.resource().uri()}|@"
-                        : STR."Adding header to @|bold \{sourceCode.resource().uri()}|@";
+            sourceCode -> sourceCode.metadata().header().isPresent()
+                          ? STR."Updating header in @|bold \{sourceCode.resource().uri()}|@"
+                          : STR."Adding header to @|bold \{sourceCode.resource().uri()}|@";
 
         for (final SourceCode sourceCode : ProgressBar.concise(sourceCodes, messageFn, console)) {
             when(sourceCodeProcessor.updateHeader(sourceCode).modified(), () -> modifiedSources.add(sourceCode));
@@ -160,11 +166,11 @@ public class RunCommand extends CliCommand {
         final Predicate<Resource> filter = resource -> resourceTypes.contains(resource.extension());
 
         return configuration.sources().stream()
-                .map(sourcePath -> resourceLoader.resources(sourcePath, filter, true))
-                .flatMap(Collection::stream)
-                .map(Resource::asWritableOrFail)
-                .map(sourceCodeProcessor::process)
-                .toList();
+            .map(sourcePath -> resourceLoader.resources(sourcePath, filter, true))
+            .flatMap(Collection::stream)
+            .map(Resource::asWritableOrFail)
+            .map(sourceCodeProcessor::process)
+            .toList();
     }
 
     private record RunResult(ReturnCode returnCode, List<SourceCode> modifiedSources) {

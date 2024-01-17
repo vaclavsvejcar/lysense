@@ -31,6 +31,7 @@ package com.norcane.lysense.resource.inline;
 
 
 import com.google.common.io.Files;
+
 import com.norcane.lysense.resource.AbstractResource;
 import com.norcane.lysense.resource.Resource;
 import com.norcane.toolkit.net.URIs;

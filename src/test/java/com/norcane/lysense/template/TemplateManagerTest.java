@@ -32,14 +32,16 @@ package com.norcane.lysense.template;
 import com.norcane.lysense.resource.Resource;
 import com.norcane.lysense.resource.inline.InlineResource;
 import com.norcane.lysense.template.source.TemplateSource;
-import io.quarkus.test.junit.QuarkusTest;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Map;
+
+import io.quarkus.test.junit.QuarkusTest;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -109,8 +111,8 @@ class TemplateManagerTest {
         @Override
         protected List<Resource> resources() {
             return List.of(
-                    InlineResource.of("test-template1", "mustache", "Hello, {{name}}!"),
-                    InlineResource.of("test-template2", "mustache", "Goodbye, {{name}}!")
+                InlineResource.of("test-template1", "mustache", "Hello, {{name}}!"),
+                InlineResource.of("test-template2", "mustache", "Goodbye, {{name}}!")
             );
         }
 

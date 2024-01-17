@@ -30,10 +30,11 @@
 package com.norcane.lysense.resource.filesystem;
 
 import com.google.common.io.CharStreams;
+
 import com.norcane.lysense.resource.Resource;
 import com.norcane.lysense.resource.exception.ResourceNotFoundException;
 import com.norcane.lysense.resource.util.LineSeparator;
-import io.quarkus.test.junit.QuarkusTest;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -41,6 +42,8 @@ import java.io.Reader;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
+
+import io.quarkus.test.junit.QuarkusTest;
 
 import static com.norcane.lysense.test.Assertions.assertIsPresent;
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -32,11 +32,13 @@ package com.norcane.lysense.cli.command;
 import com.norcane.lysense.cli.ReturnCode;
 import com.norcane.lysense.resource.exception.ResourceNotFoundException;
 import com.norcane.lysense.ui.console.Console;
-import io.quarkus.test.InjectMock;
-import io.quarkus.test.junit.QuarkusTest;
+
 import org.junit.jupiter.api.Test;
 
 import java.net.URI;
+
+import io.quarkus.test.InjectMock;
+import io.quarkus.test.junit.QuarkusTest;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

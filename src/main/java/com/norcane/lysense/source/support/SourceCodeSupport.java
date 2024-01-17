@@ -53,9 +53,8 @@ import java.util.function.Function;
 import java.util.regex.Pattern;
 
 /**
- * Represents support for loading and processing source codes of selected programming/scripting language identified by
- * {@link #languageId()}. To construct new instance, use the <i>staged builder</i> obtained via {@link #builder}
- * method.
+ * Represents support for loading and processing source codes of selected programming/scripting language identified by {@link #languageId()}. To construct new
+ * instance, use the <i>staged builder</i> obtained via {@link #builder} method.
  */
 public final class SourceCodeSupport {
 
@@ -91,12 +90,11 @@ public final class SourceCodeSupport {
      */
     public static Builder.CommentDetectorFactoryStep builder(Configuration configuration, LanguageId languageId, Set<String> resourceTypes) {
         return commentDetectorFactory -> headerDetectionRules -> variablesExtractor ->
-                new Builder.FinalStep(configuration, languageId, resourceTypes, commentDetectorFactory, headerDetectionRules, variablesExtractor);
+            new Builder.FinalStep(configuration, languageId, resourceTypes, commentDetectorFactory, headerDetectionRules, variablesExtractor);
     }
 
     /**
-     * Unique identification of the supported programming or scripting language. Please prefer machine-friendly
-     * identifiers, such as {@code java} for
+     * Unique identification of the supported programming or scripting language. Please prefer machine-friendly identifiers, such as {@code java} for
      * <i>Java</i> programming language. This ID is later used as a key for specific
      * {@link com.norcane.lysense.configuration.api.HeaderConfig} configuration.
      */
@@ -113,8 +111,7 @@ public final class SourceCodeSupport {
     }
 
     /**
-     * Loads and analyzes source code from given resource. <i>Analysis</i> means trying to find any existing <i>license
-     * header</i> and extracting all needed
+     * Loads and analyzes source code from given resource. <i>Analysis</i> means trying to find any existing <i>license header</i> and extracting all needed
      * <i>dynamic variables</i>.
      *
      * @param resource resource to load source code from
@@ -152,8 +149,7 @@ public final class SourceCodeSupport {
         public interface CommentDetectorFactoryStep {
 
             /**
-             * Accepts a function that returns {@link CommentDetectorFactory} corresponding to the passed
-             * {@link HeaderStyle}.
+             * Accepts a function that returns {@link CommentDetectorFactory} corresponding to the passed {@link HeaderStyle}.
              *
              * @param commentDetectorFactoryFn function
              * @return next step
@@ -171,9 +167,8 @@ public final class SourceCodeSupport {
             }
 
             /**
-             * Detect comments of either given <i>block syntax</i> or <i>line syntax</i> in the supported source code,
-             * based on the {@link HeaderConfig#headerStyle()} defined in the {@link Configuration} passed earlier to
-             * this builder.
+             * Detect comments of either given <i>block syntax</i> or <i>line syntax</i> in the supported source code, based on the
+             * {@link HeaderConfig#headerStyle()} defined in the {@link Configuration} passed earlier to this builder.
              *
              * @param blockComment describes the possible block comment syntax
              * @param lineComment  describes the possible line comment syntax
@@ -196,8 +191,7 @@ public final class SourceCodeSupport {
         public interface HeaderDetectionRulesStep {
 
             /**
-             * Detect <i>license header</i> in the supported source code based on the given
-             * {@link HeaderDetectionRules}.
+             * Detect <i>license header</i> in the supported source code based on the given {@link HeaderDetectionRules}.
              *
              * @param headerDetectionRules header detection rules
              * @return next step

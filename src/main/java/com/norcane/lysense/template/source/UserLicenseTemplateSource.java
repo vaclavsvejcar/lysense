@@ -33,15 +33,16 @@ import com.norcane.lysense.configuration.api.Configuration;
 import com.norcane.lysense.resource.Resource;
 import com.norcane.lysense.resource.loader.ResourceLoader;
 import com.norcane.lysense.template.TemplateFactory;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.Instance;
-import jakarta.inject.Inject;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Instance;
+import jakarta.inject.Inject;
 
 import static com.norcane.toolkit.Prelude.toMap;
 
@@ -96,9 +97,9 @@ public class UserLicenseTemplateSource extends TemplateSource<UserLicenseTemplat
         final Predicate<Resource> filter = resource -> templateTypes.contains(resource.extension());
 
         return templatePaths.stream()
-                .map(location -> resourceLoader.resources(location, filter, true))
-                .flatMap(Collection::stream)
-                .toList();
+            .map(location -> resourceLoader.resources(location, filter, true))
+            .flatMap(Collection::stream)
+            .toList();
     }
 
     /**

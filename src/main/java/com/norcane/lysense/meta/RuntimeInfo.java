@@ -30,10 +30,11 @@
 package com.norcane.lysense.meta;
 
 import com.norcane.toolkit.io.FileSystem;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
 import java.nio.file.Path;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class RuntimeInfo {

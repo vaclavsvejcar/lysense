@@ -34,8 +34,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Represents a mutable context for setup steps. Uses {@link SetupContextKey} and {@link CollectionSetupContextKey} as a
- * type-safe keys that also defines the type of the value for given key.
+ * Represents a mutable context for setup steps. Uses {@link SetupContextKey} and {@link CollectionSetupContextKey} as a type-safe keys that also defines the
+ * type of the value for given key.
  *
  * @see SetupContextKey
  * @see CollectionSetupContextKey

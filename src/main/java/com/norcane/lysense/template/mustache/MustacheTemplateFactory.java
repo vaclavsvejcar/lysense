@@ -32,6 +32,7 @@ package com.norcane.lysense.template.mustache;
 import com.norcane.lysense.resource.Resource;
 import com.norcane.lysense.template.Template;
 import com.norcane.lysense.template.TemplateFactory;
+
 import jakarta.enterprise.context.ApplicationScoped;
 
 /**

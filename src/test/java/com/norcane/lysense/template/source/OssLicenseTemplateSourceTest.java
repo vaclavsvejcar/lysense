@@ -31,13 +31,17 @@ package com.norcane.lysense.template.source;
 
 import com.norcane.lysense.resource.Resource;
 import com.norcane.lysense.resource.inline.InlineResource;
-import io.quarkus.test.junit.QuarkusTest;
-import jakarta.inject.Inject;
+
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import io.quarkus.test.junit.QuarkusTest;
+import jakarta.inject.Inject;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @QuarkusTest
 class OssLicenseTemplateSourceTest {

@@ -31,6 +31,7 @@ package com.norcane.lysense.resource;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.io.CharStreams;
+
 import com.norcane.lysense.resource.exception.CannotReadResourceException;
 import com.norcane.lysense.resource.exception.ResourceNotWritableException;
 import com.norcane.lysense.resource.util.LineSeparator;
@@ -44,8 +45,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Abstract implementation of {@link Resource} interface that implements common functionality such as <i>line
- * separator</i> detection, <i>equals</i> and
+ * Abstract implementation of {@link Resource} interface that implements common functionality such as <i>line separator</i> detection, <i>equals</i> and
  * <i>hashCode</i>, etc.
  */
 public abstract class AbstractResource implements Resource {
@@ -144,7 +144,7 @@ public abstract class AbstractResource implements Resource {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
-                .add("uri", location)
-                .toString();
+            .add("uri", location)
+            .toString();
     }
 }

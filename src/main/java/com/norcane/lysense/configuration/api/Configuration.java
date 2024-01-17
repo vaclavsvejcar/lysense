@@ -45,8 +45,7 @@ import static com.norcane.toolkit.Prelude.nonNullOrThrow;
 public interface Configuration {
 
     /**
-     * Base version of the configuration, based on this it's possible to check whether current version of application is
-     * compatible with the configuration.
+     * Base version of the configuration, based on this it's possible to check whether current version of application is compatible with the configuration.
      *
      * @return base version of the configuration
      */
@@ -81,8 +80,7 @@ public interface Configuration {
     Map<LanguageId, ? extends HeaderConfig> headerConfigs();
 
     /**
-     * Variables to be used for generating the license header. Those variables are considered <i>static</i>, i.e. they
-     * are the same for all source code files.
+     * Variables to be used for generating the license header. Those variables are considered <i>static</i>, i.e. they are the same for all source code files.
      *
      * @return variables template variables
      */

@@ -33,6 +33,7 @@ import com.fasterxml.jackson.annotation.JsonMerge;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.norcane.lysense.configuration.api.HeaderConfig;
 import com.norcane.lysense.configuration.api.HeaderStyle;
+
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;

@@ -39,19 +39,24 @@ import com.norcane.lysense.template.mustache.MustacheTemplate;
 import com.norcane.lysense.template.source.UserLicenseTemplateSource;
 import com.norcane.lysense.test.InMemoryWritableResourceWrapper;
 import com.norcane.lysense.test.TestHeaderConfig;
-import io.quarkus.test.InjectMock;
-import io.quarkus.test.junit.QuarkusTest;
-import jakarta.inject.Inject;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
+import io.quarkus.test.InjectMock;
+import io.quarkus.test.junit.QuarkusTest;
+import jakarta.inject.Inject;
+
 import static com.norcane.lysense.domain.LanguageId.languageId;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 @QuarkusTest
 class SourceCodeProcessorTest {

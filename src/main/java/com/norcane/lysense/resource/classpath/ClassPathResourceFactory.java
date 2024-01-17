@@ -34,8 +34,6 @@ import com.norcane.lysense.resource.filesystem.FileSystemResource;
 import com.norcane.lysense.resource.loader.IterableResourceFactory;
 import com.norcane.lysense.resource.util.PathMatcher;
 import com.norcane.lysense.resource.util.ResourceWalker;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -48,6 +46,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 import static com.norcane.toolkit.Prelude.streamOf;
 
@@ -93,14 +94,14 @@ public class ClassPathResourceFactory implements IterableResourceFactory {
         final String pattern = locationGlobPattern.substring(rootPathString.length());
 
         return classPathResources(rootPathString)
-                .flatMap(url -> findResources(url, rootPathString, pattern, filter).stream())
-                .toList();
+            .flatMap(url -> findResources(url, rootPathString, pattern, filter).stream())
+            .toList();
     }
 
     private List<Resource> findResources(URL url, String rootPathString, String pattern, Predicate<Resource> filter) {
         return URI_SCHEME_JAR.equals(url.getProtocol())
-                ? findJarResources(url, rootPathString, pattern, filter)
-                : findFileResources(url, pattern, filter);
+               ? findJarResources(url, rootPathString, pattern, filter)
+               : findFileResources(url, pattern, filter);
     }
 
     private List<Resource> findJarResources(URL url, String rootPathString, String pattern, Predicate<Resource> filter) {

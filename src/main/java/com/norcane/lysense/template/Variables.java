@@ -121,7 +121,7 @@ public final class Variables {
      */
     public Variables mergeWith(Variables other) {
         final Map<String, Object> mergedVariables = Stream.concat(variables.entrySet().stream(), other.variables.entrySet().stream())
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (_, v2) -> v2));
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (_, v2) -> v2));
 
         return Variables.from(mergedVariables);
     }
@@ -146,8 +146,8 @@ public final class Variables {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
-                .add("variables", variables)
-                .toString();
+            .add("variables", variables)
+            .toString();
     }
 
     /**

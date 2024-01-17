@@ -39,22 +39,23 @@ import com.norcane.lysense.meta.RuntimeInfo;
 import com.norcane.lysense.ui.alert.Alert;
 import com.norcane.lysense.ui.console.Console;
 import com.norcane.lysense.ui.progressbar.ProgressBar;
-import jakarta.enterprise.inject.Instance;
-import jakarta.inject.Inject;
-import picocli.CommandLine;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
+import jakarta.enterprise.inject.Instance;
+import jakarta.inject.Inject;
+import picocli.CommandLine;
+
 @CommandLine.Command(
-        name = "install",
-        description = "install and configure zen in current project",
-        usageHelpAutoWidth = true,
-        headerHeading = "@|bold,underline Usage|@:%n%n",
-        descriptionHeading = "%n@|bold,underline Description|@:%n%n",
-        parameterListHeading = "%n@|bold,underline Parameters|@:%n",
-        optionListHeading = "%n@|bold,underline Options|@:%n"
+    name = "install",
+    description = "install and configure zen in current project",
+    usageHelpAutoWidth = true,
+    headerHeading = "@|bold,underline Usage|@:%n%n",
+    descriptionHeading = "%n@|bold,underline Description|@:%n%n",
+    parameterListHeading = "%n@|bold,underline Parameters|@:%n",
+    optionListHeading = "%n@|bold,underline Options|@:%n"
 )
 public class InstallCommand extends CliCommand {
 
@@ -62,10 +63,10 @@ public class InstallCommand extends CliCommand {
     private final RuntimeInfo runtimeInfo;
 
     @CommandLine.Option(
-            names = {"-s", "--source"},
-            description = "specify path to source code file/directory",
-            paramLabel = "PATH",
-            required = true
+        names = {"-s", "--source"},
+        description = "specify path to source code file/directory",
+        paramLabel = "PATH",
+        required = true
     )
     Set<String> sourcePaths;
 
@@ -102,7 +103,7 @@ public class InstallCommand extends CliCommand {
 
     List<InstallStep> orderedInstallSteps() {
         return installSteps.stream()
-                .sorted(Comparator.comparing(installStep -> installStep.getClass().getSimpleName()))
-                .toList();
+            .sorted(Comparator.comparing(installStep -> installStep.getClass().getSimpleName()))
+            .toList();
     }
 }

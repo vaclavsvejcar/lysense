@@ -35,12 +35,13 @@ import com.norcane.lysense.domain.LanguageId;
 import com.norcane.lysense.resource.Resource;
 import com.norcane.lysense.resource.loader.ResourceLoader;
 import com.norcane.lysense.source.SourceCodeProcessor;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
 import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class S01DetectSourcesStep implements InstallStep {
@@ -67,21 +68,21 @@ public class S01DetectSourcesStep implements InstallStep {
         final Set<String> sourcePaths = context.get(SetupContextKeys.SOURCE_PATHS);
 
         final Set<LanguageId> languageIds = sourcePaths.stream()
-                .map(this::detectLanguageIds)
-                .flatMap(Collection::stream)
-                .collect(Collectors.toSet());
+            .map(this::detectLanguageIds)
+            .flatMap(Collection::stream)
+            .collect(Collectors.toSet());
 
         context.put(SetupContextKeys.DETECTED_LANGUAGE_IDS, languageIds);
     }
 
     private Set<LanguageId> detectLanguageIds(String sourcePath) {
         final Set<String> detectedResourceTypes = resourceLoader.resources(sourcePath, _ -> true, true).stream()
-                .map(Resource::extension)
-                .collect(Collectors.toSet());
+            .map(Resource::extension)
+            .collect(Collectors.toSet());
 
         return sourceCodeProcessor.sourceCodeSupports().entrySet().stream()
-                .filter(entry -> detectedResourceTypes.contains(entry.getKey()))
-                .map(entry -> entry.getValue().languageId())
-                .collect(Collectors.toSet());
+            .filter(entry -> detectedResourceTypes.contains(entry.getKey()))
+            .map(entry -> entry.getValue().languageId())
+            .collect(Collectors.toSet());
     }
 }

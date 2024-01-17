@@ -32,15 +32,15 @@ package com.norcane.lysense.cli.command.setup;
 import picocli.CommandLine;
 
 @CommandLine.Command(
-        name = "setup",
-        description = "set up zen in current project",
-        usageHelpAutoWidth = true,
-        mixinStandardHelpOptions = true,
-        subcommands = {InstallCommand.class},
-        headerHeading = "@|bold,underline Usage|@:%n%n",
-        descriptionHeading = "%n@|bold,underline Description|@:%n%n",
-        parameterListHeading = "%n@|bold,underline Parameters|@:%n",
-        optionListHeading = "%n@|bold,underline Options|@:%n"
+    name = "setup",
+    description = "set up zen in current project",
+    usageHelpAutoWidth = true,
+    mixinStandardHelpOptions = true,
+    subcommands = {InstallCommand.class},
+    headerHeading = "@|bold,underline Usage|@:%n%n",
+    descriptionHeading = "%n@|bold,underline Description|@:%n%n",
+    parameterListHeading = "%n@|bold,underline Parameters|@:%n",
+    optionListHeading = "%n@|bold,underline Options|@:%n"
 )
 public class SetupCommand {
 }

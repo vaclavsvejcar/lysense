@@ -35,6 +35,7 @@ import com.norcane.lysense.cli.command.setup.step.InstallStep;
 import com.norcane.lysense.configuration.ConfigurationLookup;
 import com.norcane.lysense.configuration.ConfigurationManager;
 import com.norcane.toolkit.io.FileSystem;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 

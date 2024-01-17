@@ -49,9 +49,9 @@ public class HeaderConfigNotFoundException extends ApplicationException {
     @Override
     public ErrorDetail errorDetail() {
         return ErrorDetail.builder()
-                .problem(STR."Header configuration for language '\{languageId}' not found")
-                .solution(STR."Please check that your configuration file contains header configuration for language '\{languageId}'")
-                .build();
+            .problem(STR."Header configuration for language '\{languageId}' not found")
+            .solution(STR."Please check that your configuration file contains header configuration for language '\{languageId}'")
+            .build();
     }
 
 }

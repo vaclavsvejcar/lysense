@@ -49,21 +49,21 @@ public class UnexpectedBehaviorException extends ApplicationException {
      */
     public static UnexpectedBehaviorException wrap(final Throwable cause) {
         return cause.getCause() != null
-                ? new UnexpectedBehaviorException(cause.getMessage(), cause.getCause())
-                : new UnexpectedBehaviorException(cause.getMessage());
+               ? new UnexpectedBehaviorException(cause.getMessage(), cause.getCause())
+               : new UnexpectedBehaviorException(cause.getMessage());
     }
 
     @Override
     public ErrorDetail errorDetail() {
         return ErrorDetail.builder()
-                .problem(
-                        STR."""
+            .problem(
+                STR."""
                     Unexpected error occurred during application execution:
 
                     \{getCause()}"""
-                )
-                .solution("This might be application bug. Please if possible, report it using the link below.")
-                .seeAlsoLink(ProductInfo.URL_REPORT_BUG)
-                .build();
+            )
+            .solution("This might be application bug. Please if possible, report it using the link below.")
+            .seeAlsoLink(ProductInfo.URL_REPORT_BUG)
+            .build();
     }
 }

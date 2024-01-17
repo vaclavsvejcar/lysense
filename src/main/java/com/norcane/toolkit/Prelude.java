@@ -29,7 +29,11 @@
  */
 package com.norcane.toolkit;
 
-import java.util.*;
+import java.util.Enumeration;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Spliterator;
+import java.util.Spliterators;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -94,8 +98,7 @@ public final class Prelude {
     }
 
     /**
-     * Returns back the given object if not {@code null}, otherwise throws {@link IllegalArgumentException} with the
-     * provided message.
+     * Returns back the given object if not {@code null}, otherwise throws {@link IllegalArgumentException} with the provided message.
      *
      * <br><br><strong>Example of use</strong>
      * {@snippet lang = "java":
@@ -113,8 +116,7 @@ public final class Prelude {
     }
 
     /**
-     * Returns back the given object if not {@code null}, otherwise throws {@link RuntimeException} provided by the
-     * given supplier.
+     * Returns back the given object if not {@code null}, otherwise throws {@link RuntimeException} provided by the given supplier.
      *
      * @param object           object to check for nullity and return if not {@code null}
      * @param runtimeException supplier of the exception to throw if object is {@code null}

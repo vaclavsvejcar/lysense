@@ -30,10 +30,11 @@
 package com.norcane.lysense.splicer.writer;
 
 import com.norcane.lysense.resource.util.LineSeparator;
-import jakarta.enterprise.context.ApplicationScoped;
 
 import java.io.Writer;
 import java.util.function.Supplier;
+
+import jakarta.enterprise.context.ApplicationScoped;
 
 /**
  * A factory for creating {@link AtomicWriter} instances.

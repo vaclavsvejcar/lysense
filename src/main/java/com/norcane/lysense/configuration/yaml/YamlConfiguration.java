@@ -36,13 +36,14 @@ import com.norcane.lysense.configuration.api.RunMode;
 import com.norcane.lysense.domain.LanguageId;
 import com.norcane.lysense.meta.SemVer;
 import com.norcane.lysense.template.Variables;
+
+import java.util.List;
+import java.util.Map;
+
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-
-import java.util.List;
-import java.util.Map;
 
 @RegisterForReflection
 public class YamlConfiguration implements Configuration {

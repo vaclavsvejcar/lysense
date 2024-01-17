@@ -37,8 +37,8 @@ import java.net.URI;
  * Result of the lookup for user configuration.
  */
 public sealed interface ConfigurationLookup
-        permits ConfigurationLookup.Found,
-                ConfigurationLookup.NotFound {
+    permits ConfigurationLookup.Found,
+            ConfigurationLookup.NotFound {
 
     /**
      * User configuration file has been found.

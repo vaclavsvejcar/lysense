@@ -50,15 +50,15 @@ public class NoConfigurationFoundException extends ApplicationException {
     @Override
     public ErrorDetail errorDetail() {
         return ErrorDetail.builder()
-                .problem("No valid configuration file found.")
-                .solution(
-                        STR."""
+            .problem("No valid configuration file found.")
+            .solution(
+                STR."""
                     Configuration file is expected to exist at:
 
                     @|bold \{location}|@
 
                     Please create one or check that existing one is named correctly.""".strip()
-                )
-                .build();
+            )
+            .build();
     }
 }

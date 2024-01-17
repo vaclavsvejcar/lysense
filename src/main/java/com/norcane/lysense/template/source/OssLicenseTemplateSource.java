@@ -34,14 +34,15 @@ import com.norcane.lysense.domain.LicenseId;
 import com.norcane.lysense.resource.Resource;
 import com.norcane.lysense.resource.loader.ResourceLoader;
 import com.norcane.lysense.template.TemplateFactory;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.Instance;
-import jakarta.inject.Inject;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Instance;
+import jakarta.inject.Inject;
 
 import static com.norcane.lysense.domain.LanguageId.languageId;
 import static com.norcane.lysense.domain.LicenseId.licenseId;
@@ -102,6 +103,6 @@ public class OssLicenseTemplateSource extends TemplateSource<OssLicenseTemplateS
      * @param languageId language ID (e.g. {@code java})
      */
     public record TemplateKey(LicenseId licenseId, LanguageId languageId)
-            implements com.norcane.lysense.template.TemplateKey {
+        implements com.norcane.lysense.template.TemplateKey {
     }
 }

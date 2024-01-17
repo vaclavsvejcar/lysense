@@ -31,10 +31,11 @@ package com.norcane.lysense.ui.progressbar;
 
 
 import com.norcane.lysense.ui.console.Console;
-import jakarta.annotation.Nonnull;
 
 import java.util.Iterator;
 import java.util.function.Function;
+
+import jakarta.annotation.Nonnull;
 
 import static com.norcane.toolkit.Prelude.nonNull;
 

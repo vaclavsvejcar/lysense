@@ -35,21 +35,28 @@ import com.norcane.lysense.configuration.api.RunMode;
 import com.norcane.lysense.configuration.exception.IncompatibleConfigurationException;
 import com.norcane.lysense.meta.RuntimeInfo;
 import com.norcane.lysense.meta.SemVer;
-import io.quarkus.test.InjectMock;
-import io.quarkus.test.Mock;
-import io.quarkus.test.junit.QuarkusTest;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.Produces;
-import jakarta.inject.Inject;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
 import java.util.List;
 
+import io.quarkus.test.InjectMock;
+import io.quarkus.test.Mock;
+import io.quarkus.test.junit.QuarkusTest;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Produces;
+import jakarta.inject.Inject;
+
 import static com.norcane.lysense.domain.LanguageId.languageId;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 @QuarkusTest
 class ConfigurationManagerTest {
