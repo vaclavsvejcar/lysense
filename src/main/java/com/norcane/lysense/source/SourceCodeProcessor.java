@@ -171,7 +171,7 @@ public class SourceCodeProcessor implements Stateful {
 
             return sourceCodeSupports.stream()
                 .filter(support -> templateNames.contains(support.languageId().value()))  // filter only source codes for which template exists
-                .flatMap(support -> support.resourceTypes().stream().map(ext -> Map.entry(ext, support)))
+                .flatMap(support -> support.resourceExtensions().stream().map(ext -> Map.entry(ext, support)))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         });
     }

@@ -76,12 +76,12 @@ public class S01DetectSourcesStep implements InstallStep {
     }
 
     private Set<LanguageId> detectLanguageIds(String sourcePath) {
-        final Set<String> detectedResourceTypes = resourceLoader.resources(sourcePath, _ -> true, true).stream()
+        final Set<String> resourceExtensions = resourceLoader.resources(sourcePath, _ -> true, true).stream()
             .map(Resource::extension)
             .collect(Collectors.toSet());
 
         return sourceCodeProcessor.sourceCodeSupports().entrySet().stream()
-            .filter(entry -> detectedResourceTypes.contains(entry.getKey()))
+            .filter(entry -> resourceExtensions.contains(entry.getKey()))
             .map(entry -> entry.getValue().languageId())
             .collect(Collectors.toSet());
     }

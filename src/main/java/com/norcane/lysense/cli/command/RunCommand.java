@@ -162,8 +162,8 @@ public class RunCommand extends CliCommand {
     }
 
     private List<SourceCode> loadSourceCodes() {
-        final Set<String> resourceTypes = sourceCodeProcessor.sourceCodeSupports().keySet();
-        final Predicate<Resource> filter = resource -> resourceTypes.contains(resource.extension());
+        final Set<String> resourceExtensions = sourceCodeProcessor.sourceCodeSupports().keySet();
+        final Predicate<Resource> filter = resource -> resourceExtensions.contains(resource.extension());
 
         return configuration.sources().stream()
             .map(sourcePath -> resourceLoader.resources(sourcePath, filter, true))

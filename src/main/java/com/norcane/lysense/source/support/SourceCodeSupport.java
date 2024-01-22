@@ -60,21 +60,21 @@ public final class SourceCodeSupport {
 
     private final Configuration configuration;
     private final LanguageId languageId;
-    private final Set<String> resourceTypes;
+    private final Set<String> resourceExtensions;
     private final Function<HeaderStyle, CommentDetectorFactory> commentDetectorFactoryFn;
     private final HeaderDetectionRules headerDetectionRules;
     private final VariablesExtractor variablesExtractor;
 
     private SourceCodeSupport(Configuration configuration,
                               LanguageId languageId,
-                              Set<String> resourceTypes,
+                              Set<String> resourceExtensions,
                               Function<HeaderStyle, CommentDetectorFactory> commentDetectorFactoryFn,
                               HeaderDetectionRules headerDetectionRules,
                               VariablesExtractor variablesExtractor) {
 
         this.configuration = configuration;
         this.languageId = languageId;
-        this.resourceTypes = resourceTypes;
+        this.resourceExtensions = resourceExtensions;
         this.commentDetectorFactoryFn = commentDetectorFactoryFn;
         this.headerDetectionRules = headerDetectionRules;
         this.variablesExtractor = variablesExtractor;
@@ -83,14 +83,14 @@ public final class SourceCodeSupport {
     /**
      * Creates new <i>staged builder</i> for given configuration, <i>language ID</i> and <i>resource types</i>.
      *
-     * @param configuration application configuration
-     * @param languageId    unique ID of the supported programming/scripting language
-     * @param resourceTypes set of resource types of the programming/scripting language resources
+     * @param configuration      application configuration
+     * @param languageId         unique ID of the supported programming/scripting language
+     * @param resourceExtensions set of resource extensions of the programming/scripting language resources
      * @return builder
      */
-    public static Builder.CommentDetectorFactoryStep builder(Configuration configuration, LanguageId languageId, Set<String> resourceTypes) {
+    public static Builder.CommentDetectorFactoryStep builder(Configuration configuration, LanguageId languageId, Set<String> resourceExtensions) {
         return commentDetectorFactory -> headerDetectionRules -> variablesExtractor ->
-            new Builder.FinalStep(configuration, languageId, resourceTypes, commentDetectorFactory, headerDetectionRules, variablesExtractor);
+            new Builder.FinalStep(configuration, languageId, resourceExtensions, commentDetectorFactory, headerDetectionRules, variablesExtractor);
     }
 
     /**
@@ -106,8 +106,8 @@ public final class SourceCodeSupport {
      * <i>Resource types</i> handled by this implementation. Resource type usually means file extension, so for example
      * implementation of support for <i>UNIX Shell</i> might use  {@code Set.of("sh")}.
      */
-    public Set<String> resourceTypes() {
-        return resourceTypes;
+    public Set<String> resourceExtensions() {
+        return resourceExtensions;
     }
 
     /**
@@ -261,21 +261,21 @@ public final class SourceCodeSupport {
 
             private final Configuration configuration;
             private final LanguageId languageId;
-            private final Set<String> resourceTypes;
+            private final Set<String> resourceExtensions;
             private final Function<HeaderStyle, CommentDetectorFactory> commentDetectorFactoryFn;
             private final HeaderDetectionRules headerDetectionRules;
             private final VariablesExtractor variablesExtractor;
 
             public FinalStep(Configuration configuration,
                              LanguageId languageId,
-                             Set<String> resourceTypes,
+                             Set<String> resourceExtensions,
                              Function<HeaderStyle, CommentDetectorFactory> commentDetectorFactoryFn,
                              HeaderDetectionRules headerDetectionRules,
                              VariablesExtractor variablesExtractor) {
 
                 this.configuration = configuration;
                 this.languageId = languageId;
-                this.resourceTypes = resourceTypes;
+                this.resourceExtensions = resourceExtensions;
                 this.commentDetectorFactoryFn = commentDetectorFactoryFn;
                 this.headerDetectionRules = headerDetectionRules;
                 this.variablesExtractor = variablesExtractor;
@@ -287,7 +287,7 @@ public final class SourceCodeSupport {
              * @return new instance
              */
             public SourceCodeSupport build() {
-                return new SourceCodeSupport(configuration, languageId, resourceTypes, commentDetectorFactoryFn, headerDetectionRules, variablesExtractor);
+                return new SourceCodeSupport(configuration, languageId, resourceExtensions, commentDetectorFactoryFn, headerDetectionRules, variablesExtractor);
             }
         }
 
