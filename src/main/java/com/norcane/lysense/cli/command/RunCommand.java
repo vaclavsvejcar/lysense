@@ -39,6 +39,8 @@ import com.norcane.lysense.resource.Resource;
 import com.norcane.lysense.resource.loader.ResourceLoader;
 import com.norcane.lysense.source.SourceCode;
 import com.norcane.lysense.source.SourceCodeProcessor;
+import com.norcane.lysense.template.TemplateManager;
+import com.norcane.lysense.template.source.UserLicenseTemplateSource;
 import com.norcane.lysense.ui.console.Console;
 import com.norcane.lysense.ui.progressbar.ProgressBar;
 
@@ -46,9 +48,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import jakarta.inject.Inject;
 import picocli.CommandLine;
@@ -70,6 +74,7 @@ public class RunCommand extends CliCommand {
     private final ConfigurationManager configurationManager;
     private final ResourceLoader resourceLoader;
     private final SourceCodeProcessor sourceCodeProcessor;
+    private final TemplateManager templateManager;
 
     @CommandLine.Option(
         names = {"-m", "--mode"},
@@ -83,13 +88,15 @@ public class RunCommand extends CliCommand {
                       Configuration configuration,
                       ConfigurationManager configurationManager,
                       ResourceLoader resourceLoader,
-                      SourceCodeProcessor sourceCodeProcessor) {
+                      SourceCodeProcessor sourceCodeProcessor,
+                      TemplateManager templateManager) {
 
         super(console);
         this.configuration = configuration;
         this.configurationManager = configurationManager;
         this.resourceLoader = resourceLoader;
         this.sourceCodeProcessor = sourceCodeProcessor;
+        this.templateManager = templateManager;
     }
 
     @Override
@@ -162,7 +169,7 @@ public class RunCommand extends CliCommand {
     }
 
     private List<SourceCode> loadSourceCodes() {
-        final Set<String> resourceExtensions = sourceCodeProcessor.sourceCodeSupports().keySet();
+        final Set<String> resourceExtensions = sourceCodeExtensions();
         final Predicate<Resource> filter = resource -> resourceExtensions.contains(resource.extension());
 
         return configuration.sources().stream()
@@ -171,6 +178,17 @@ public class RunCommand extends CliCommand {
             .map(Resource::asWritableOrFail)
             .map(sourceCodeProcessor::process)
             .toList();
+    }
+
+    private Set<String> sourceCodeExtensions() {
+        final Set<String> templateNames = templateManager.templates(UserLicenseTemplateSource.TemplateKey.class).keySet().stream()
+            .map(UserLicenseTemplateSource.TemplateKey::languageId)
+            .collect(Collectors.toSet());
+
+        return sourceCodeProcessor.sourceCodeSupports().entrySet().stream()
+            .filter(entry -> templateNames.contains(entry.getValue().languageId().value()))
+            .map(Map.Entry::getKey)
+            .collect(Collectors.toSet());
     }
 
     private record RunResult(ReturnCode returnCode, List<SourceCode> modifiedSources) {

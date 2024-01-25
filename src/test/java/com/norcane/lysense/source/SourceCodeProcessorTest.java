@@ -32,7 +32,6 @@ package com.norcane.lysense.source;
 import com.norcane.lysense.configuration.api.Configuration;
 import com.norcane.lysense.configuration.api.HeaderStyle;
 import com.norcane.lysense.resource.inline.InlineResource;
-import com.norcane.lysense.template.Template;
 import com.norcane.lysense.template.TemplateManager;
 import com.norcane.lysense.template.Variables;
 import com.norcane.lysense.template.mustache.MustacheTemplate;
@@ -60,8 +59,6 @@ import static org.mockito.Mockito.when;
 
 @QuarkusTest
 class SourceCodeProcessorTest {
-
-    static final Template TEST_TEMPLATE = MustacheTemplate.compile(InlineResource.of("java", "mustache", "test"));
 
     @Inject
     SourceCodeProcessor sourceCodeProcessor;
@@ -110,9 +107,6 @@ class SourceCodeProcessorTest {
         // -- mocks
         when(configuration.headerConfigOrFail(languageId("java"))).thenReturn(new TestHeaderConfig(HeaderStyle.BLOCK_COMMENT));
         when(configuration.templateVariables()).thenReturn(variables);
-        when(templateManager.templates(UserLicenseTemplateSource.TemplateKey.class)).thenReturn(Map.of(
-            templateKey, TEST_TEMPLATE
-        ));
         when(templateManager.template(templateKey))
             .thenReturn(MustacheTemplate.compile(InlineResource.of("java", "mustache", "this is template from John Smith")));
 
@@ -123,7 +117,6 @@ class SourceCodeProcessorTest {
         // -- verify
         verify(configuration, times(2)).headerConfigOrFail(languageId("java"));
         verify(configuration).templateVariables();
-        verify(templateManager).templates(UserLicenseTemplateSource.TemplateKey.class);
         verify(templateManager).template(templateKey);
     }
 
@@ -141,16 +134,12 @@ class SourceCodeProcessorTest {
 
         // -- mocks
         when(configuration.headerConfigOrFail(languageId("java"))).thenReturn(new TestHeaderConfig(HeaderStyle.BLOCK_COMMENT));
-        when(templateManager.templates(UserLicenseTemplateSource.TemplateKey.class)).thenReturn(Map.of(
-            new UserLicenseTemplateSource.TemplateKey("java"), TEST_TEMPLATE
-        ));
 
         final SourceModificationResult result = sourceCodeProcessor.addHeader(sourceCodeProcessor.process(resource));
         assertEquals(SourceModificationResult.NOT_MODIFIED, result);
 
         // -- verify
         verify(configuration).headerConfigOrFail(languageId("java"));
-        verify(templateManager).templates(UserLicenseTemplateSource.TemplateKey.class);
     }
 
     @Test
@@ -177,9 +166,6 @@ class SourceCodeProcessorTest {
 
         // -- mocks
         when(configuration.headerConfigOrFail(languageId("java"))).thenReturn(new TestHeaderConfig(HeaderStyle.BLOCK_COMMENT));
-        when(templateManager.templates(UserLicenseTemplateSource.TemplateKey.class)).thenReturn(Map.of(
-            new UserLicenseTemplateSource.TemplateKey("java"), TEST_TEMPLATE
-        ));
 
         final SourceModificationResult result = sourceCodeProcessor.dropHeader(sourceCodeProcessor.process(resource));
         assertEquals(SourceModificationResult.MODIFIED, result);
@@ -187,7 +173,6 @@ class SourceCodeProcessorTest {
 
         // -- verify
         verify(configuration).headerConfigOrFail(languageId("java"));
-        verify(templateManager).templates(UserLicenseTemplateSource.TemplateKey.class);
     }
 
     @Test
@@ -203,16 +188,11 @@ class SourceCodeProcessorTest {
 
         // -- mocks
         when(configuration.headerConfigOrFail(languageId("java"))).thenReturn(new TestHeaderConfig(HeaderStyle.BLOCK_COMMENT));
-        when(templateManager.templates(UserLicenseTemplateSource.TemplateKey.class)).thenReturn(Map.of(
-            new UserLicenseTemplateSource.TemplateKey("java"), TEST_TEMPLATE
-        ));
-
         final SourceModificationResult result = sourceCodeProcessor.dropHeader(sourceCodeProcessor.process(resource));
         assertEquals(SourceModificationResult.NOT_MODIFIED, result);
 
         // -- verify
         verify(configuration).headerConfigOrFail(languageId("java"));
-        verify(templateManager).templates(UserLicenseTemplateSource.TemplateKey.class);
     }
 
     @Test
@@ -253,9 +233,6 @@ class SourceCodeProcessorTest {
         // -- mocks
         when(configuration.headerConfigOrFail(languageId("java"))).thenReturn(new TestHeaderConfig(HeaderStyle.BLOCK_COMMENT));
         when(configuration.templateVariables()).thenReturn(variables);
-        when(templateManager.templates(UserLicenseTemplateSource.TemplateKey.class)).thenReturn(Map.of(
-            templateKey, TEST_TEMPLATE
-        ));
         when(templateManager.template(templateKey))
             .thenReturn(MustacheTemplate.compile(InlineResource.of("java", "mustache", newTemplate.trim())));
 
@@ -266,7 +243,6 @@ class SourceCodeProcessorTest {
         // -- verify
         verify(configuration, times(2)).headerConfigOrFail(languageId("java"));
         verify(configuration).templateVariables();
-        verify(templateManager).templates(UserLicenseTemplateSource.TemplateKey.class);
         verify(templateManager).template(templateKey);
     }
 
@@ -295,9 +271,6 @@ class SourceCodeProcessorTest {
         // -- mocks
         when(configuration.headerConfigOrFail(languageId("java"))).thenReturn(new TestHeaderConfig(HeaderStyle.BLOCK_COMMENT));
         when(configuration.templateVariables()).thenReturn(variables);
-        when(templateManager.templates(UserLicenseTemplateSource.TemplateKey.class)).thenReturn(Map.of(
-            templateKey, TEST_TEMPLATE
-        ));
         when(templateManager.template(templateKey))
             .thenReturn(MustacheTemplate.compile(InlineResource.of("java", "mustache", newTemplate.trim())));
 
@@ -307,7 +280,6 @@ class SourceCodeProcessorTest {
         // -- verify
         verify(configuration, times(2)).headerConfigOrFail(languageId("java"));
         verify(configuration).templateVariables();
-        verify(templateManager).templates(UserLicenseTemplateSource.TemplateKey.class);
         verify(templateManager).template(templateKey);
     }
 }

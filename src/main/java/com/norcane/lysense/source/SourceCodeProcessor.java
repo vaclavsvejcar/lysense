@@ -164,16 +164,9 @@ public class SourceCodeProcessor implements Stateful {
     }
 
     public Map<String, SourceCodeSupport> sourceCodeSupports() {
-        return languageIdToSupport.computeIfAbsent(() -> {
-            final Set<String> templateNames = templateManager.templates(UserLicenseTemplateSource.TemplateKey.class).keySet().stream()
-                .map(UserLicenseTemplateSource.TemplateKey::languageId)
-                .collect(Collectors.toSet());
-
-            return sourceCodeSupports.stream()
-                .filter(support -> templateNames.contains(support.languageId().value()))  // filter only source codes for which template exists
-                .flatMap(support -> support.resourceExtensions().stream().map(ext -> Map.entry(ext, support)))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-        });
+        return languageIdToSupport.computeIfAbsent(() -> sourceCodeSupports.stream()
+            .flatMap(support -> support.resourceExtensions().stream().map(ext -> Map.entry(ext, support)))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
     }
 
     private boolean headerUpdateNeeded(String newHeader, SourceCode sourceCode) {
