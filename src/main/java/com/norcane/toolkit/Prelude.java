@@ -102,7 +102,7 @@ public final class Prelude {
      *
      * <br><br><strong>Example of use</strong>
      * {@snippet lang = "java":
-     *      final User user = nonNullOrThrow(findUser(username), "no user found for username");
+     *      final User theUser = nonNullOrThrow(findUser(username), "no user found for username");
      *}
      *
      * @param object                          object to check for nullity and return if not {@code null}

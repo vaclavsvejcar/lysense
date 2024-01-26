@@ -74,7 +74,9 @@ class VariablesTest {
 
     @Test
     void testEquals() {
-        assertEquals(Variables.empty(), Variables.empty());
+        final Variables emptyVariables = Variables.empty();
+
+        assertEquals(emptyVariables, Variables.empty());
         assertNotEquals(Variables.empty(), "other type");
         assertNotEquals(null, Variables.from(Map.of()));
     }
