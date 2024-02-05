@@ -76,23 +76,23 @@ public abstract class TemplateSource<K extends TemplateKey> {
      * @throws DuplicateTemplatesFoundException if there are multiple templates with same template key
      */
     public final Map<K, Resource> templateResources() {
+        final Map<K, List<Resource>> resourcesByKey = resources().stream()
+            .collect(Collectors.groupingBy(this::templateKey, Collectors.mapping(resource -> resource, Collectors.toList())));
 
-        final Map<String, List<Resource>> templateNameToResource = resources().stream()
-            .collect(Collectors.groupingBy(Resource::name));
-
-        return templateNameToResource.entrySet().stream()
+        return resourcesByKey.entrySet().stream()
             .map(entry -> {
-                final String templateName = entry.getKey();
+                final K templateKey = entry.getKey();
                 final List<Resource> templateResources = entry.getValue();
 
                 // found multiple template resources with same template name
                 if (templateResources.size() > 1) {
                     final List<URI> paths = templateResources.stream().map(Resource::uri).toList();
-                    throw new DuplicateTemplatesFoundException(templateName, paths);
+                    throw new DuplicateTemplatesFoundException(templateKey.toString(), paths);
                 }
 
                 final Resource templateResource = templateResources.getFirst();
-                return Map.entry(templateKey(templateResource), templateResource);
+                return Map.entry(templateKey, templateResource);
+
             })
             .collect(Collectors.collectingAndThen(
                 Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue),
