@@ -84,10 +84,10 @@ public abstract class TemplateSource<K extends TemplateKey> {
                 final K templateKey = entry.getKey();
                 final List<Resource> templateResources = entry.getValue();
 
-                // found multiple template resources with same template name
+                // found multiple template resources with same template key
                 if (templateResources.size() > 1) {
                     final List<URI> paths = templateResources.stream().map(Resource::uri).toList();
-                    throw new DuplicateTemplatesFoundException(templateKey.toString(), paths);
+                    throw new DuplicateTemplatesFoundException(templateKey, paths);
                 }
 
                 final Resource templateResource = templateResources.getFirst();

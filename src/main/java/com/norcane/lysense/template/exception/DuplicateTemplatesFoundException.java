@@ -32,6 +32,7 @@ package com.norcane.lysense.template.exception;
 import com.norcane.lysense.exception.ApplicationException;
 import com.norcane.lysense.exception.ErrorCode;
 import com.norcane.lysense.exception.ErrorDetail;
+import com.norcane.lysense.template.TemplateKey;
 
 import java.net.URI;
 import java.util.List;
@@ -43,13 +44,13 @@ import static com.norcane.toolkit.Prelude.nonNull;
  * Thrown when multiple templates are found for same source file type.
  */
 public class DuplicateTemplatesFoundException extends ApplicationException {
-    private final String type;
+    private final TemplateKey templateKey;
     private final List<URI> uris;
 
-    public DuplicateTemplatesFoundException(String type, List<URI> uris) {
-        super(ErrorCode.DUPLICATE_TEMPLATES_FOUND, STR."Multiple templates found for source file type '\{type}'");
+    public DuplicateTemplatesFoundException(TemplateKey templateKey, List<URI> uris) {
+        super(ErrorCode.DUPLICATE_TEMPLATES_FOUND, STR."Multiple templates found for template key '\{templateKey}'");
 
-        this.type = nonNull(type);
+        this.templateKey = nonNull(templateKey);
         this.uris = nonNull(uris);
     }
 
@@ -58,11 +59,11 @@ public class DuplicateTemplatesFoundException extends ApplicationException {
         return ErrorDetail.builder()
             .problem(
                 STR."""
-                    Template paths contain multiple templates for same source file type @|bold \{type}|@:
+                    Template paths contain multiple templates for same template key @|bold \{templateKey}|@:
                     \{listOfUris()}
                     """
             )
-            .solution("Make sure that only one template is present for selected file type")
+            .solution("Make sure that only one template is present for selected template key")
             .build();
     }
 
