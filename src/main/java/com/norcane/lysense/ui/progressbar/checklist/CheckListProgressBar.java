@@ -93,9 +93,9 @@ public class CheckListProgressBar implements ProgressBar {
         }
 
         if (console.isInteractive()) {
-            console.print(STR."@|bold [ ]|@ \{message}");
+            console.print("@|bold [ ]|@ %s".formatted(message));
         } else {
-            console.print(STR."\{message}...");
+            console.print("%s...".formatted(message));
         }
     }
 
@@ -106,7 +106,7 @@ public class CheckListProgressBar implements ProgressBar {
 
         if (console.isInteractive()) {
             console.clearLine();
-            console.printLn(STR."@|bold [|@@|bold,green ✓|@@|bold ]|@ \{previousMessage}");
+            console.printLn("@|bold [|@@|bold,green ✓|@@|bold ]|@ %s".formatted(previousMessage));
         } else {
             console.printLn(" DONE");
         }

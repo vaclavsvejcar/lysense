@@ -78,7 +78,7 @@ public class OssLicenseTemplateSource extends TemplateSource<OssLicenseTemplateS
     @Override
     protected TemplateKey templateKey(Resource resource) {
         if (resource.parent().isEmpty()) {
-            throw new IllegalArgumentException(STR."Invalid OSS license template path: \{resource.uri()}");
+            throw new IllegalArgumentException("Invalid OSS license template path: %s".formatted(resource.uri()));
         }
 
         final String path = resource.parent().get();

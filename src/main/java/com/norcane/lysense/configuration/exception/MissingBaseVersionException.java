@@ -41,7 +41,7 @@ public class MissingBaseVersionException extends ApplicationException {
     private final Resource resource;
 
     public MissingBaseVersionException(Resource resource) {
-        super(ErrorCode.MISSING_BASE_VERSION, STR."Cannot parse base version from configuration '\{resource}'");
+        super(ErrorCode.MISSING_BASE_VERSION, "Cannot parse base version from configuration '%s}'".formatted(resource));
 
         this.resource = nonNull(resource);
     }
@@ -49,7 +49,7 @@ public class MissingBaseVersionException extends ApplicationException {
     @Override
     public ErrorDetail errorDetail() {
         return ErrorDetail.builder()
-            .problem(STR."Cannot parse base version from configuration '\{resource}'")
+            .problem("Cannot parse base version from configuration '%s'".formatted(resource))
             .solution("Please make sure that the info about minimum compatible version is present in the configuration file.")
             .build();
     }

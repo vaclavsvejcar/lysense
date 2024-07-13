@@ -43,7 +43,6 @@ import io.quarkus.logging.Log;
 import picocli.CommandLine;
 
 import static com.norcane.toolkit.Prelude.nonNull;
-import static java.util.FormatProcessor.FMT;
 
 /**
  * Base class to all <i>CLI</i> subcommands.
@@ -87,12 +86,12 @@ public abstract class CliCommand implements Callable<Integer> {
     }
 
     private void handleApplicationException(ApplicationException e) {
-        final String errorCode = FMT."\{ProductInfo.ERROR_CODE_PREFIX}-%05d\{e.errorCode().code()}";
+        final String errorCode = "%s-%05d".formatted(ProductInfo.ERROR_CODE_PREFIX, e.errorCode().code());
 
         Log.error(e);
         console.emptyLine();
         console.emptyLine();
-        console.render(Alert.error(STR."ERROR \{errorCode}", e.getMessage()));
+        console.render(Alert.error("ERROR " + errorCode, e.getMessage()));
         console.render(ApplicationExceptionPrinter.of(printStackTrace, e));
     }
 }

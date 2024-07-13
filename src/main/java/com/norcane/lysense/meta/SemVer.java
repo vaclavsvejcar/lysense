@@ -56,7 +56,7 @@ public record SemVer(int major, int minor, int patch, String suffix) implements 
         final Matcher matcher = pattern.matcher(rawVersion);
 
         if (!matcher.matches()) {
-            throw new IllegalArgumentException(STR."Not a valid SemVer string: \{rawVersion}");
+            throw new IllegalArgumentException("Not a valid SemVer string: %s".formatted(rawVersion));
         }
 
         final int major = Integer.parseInt(matcher.group(1));
@@ -122,7 +122,7 @@ public record SemVer(int major, int minor, int patch, String suffix) implements 
     @Override
     public String toString() {
         return suffix != null
-               ? STR."\{major}.\{minor}.\{patch}-\{suffix}"
-               : STR."\{major}.\{minor}.\{patch}";
+               ? "%d.%d.%d-%s".formatted(major, minor, patch, suffix)
+               : "%d.%d.%d".formatted(major, minor, patch);
     }
 }

@@ -84,7 +84,7 @@ public class InlineResource extends AbstractResource {
         final String name = Files.getNameWithoutExtension(path);
         final String encodedName = URIs.escape(path);
         final String parent = parent(path);
-        final URI uri = URIs.create(STR."\{SCHEME.value()}:\{extension};name=\{encodedName};base64,\{encodedContent}");
+        final URI uri = URIs.create("%s:%s;name=%s;base64,%s".formatted(SCHEME.value(), extension, encodedName, encodedContent));
         return new InlineResource(name, extension, parent, content, uri);
     }
 

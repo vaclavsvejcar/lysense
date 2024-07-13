@@ -80,13 +80,13 @@ class FileSystemResourceFactoryTest {
         Files.createFile(tempDirectory.resolve(fileA));
         Files.createFile(tempDirectory.resolve(fileB));
 
-        final String pattern = STR."\{tempDirectory}\{File.separator}**.txt";
+        final String pattern = tempDirectory + File.separator + "**.txt";
 
         // check if correctly resolves non-existing paths
         assertTrue(factory.resources("/not/existing", _ -> true).isEmpty());
 
         // check if correctly resolves pattern path
-        final List<Resource> resources1 = factory.resources(STR."\{tempDirectory}/**", _ -> true);
+        final List<Resource> resources1 = factory.resources(tempDirectory + "/**", _ -> true);
         assertEquals(2, resources1.size());
         assertTrue(resources1.stream().anyMatch(resource -> resource.uri().toString().endsWith("a.txt")));
         assertTrue(resources1.stream().anyMatch(resource -> resource.uri().toString().endsWith("b.txt")));

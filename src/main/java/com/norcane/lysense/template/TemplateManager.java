@@ -137,9 +137,9 @@ public class TemplateManager implements Stateful {
     private void compileTemplate(TemplateKey templateKey) {
         loadRawTemplates(templateKey.getClass());
 
-        final Resource rawTemplate = nonNullOrThrow(rawTemplates.get(templateKey), STR."No raw template found for template key '\{templateKey}'");
+        final Resource rawTemplate = nonNullOrThrow(rawTemplates.get(templateKey), "No raw template found for template key '%s'".formatted(templateKey));
         final TemplateFactory templateFactory = nonNullOrThrow(templateFactories.get(rawTemplate.extension()),
-                                                               STR."No template factory found for template type '\{rawTemplate.extension()}'");
+                                                               "No template factory found for template type '%s'".formatted(rawTemplate.extension()));
         final Template template = templateFactory.compile(rawTemplate);
 
         compiledTemplates.put(templateKey, template);
@@ -151,7 +151,7 @@ public class TemplateManager implements Stateful {
         }
 
         final TemplateSource<?> templateSource = nonNullOrThrow(templateSources.get(templateKey),
-                                                                STR."No template source found for template key: \{templateKey}");
+                                                                "No template source found for template key: %s".formatted(templateKey));
 
         loadedTemplateSources.add(templateKey);
         rawTemplates.putAll(templateSource.templateResources());

@@ -49,6 +49,6 @@ public final class ProductInfo {
     public static final String TEMPLATES_DIR = "lysense-templates";
 
     public static String productHeader() {
-        return STR."Welcome to @|bold,magenta \{NAME} \{VERSION}|@ :: @|underline \{URL_HOMEPAGE}|@";
+        return "Welcome to @|bold,magenta %s %s|@ :: @|underline %s|@".formatted(NAME, VERSION, URL_HOMEPAGE);
     }
 }

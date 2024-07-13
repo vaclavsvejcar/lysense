@@ -40,14 +40,13 @@ import java.util.stream.Collectors;
 import jakarta.validation.ConstraintViolation;
 
 import static com.norcane.toolkit.Prelude.nonNull;
-import static java.util.FormatProcessor.FMT;
 
 public class InvalidConfigurationException extends ApplicationException {
 
     private final Set<ConstraintViolation<Configuration>> violations;
 
     public InvalidConfigurationException(Set<ConstraintViolation<Configuration>> violations) {
-        super(ErrorCode.INVALID_CONFIGURATION, FMT."Invalid configuration, found %d\{violations.size()} problems");
+        super(ErrorCode.INVALID_CONFIGURATION, "Invalid configuration, found %d problems".formatted(violations.size()));
 
         this.violations = nonNull(violations);
     }
@@ -56,11 +55,11 @@ public class InvalidConfigurationException extends ApplicationException {
     public ErrorDetail errorDetail() {
         return ErrorDetail.builder()
             .problem(
-                STR."""
-                       Provided application config source is invalid and has following issues:
+                """
+                    Provided application config source is invalid and has following issues:
 
-                       \{listOfViolations()}
-                       """.strip()
+                    %s
+                    """.formatted(listOfViolations()).strip()
             )
             .solution("Please check the error messages above and correct the configuration appropriately.")
             .build();
@@ -69,7 +68,7 @@ public class InvalidConfigurationException extends ApplicationException {
     private String listOfViolations() {
         return violations
             .stream()
-            .map(violation -> STR."  - @|bold,underline \{violation.getPropertyPath()}|@ @|bold \{violation.getMessage()}|@")
+            .map(violation -> "  - @|bold,underline %s|@ @|bold %s|@".formatted(violation.getPropertyPath(), violation.getMessage()))
             .collect(Collectors.joining("\n"));
     }
 }

@@ -55,7 +55,7 @@ public class S00PreInstallationStep implements InstallStep {
 
     @Override
     public String installationMessage(SetupContext context) {
-        return STR."Checking if product is already installed in @|bold \{fileSystem.currentDirectory()}|@";
+        return "Checking if product is already installed in @|bold %s|@".formatted(fileSystem.currentDirectory());
     }
 
     @Override

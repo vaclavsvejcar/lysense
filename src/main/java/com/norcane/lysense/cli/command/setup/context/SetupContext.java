@@ -79,7 +79,7 @@ public class SetupContext {
         final Object value = values.get(key);
 
         if (value == null) {
-            throw new IllegalArgumentException(STR."No value found for key: \{key}");
+            throw new IllegalArgumentException("No value found for key: " + key);
         }
 
         return key.valueClass().cast(value);
@@ -99,7 +99,7 @@ public class SetupContext {
         final Object value = values.get(key);
 
         if (value == null) {
-            throw new IllegalArgumentException(STR."No value found for key: \{key}");
+            throw new IllegalArgumentException("No value found for key: " + key);
         }
 
         return (C) value;

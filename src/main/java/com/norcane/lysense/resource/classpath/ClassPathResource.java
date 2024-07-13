@@ -66,7 +66,7 @@ public class ClassPathResource extends AbstractResource {
     }
 
     public static ClassPathResource of(String classPath) {
-        return of(URIs.create(STR."\{SCHEME.value()}:\{classPath}"));
+        return of(URIs.create(SCHEME.value() + ":" + classPath));
     }
 
     @Override

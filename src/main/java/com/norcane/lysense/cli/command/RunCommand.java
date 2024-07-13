@@ -105,10 +105,10 @@ public class RunCommand extends CliCommand {
 
         final RunMode runMode = cliRunMode != null ? cliRunMode : configuration.runMode();
 
-        console.printLn(STR."Loaded configuration from \{configurationManager.configurationRef().resource().uri()}");
+        console.printLn("Loaded configuration from " + configurationManager.configurationRef().resource().uri());
 
         final List<SourceCode> sourceCodes = loadSourceCodes();
-        console.printLn(STR."Found @|bold \{sourceCodes.size()}|@ source code files from @|bold \{configuration.sources()}|@");
+        console.printLn("Found @|bold %s|@ source code files from @|bold %s|@".formatted(sourceCodes.size(), configuration.sources()));
 
         final RunResult runResult = switch (runMode) {
             case ADD -> addHeaders(sourceCodes);
@@ -118,7 +118,7 @@ public class RunCommand extends CliCommand {
 
         stopwatch.stop();
         console.emptyLine();
-        console.printLn(STR."Modified @|bold \{runResult.modifiedSources().size()}|@ source code file(s) in @|bold \{stopwatch}|@");
+        console.printLn("Modified @|bold %s|@ source code file(s) in @|bold %s|@".formatted(runResult.modifiedSources().size(), stopwatch));
 
         return ReturnCode.SUCCESS;
     }
@@ -128,8 +128,8 @@ public class RunCommand extends CliCommand {
 
         final Function<SourceCode, String> messageFn =
             sourceCode -> sourceCode.metadata().header().isEmpty()
-                          ? STR."Adding header to @|bold \{sourceCode.resource().uri()}|@"
-                          : STR."Header already present in @|bold \{sourceCode.resource().uri()}|@";
+                          ? "Adding header to @|bold %s|@".formatted(sourceCode.resource().uri())
+                          : "Header already present in @|bold %s}|@".formatted(sourceCode.resource().uri());
 
         for (final SourceCode sourceCode : ProgressBar.concise(sourceCodes, messageFn, console)) {
             when(sourceCodeProcessor.addHeader(sourceCode).modified(), () -> modifiedSources.add(sourceCode));
@@ -143,8 +143,8 @@ public class RunCommand extends CliCommand {
 
         final Function<SourceCode, String> messageFn =
             sourceCode -> sourceCode.metadata().header().isPresent()
-                          ? STR."Dropping header from @|bold \{sourceCode.resource().uri()}|@"
-                          : STR."No header present in @|bold \{sourceCode.resource().uri()}|@";
+                          ? "Dropping header from @|bold %s|@".formatted(sourceCode.resource().uri())
+                          : "No header present in @|bold %s|@".formatted(sourceCode.resource().uri());
 
         for (final SourceCode sourceCode : ProgressBar.concise(sourceCodes, messageFn, console)) {
             when(sourceCodeProcessor.dropHeader(sourceCode).modified(), () -> modifiedSources.add(sourceCode));
@@ -158,8 +158,8 @@ public class RunCommand extends CliCommand {
 
         final Function<SourceCode, String> messageFn =
             sourceCode -> sourceCode.metadata().header().isPresent()
-                          ? STR."Updating header in @|bold \{sourceCode.resource().uri()}|@"
-                          : STR."Adding header to @|bold \{sourceCode.resource().uri()}|@";
+                          ? "Updating header in @|bold %s|@".formatted(sourceCode.resource().uri())
+                          : "Adding header to @|bold %s|@".formatted(sourceCode.resource().uri());
 
         for (final SourceCode sourceCode : ProgressBar.concise(sourceCodes, messageFn, console)) {
             when(sourceCodeProcessor.updateHeader(sourceCode).modified(), () -> modifiedSources.add(sourceCode));

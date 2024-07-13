@@ -48,7 +48,7 @@ public class ResourceNotFoundException extends ApplicationException {
      * @param uri URI of the resource that was not found
      */
     public ResourceNotFoundException(URI uri) {
-        super(ErrorCode.RESOURCE_NOT_FOUND, STR."Resource not found: \{uri}");
+        super(ErrorCode.RESOURCE_NOT_FOUND, "Resource not found: " + uri);
 
         this.location = uri;
     }
@@ -65,7 +65,7 @@ public class ResourceNotFoundException extends ApplicationException {
     @Override
     public ErrorDetail errorDetail() {
         return ErrorDetail.builder()
-            .problem(STR."Resource not found: \{location}")
+            .problem("Resource not found: " + location)
             .solution("Please check if given resource exists.")
             .build();
     }

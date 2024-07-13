@@ -114,7 +114,7 @@ public class ResourceLoader {
 
         // fail fast if the factory doesn't support iterating resources
         if (!(factory instanceof IterableResourceFactory iterableFactory)) {
-            throw new UnsupportedOperationException(STR."Iterating over resources with scheme '\{factory.scheme()}' is not supported");
+            throw new UnsupportedOperationException("Iterating over resources with scheme '%s' is not supported".formatted(factory.scheme()));
         }
 
         // strip the scheme from the pattern (e.g. 'classpath:' or 'file:')
@@ -129,7 +129,7 @@ public class ResourceLoader {
         final String dirSuffix = listDirectoryRecursively ? GLOB_RECURSIVE_DIR : GLOB_SINGLE_DIR;
         final String patternOrDirectory = pathMatcher.isPattern(patternWithoutScheme)
                                           ? patternWithoutScheme
-                                          : STR."\{patternWithoutScheme}/\{dirSuffix}";
+                                          : patternWithoutScheme + "/" + dirSuffix;
 
         return iterableFactory.resources(patternOrDirectory, filter);
     }
@@ -143,7 +143,7 @@ public class ResourceLoader {
 
     private String dropScheme(String path) {
         return Resource.Scheme.parse(path)
-            .filter(scheme -> path.startsWith(STR."\{scheme.value()}:"))
+            .filter(scheme -> path.startsWith(scheme.value() + ":"))
             .map(scheme -> path.substring(scheme.value().length() + 1))
             .orElse(path);
     }

@@ -42,7 +42,7 @@ public class NoConfigurationFoundException extends ApplicationException {
     private final URI location;
 
     public NoConfigurationFoundException(URI location) {
-        super(ErrorCode.NO_CONFIGURATION_FOUND, STR."No configuration file found: \{location}");
+        super(ErrorCode.NO_CONFIGURATION_FOUND, "No configuration file found: %s".formatted(location));
 
         this.location = nonNull(location);
     }
@@ -52,12 +52,12 @@ public class NoConfigurationFoundException extends ApplicationException {
         return ErrorDetail.builder()
             .problem("No valid configuration file found.")
             .solution(
-                STR."""
+                """
                     Configuration file is expected to exist at:
 
-                    @|bold \{location}|@
+                    @|bold %s|@
 
-                    Please create one or check that existing one is named correctly.""".strip()
+                    Please create one or check that existing one is named correctly.""".formatted(location).strip()
             )
             .build();
     }

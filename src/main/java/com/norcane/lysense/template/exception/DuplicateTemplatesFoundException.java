@@ -48,7 +48,7 @@ public class DuplicateTemplatesFoundException extends ApplicationException {
     private final List<URI> uris;
 
     public DuplicateTemplatesFoundException(TemplateKey templateKey, List<URI> uris) {
-        super(ErrorCode.DUPLICATE_TEMPLATES_FOUND, STR."Multiple templates found for template key '\{templateKey}'");
+        super(ErrorCode.DUPLICATE_TEMPLATES_FOUND, "Multiple templates found for template key '%s'".formatted(templateKey));
 
         this.templateKey = nonNull(templateKey);
         this.uris = nonNull(uris);
@@ -58,10 +58,10 @@ public class DuplicateTemplatesFoundException extends ApplicationException {
     public ErrorDetail errorDetail() {
         return ErrorDetail.builder()
             .problem(
-                STR."""
-                    Template paths contain multiple templates for same template key @|bold \{templateKey}|@:
-                    \{listOfUris()}
-                    """
+                """
+                    Template paths contain multiple templates for same template key @|bold %s|@:
+                    %s
+                    """.formatted(templateKey, listOfUris())
             )
             .solution("Make sure that only one template is present for selected template key")
             .build();
@@ -69,7 +69,7 @@ public class DuplicateTemplatesFoundException extends ApplicationException {
 
     private String listOfUris() {
         return uris.stream()
-            .map(uri -> STR."  - @|bold \{uri}|@")
+            .map("  - @|bold %s|@"::formatted)
             .collect(Collectors.joining("\n"));
     }
 }

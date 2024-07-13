@@ -69,11 +69,11 @@ public class ConciseProgressBar implements ProgressBar {
     @Override
     public void render(Console console) {
         final char spinner = SPINNER_FRAMES[current % SPINNER_MODULO];
-        final String currentFormat = STR."%\{String.valueOf(maximum).length()}s";
+        final String currentFormat = "%" + String.valueOf(maximum).length() + "s";
         final boolean interactive = console.isInteractive();
-        final String currentSpinner = interactive ? STR."@|bold,magenta \{spinner}|@ " : "";
+        final String currentSpinner = interactive ? "@|bold,magenta %s|@ ".formatted(spinner) : "";
 
-        final String rendered = STR."\{currentSpinner}@|bold [\{currentFormat.formatted(current)} of \{maximum}]|@ \{message}";
+        final String rendered = "%s@|bold [%s of %d]|@ %s".formatted(currentSpinner, currentFormat.formatted(current), maximum, message);
 
         if (interactive) {
             console.clearLine();

@@ -82,7 +82,7 @@ public class InstallCommand extends CliCommand {
 
     @Override
     protected ReturnCode execute() {
-        console.render(Alert.info(STR."Beginning installing \{ProductInfo.NAME}"));
+        console.render(Alert.info("Beginning installing " + ProductInfo.NAME));
 
         final SetupContext context = new SetupContext();
         final List<InstallStep> orderedInstallSteps = orderedInstallSteps();

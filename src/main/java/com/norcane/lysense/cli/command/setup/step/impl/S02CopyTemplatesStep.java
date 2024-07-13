@@ -61,7 +61,7 @@ public class S02CopyTemplatesStep implements InstallStep {
 
     @Override
     public String installationMessage(SetupContext context) {
-        return STR."Generating templates to \{context.get(SetupContextKeys.TEMPLATES_DIR)}";
+        return "Generating templates to " + context.get(SetupContextKeys.TEMPLATES_DIR);
     }
 
     @Override
@@ -83,7 +83,7 @@ public class S02CopyTemplatesStep implements InstallStep {
             .forEach((templateKey, template) -> {
 
                 // write template to <templatesDir>/<languageId>.<extension> (e.g. /foo/bar/java.mustache)
-                final String templateName = STR."\{templateKey.languageId().value()}.\{template.resource().extension()}";
+                final String templateName = templateKey.languageId().value() + "." + template.resource().extension();
                 final Path templateFile = templatesDir.resolve(templateName);
                 fileSystem.write(template.resource(), templateFile);
             });

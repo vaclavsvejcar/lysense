@@ -60,7 +60,7 @@ public class S01DetectSourcesStep implements InstallStep {
     @Override
     public String installationMessage(SetupContext context) {
         final Set<String> sourcePaths = context.get(SetupContextKeys.SOURCE_PATHS);
-        return STR."Searching for source code files in @|bold \{sourcePaths}|@";
+        return "Searching for source code files in @|bold %s|@".formatted(sourcePaths);
     }
 
     @Override
