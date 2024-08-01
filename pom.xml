@@ -21,7 +21,7 @@
         <surefire-plugin.version>3.1.2</surefire-plugin.version>
 
         <jansi.version>2.4.1</jansi.version>
-        <jline.version>3.24.1</jline.version>
+        <jline.version>3.26.3</jline.version>
         <mustache.java.version>0.9.14</mustache.java.version>
         <record.builder.version>42</record.builder.version>
     </properties>
@@ -65,22 +65,8 @@
         </dependency>
         <dependency>
             <groupId>org.jline</groupId>
-            <artifactId>jline-reader</artifactId>
-            <version>${jline.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jline</groupId>
             <artifactId>jline-console</artifactId>
             <version>${jline.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>net.java.dev.jna</groupId>
-            <artifactId>jna</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.fusesource.jansi</groupId>
-            <artifactId>jansi</artifactId>
-            <version>${jansi.version}</version>
         </dependency>
 
         <!-- Templating -->

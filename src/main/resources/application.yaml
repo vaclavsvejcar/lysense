@@ -16,6 +16,17 @@ quarkus:
       - --initialize-at-run-time=org.jline.nativ.CLibrary
       - --initialize-at-run-time=org.jline.nativ.CLibrary$WinSize
       - --initialize-at-run-time=org.jline.nativ.CLibrary$Termios
+      - --initialize-at-run-time=org.jline.nativ.Kernel32
+      - --initialize-at-run-time=org.jline.nativ.Kernel32$INPUT_RECORD
+      - --initialize-at-run-time=org.jline.nativ.Kernel32$MENU_EVENT_RECORD
+      - --initialize-at-run-time=org.jline.nativ.Kernel32$FOCUS_EVENT_RECORD
+      - --initialize-at-run-time=org.jline.nativ.Kernel32$WINDOW_BUFFER_SIZE_RECORD
+      - --initialize-at-run-time=org.jline.nativ.Kernel32$MOUSE_EVENT_RECORD
+      - --initialize-at-run-time=org.jline.nativ.Kernel32$KEY_EVENT_RECORD
+      - --initialize-at-run-time=org.jline.nativ.Kernel32$CHAR_INFO
+      - --initialize-at-run-time=org.jline.nativ.Kernel32$CONSOLE_SCREEN_BUFFER_INFO
+      - --initialize-at-run-time=org.jline.nativ.Kernel32$COORD
+      - --initialize-at-run-time=org.jline.nativ.Kernel32$SMALL_RECT
 
 lysense:
   configuration:
